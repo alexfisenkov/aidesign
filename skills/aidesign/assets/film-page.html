@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- AI Design: шаблон страницы «сайт как фильм». Заполняет tools/film.py page; руками правят готовую страницу, не шаблон.
+     Без скрипта и при prefers-reduced-motion это обычная страница: кадры и текст сцен в потоке.
+     По мотивам: oso95/scroll-world references/scrub-engine.js (MIT, © 2026 cyw) и
+     MengTo/Skills scroll-world-storytelling (MIT, © 2026 Meng To). Изменено: написано заново. -->
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{title}}</title>
+<style>
+  :root {
+    --sf-bg: {{bg}};
+    --sf-ink: {{ink}};
+    --sf-accent: {{accent}};
+    --sf-font: {{font}};
+  }
+  body { margin: 0; background: var(--sf-bg); color: var(--sf-ink); font: 1.0625rem/1.55 var(--sf-font); }
+  .sf { display: grid; gap: clamp(3rem, 8vh, 6rem); padding: clamp(2rem, 6vh, 4rem) 0; }
+  .sf-beat { display: grid; gap: 1.25rem; width: min(72rem, 100% - 2.5rem); margin-inline: auto; }
+  .sf-beat img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 0.5rem; }
+  .sf-beat h1, .sf-beat h2 { margin: 0; max-width: 20ch; font-size: clamp(1.9rem, 4.2vw, 3.4rem); line-height: 1.08; text-wrap: balance; }
+  .sf-beat p { margin: 0; max-width: 44ch; text-wrap: pretty; }
+  .sf-action { display: inline-block; justify-self: start; padding: 0.85rem 1.5rem; border-radius: 0.5rem;
+               background: var(--sf-accent); color: var(--sf-bg); font-weight: 600; text-decoration: none; }
+  .sf-action:focus-visible { outline: 3px solid var(--sf-ink); outline-offset: 3px; }
+  .sf-after { width: min(72rem, 100% - 2.5rem); margin: 0 auto; padding: 10vh 0; }
+  .sf-after p { max-width: 60ch; text-wrap: pretty; }
+</style>
+</head>
+<body>
+<main>
+<section class="sf" data-film aria-label="{{title}}">
+<script type="application/json" class="sf-config">{{config}}</script>
+{{beats}}
+</section>
+<section class="sf-after">
+  <p>{{after}}</p>
+</section>
+</main>
+<script src="scroll-film.js"></script>
+</body>
+</html>

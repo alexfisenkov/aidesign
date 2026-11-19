@@ -1,0 +1,56 @@
+/* Черновик токенов AI Design из справочника — стартовая гипотеза, не решение.
+   Стиль: Земля и материал (природный). Палитра: Глина гончара. Шрифты: Alegreya + Alegreya Sans.
+   Подключение шрифтов: https://fonts.googleapis.com/css2?family=Alegreya:wght@700&family=Alegreya+Sans:wght@400;700&display=swap */
+:root {
+  --color-bg: #1A1512;
+  --color-surface: #251F1C;
+  --color-text: #F3E9E5;
+  --color-muted: #918A86;
+  --color-border: #736C69;
+  --color-divider: #383330;
+  --color-primary: #CF957C;
+  --color-on-primary: #1A1512;
+  --color-accent: #90AC9F;
+  --color-on-accent: #1A1512;
+  --color-ring: #CF957C;
+  --color-danger: #FD736D;
+  --color-on-danger: #1A1512;
+  --color-success: #7CCD8E;
+  --color-warning: #F0B135;
+  --color-on-warning: #1A1512;
+  --font-display: "Alegreya", Georgia, "Times New Roman", serif;
+  --font-body: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --radius-s: 8px;
+  --radius-m: 16px;
+  --radius-l: 28px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / .05), 0 6px 20px rgb(0 0 0 / .06);
+  --motion-fast: 200ms;
+  --motion-base: 360ms;
+  --motion-ease: ease-out;
+}
+
+[data-theme="light"] {
+  --color-bg: #F6F0EA;
+  --color-surface: #FEF8F2;
+  --color-text: #2A1D16;
+  --color-muted: #736962;
+  --color-border: #908680;
+  --color-divider: #D9D2CC;
+  --color-primary: #7E4A33;
+  --color-on-primary: #FFFFFF;
+  --color-accent: #5F7A6E;
+  --color-on-accent: #FFFFFF;
+  --color-ring: #7E4A33;
+  --color-danger: #B63132;
+  --color-on-danger: #FFFFFF;
+  --color-success: #21763C;
+  --color-warning: #F0B135;
+  --color-on-warning: #2A1D16;
+}

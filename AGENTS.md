@@ -11,8 +11,8 @@
 
 | Команда | Что делает |
 |---------|------------|
-| `python3 -B -m unittest discover -s tests` | все тесты (сейчас 299, число растёт) |
-| `python3 -B -m unittest tests.test_ad` | один файл тестов (`test_ad`, `test_check`, `test_setup`, `test_backup`, `test_scaffold`, `test_designsystem`, `test_rules`, `test_media`, `test_shots`, `test_examples`, `test_knowledge`, `test_process`, `test_release`) |
+| `python3 -B -m unittest discover -s tests` | все тесты (сейчас 433, число растёт; браузерные пропускаются без модуля — `AIDESIGN_BROWSER_HOME`) |
+| `python3 -B -m unittest tests.test_ad` | один файл тестов (`test_ad`, `test_check`, `test_setup`, `test_backup`, `test_scaffold`, `test_designsystem`, `test_rules`, `test_media`, `test_shots`, `test_browser`, `test_extract`, `test_pick`, `test_film`, `test_examples`, `test_knowledge`, `test_process`, `test_release`) |
 | `python3 skills/aidesign/tools/check.py skills/aidesign/examples` | проверка на шаблонность ИИ; ждём «Находок: 0»; флаги `--json`, `--rules` |
 | `python3 tools/public-export.py --out <новая папка>` | чистая выгрузка для публикации; ждём «Находок: 0»; берёт только файлы из git — сначала коммит |
 | `python3 skills/aidesign/tools/setup.py doctor` | что стоит на компьютере; `plan <ids> --os mac\|windows\|linux` — команды установки без установки |
@@ -27,6 +27,7 @@
 - `skills/aidesign/tools/ad.py` — учёт прогона, `state.js`, сервер панели; `tools/check.py` — правила шаблонности (`RULES`, `scan()`).
 - `skills/aidesign/tools/setup.py` — проверка и установка программ (ключ команд — пакетный менеджер); `backup.py` — копии проекта и откат (ссылки не пишутся насквозь, ничего не удаляется); `scaffold.py` — структура проекта; `designsystem.py` — `tokens.json`, проверка «мимо токенов», архив (кладёт рядом с проектом); `rules.py` — блок `aidesign` в памяти проекта: подраздел «Сейчас» переписывает `ad.py` сам после каждого события, на готовом сайте — только после первой копии «до». Все копируются в `.aidesign-work/` на `init`.
 - `skills/aidesign/tools/media.py` — генераторы (распознать по отпечатку инструментов, подключить), найти скиллы про медиа, скачать (`fetch`, без перезаписи, SVG по белому списку), подготовить (`prep` через ffmpeg/cwebp), опись `assets/media.json`; каталог — `knowledge/медиа/генераторы.json`. Бюджет — `ad.py media budget|spend|check` (одна единица, `check` 1 — спросить человека). `shots.py` — снимки превью 1280/390. `ad.py --serve-http PORT --directory DIR` — сервер с Range для показа сайта (видео по прокрутке без Range не перематывается).
+- 0.4.0: `tools/browser.py` + `tools/browser/` — общий браузерный модуль (Playwright в общем кэше, честный UA, `robots.txt`, внутренние адреса закрыты, cookies — только «принять» в окне согласия); `tools/extract.py` — стиль с сайта по ссылке → `tokens.css`; `tools/pick.py` + `knowledge/справочник/` — стили, палитры, пары с кириллицей, отрасли, лендинги, подбор по-русски, `validate`; `check.py` + `check_*.py` — паритет с Impeccable (таблица 62 правил в `антипаттерны.md#impeccable-parity`), `--browser`, `--fast`, `--hook`; `tools/film.py` + `assets/scroll-film.js` — «сайт как фильм».
 - `skills/aidesign/knowledge/медиа/` — промпты по инструкциям владельца (пересказ под MIT с его разрешения 19.11), рецепты «кодом вместо генерации».
 - `skills/aidesign/phases/figma.md` — Figma, читается только после согласия человека.
 - `skills/aidesign/knowledge/sources.json` — реестр источников; порядок пополнения новым скиллом — `docs/пополнение.md` (тест сверяет реестр, `THIRD_PARTY_NOTICES.md`, README и шапки).
@@ -49,6 +50,7 @@
 - Оболочка Bash у агента — zsh: переменная со списком путей не дробится на слова; передавай пути явно.
 - Инструменты, которые трогают файлы человека (`backup.py`, `scaffold.py`), тестируются только во временных папках; откат и перенос — с `--yes` и после вопроса человеку.
 - Превью всегда настоящие (настоящий приём на настоящем материале); генерация в превью — только в трёх случаях (`3-previews.md` §3), и все тексты про это должны совпадать — тест `test_process` сторожит.
+- Тесты, пишущие файлы, и `ad.py init` — только во временных папках; `ad.py init` из папки самого скилла засоряет `tools/`.
 - Не меняй логику `ad.py` относительно форка `ap.py` без причины: время, ожидание, сервер, `write_snapshot` взяты как есть.
 
 ## Как здесь работает AISpa

@@ -1,0 +1,7359 @@
+{
+ "version": 1,
+ "about": "Семейства Google Fonts с кириллицей: категория, подмножества, начертания, оси, лицензия, страница. Метаданные Google Fonts (github.com/google/fonts, METADATA.pb) в выборке UI UX Pro Max (MIT, © 2024 Next Level Builder); отобраны только семейства с подмножеством cyrillic, имена дизайнеров убраны.",
+ "source": {
+  "repository": "https://github.com/google/fonts",
+  "revision": "038b637da7b3fd956a4ed93ffc607c3d5e4ce172",
+  "via": "nextlevelbuilder/ui-ux-pro-max-skill data/google-fonts.csv, data/google-font-licenses.json"
+ },
+ "families": [
+  {
+   "family": "Advent Pro",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 100..200",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 162,
+   "specimen": "https://fonts.google.com/specimen/Advent+Pro"
+  },
+  {
+   "family": "Akt",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 808,
+   "specimen": "https://fonts.google.com/specimen/Akt"
+  },
+  {
+   "family": "Alegreya",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 400..900"
+   ],
+   "license": "OFL",
+   "popularity": 87,
+   "specimen": "https://fonts.google.com/specimen/Alegreya"
+  },
+  {
+   "family": "Alegreya SC",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 212,
+   "specimen": "https://fonts.google.com/specimen/Alegreya+SC"
+  },
+  {
+   "family": "Alegreya Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 208,
+   "specimen": "https://fonts.google.com/specimen/Alegreya+Sans"
+  },
+  {
+   "family": "Alegreya Sans SC",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 135,
+   "specimen": "https://fonts.google.com/specimen/Alegreya+Sans+SC"
+  },
+  {
+   "family": "Alice",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 253,
+   "specimen": "https://fonts.google.com/specimen/Alice"
+  },
+  {
+   "family": "Alumni Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 49,
+   "specimen": "https://fonts.google.com/specimen/Alumni+Sans"
+  },
+  {
+   "family": "Alumni Sans Collegiate One",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 882,
+   "specimen": "https://fonts.google.com/specimen/Alumni+Sans+Collegiate+One"
+  },
+  {
+   "family": "Alumni Sans Pinstripe",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 836,
+   "specimen": "https://fonts.google.com/specimen/Alumni+Sans+Pinstripe"
+  },
+  {
+   "family": "Alumni Sans SC",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 828,
+   "specimen": "https://fonts.google.com/specimen/Alumni+Sans+SC"
+  },
+  {
+   "family": "Amatic SC",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 147,
+   "specimen": "https://fonts.google.com/specimen/Amatic+SC"
+  },
+  {
+   "family": "Andika",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 136,
+   "specimen": "https://fonts.google.com/specimen/Andika"
+  },
+  {
+   "family": "Anonymous Pro",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 112,
+   "specimen": "https://fonts.google.com/specimen/Anonymous+Pro"
+  },
+  {
+   "family": "Arimo",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 5,
+   "specimen": "https://fonts.google.com/specimen/Arimo"
+  },
+  {
+   "family": "Arsenal",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 142,
+   "specimen": "https://fonts.google.com/specimen/Arsenal"
+  },
+  {
+   "family": "Arsenal SC",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 432,
+   "specimen": "https://fonts.google.com/specimen/Arsenal+SC"
+  },
+  {
+   "family": "BIZ UDGothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek-ext",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 364,
+   "specimen": "https://fonts.google.com/specimen/BIZ+UDGothic"
+  },
+  {
+   "family": "BIZ UDMincho",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "greek-ext",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 724,
+   "specimen": "https://fonts.google.com/specimen/BIZ+UDMincho"
+  },
+  {
+   "family": "BIZ UDPGothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek-ext",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 100,
+   "specimen": "https://fonts.google.com/specimen/BIZ+UDPGothic"
+  },
+  {
+   "family": "BIZ UDPMincho",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "greek-ext",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 693,
+   "specimen": "https://fonts.google.com/specimen/BIZ+UDPMincho"
+  },
+  {
+   "family": "Bad Script",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 457,
+   "specimen": "https://fonts.google.com/specimen/Bad+Script"
+  },
+  {
+   "family": "Balsamiq Sans",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 617,
+   "specimen": "https://fonts.google.com/specimen/Balsamiq+Sans"
+  },
+  {
+   "family": "Bellota",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 305,
+   "specimen": "https://fonts.google.com/specimen/Bellota"
+  },
+  {
+   "family": "Bellota Text",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 779,
+   "specimen": "https://fonts.google.com/specimen/Bellota+Text"
+  },
+  {
+   "family": "Bitter",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 102,
+   "specimen": "https://fonts.google.com/specimen/Bitter"
+  },
+  {
+   "family": "Bona Nova",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 646,
+   "specimen": "https://fonts.google.com/specimen/Bona+Nova"
+  },
+  {
+   "family": "Bona Nova SC",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 347,
+   "specimen": "https://fonts.google.com/specimen/Bona+Nova+SC"
+  },
+  {
+   "family": "Brygada 1918",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 400,
+   "specimen": "https://fonts.google.com/specimen/Brygada+1918"
+  },
+  {
+   "family": "Cactus Classical Serif",
+   "category": "Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1346,
+   "specimen": "https://fonts.google.com/specimen/Cactus+Classical+Serif"
+  },
+  {
+   "family": "Carlito",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 328,
+   "specimen": "https://fonts.google.com/specimen/Carlito"
+  },
+  {
+   "family": "Cascadia Code",
+   "category": "Sans Serif",
+   "subsets": [
+    "arabic",
+    "braille",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 200..700"
+   ],
+   "license": "OFL",
+   "popularity": 326,
+   "specimen": "https://fonts.google.com/specimen/Cascadia+Code"
+  },
+  {
+   "family": "Cascadia Mono",
+   "category": "Sans Serif",
+   "subsets": [
+    "arabic",
+    "braille",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 200..700"
+   ],
+   "license": "OFL",
+   "popularity": 464,
+   "specimen": "https://fonts.google.com/specimen/Cascadia+Mono"
+  },
+  {
+   "family": "Caveat",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 40,
+   "specimen": "https://fonts.google.com/specimen/Caveat"
+  },
+  {
+   "family": "Charis SIL",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 143,
+   "specimen": "https://fonts.google.com/specimen/Charis+SIL"
+  },
+  {
+   "family": "Chiron GoRound TC",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 714,
+   "specimen": "https://fonts.google.com/specimen/Chiron+GoRound+TC"
+  },
+  {
+   "family": "Chiron Hei HK",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 1536,
+   "specimen": "https://fonts.google.com/specimen/Chiron+Hei+HK"
+  },
+  {
+   "family": "Chiron Sung HK",
+   "category": "Serif",
+   "subsets": [
+    "chinese-hongkong",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 968,
+   "specimen": "https://fonts.google.com/specimen/Chiron+Sung+HK"
+  },
+  {
+   "family": "Chocolate Classical Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 725,
+   "specimen": "https://fonts.google.com/specimen/Chocolate+Classical+Sans"
+  },
+  {
+   "family": "Climate Crisis",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [
+    "YEAR: 1979..2050"
+   ],
+   "license": "OFL",
+   "popularity": 790,
+   "specimen": "https://fonts.google.com/specimen/Climate+Crisis"
+  },
+  {
+   "family": "Comfortaa",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 88,
+   "specimen": "https://fonts.google.com/specimen/Comfortaa"
+  },
+  {
+   "family": "Comforter",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 349,
+   "specimen": "https://fonts.google.com/specimen/Comforter"
+  },
+  {
+   "family": "Comforter Brush",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 407,
+   "specimen": "https://fonts.google.com/specimen/Comforter+Brush"
+  },
+  {
+   "family": "Comic Relief",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 560,
+   "specimen": "https://fonts.google.com/specimen/Comic+Relief"
+  },
+  {
+   "family": "Commissioner",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "FLAR: 0..100",
+    "VOLM: 0..100",
+    "slnt: -12..0",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 312,
+   "specimen": "https://fonts.google.com/specimen/Commissioner"
+  },
+  {
+   "family": "Cormorant",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 187,
+   "specimen": "https://fonts.google.com/specimen/Cormorant"
+  },
+  {
+   "family": "Cormorant Garamond",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 49,
+   "specimen": "https://fonts.google.com/specimen/Cormorant+Garamond"
+  },
+  {
+   "family": "Cormorant Infant",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 403,
+   "specimen": "https://fonts.google.com/specimen/Cormorant+Infant"
+  },
+  {
+   "family": "Cormorant SC",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 396,
+   "specimen": "https://fonts.google.com/specimen/Cormorant+SC"
+  },
+  {
+   "family": "Cormorant Unicase",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 599,
+   "specimen": "https://fonts.google.com/specimen/Cormorant+Unicase"
+  },
+  {
+   "family": "Cousine",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 109,
+   "specimen": "https://fonts.google.com/specimen/Cousine"
+  },
+  {
+   "family": "Cuprum",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 258,
+   "specimen": "https://fonts.google.com/specimen/Cuprum"
+  },
+  {
+   "family": "Days One",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 624,
+   "specimen": "https://fonts.google.com/specimen/Days+One"
+  },
+  {
+   "family": "Dela Gothic One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 93,
+   "specimen": "https://fonts.google.com/specimen/Dela+Gothic+One"
+  },
+  {
+   "family": "Didact Gothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 182,
+   "specimen": "https://fonts.google.com/specimen/Didact+Gothic"
+  },
+  {
+   "family": "DotGothic16",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 379,
+   "specimen": "https://fonts.google.com/specimen/DotGothic16"
+  },
+  {
+   "family": "EB Garamond",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [
+    "wght: 400..800"
+   ],
+   "license": "OFL",
+   "popularity": 58,
+   "specimen": "https://fonts.google.com/specimen/EB+Garamond"
+  },
+  {
+   "family": "El Messiri",
+   "category": "Sans Serif",
+   "subsets": [
+    "arabic",
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 96,
+   "specimen": "https://fonts.google.com/specimen/El+Messiri"
+  },
+  {
+   "family": "Exo 2",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 33,
+   "specimen": "https://fonts.google.com/specimen/Exo+2"
+  },
+  {
+   "family": "Finlandica Headline",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 1976,
+   "specimen": "https://fonts.google.com/specimen/Finlandica+Headline"
+  },
+  {
+   "family": "Finlandica Text",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 1883,
+   "specimen": "https://fonts.google.com/specimen/Finlandica+Text"
+  },
+  {
+   "family": "Fira Code",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "symbols2"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 60,
+   "specimen": "https://fonts.google.com/specimen/Fira+Code"
+  },
+  {
+   "family": "Fira Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "symbols2"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 110,
+   "specimen": "https://fonts.google.com/specimen/Fira+Mono"
+  },
+  {
+   "family": "Fira Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 19,
+   "specimen": "https://fonts.google.com/specimen/Fira+Sans"
+  },
+  {
+   "family": "Fira Sans Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 133,
+   "specimen": "https://fonts.google.com/specimen/Fira+Sans+Condensed"
+  },
+  {
+   "family": "Fira Sans Extra Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 451,
+   "specimen": "https://fonts.google.com/specimen/Fira+Sans+Extra+Condensed"
+  },
+  {
+   "family": "Flow Block",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 966,
+   "specimen": "https://fonts.google.com/specimen/Flow+Block"
+  },
+  {
+   "family": "Flow Circular",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 791,
+   "specimen": "https://fonts.google.com/specimen/Flow+Circular"
+  },
+  {
+   "family": "Flow Rounded",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 445,
+   "specimen": "https://fonts.google.com/specimen/Flow+Rounded"
+  },
+  {
+   "family": "Forum",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 94,
+   "specimen": "https://fonts.google.com/specimen/Forum"
+  },
+  {
+   "family": "Gabriela",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 232,
+   "specimen": "https://fonts.google.com/specimen/Gabriela"
+  },
+  {
+   "family": "Geist",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 109,
+   "specimen": "https://fonts.google.com/specimen/Geist"
+  },
+  {
+   "family": "Geist Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 96,
+   "specimen": "https://fonts.google.com/specimen/Geist+Mono"
+  },
+  {
+   "family": "Gentium Book Plus",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 689,
+   "specimen": "https://fonts.google.com/specimen/Gentium+Book+Plus"
+  },
+  {
+   "family": "Gentium Plus",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 738,
+   "specimen": "https://fonts.google.com/specimen/Gentium+Plus"
+  },
+  {
+   "family": "Geologica",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "CRSV: 0..1",
+    "SHRP: 0..100",
+    "slnt: -12..0",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 117,
+   "specimen": "https://fonts.google.com/specimen/Geologica"
+  },
+  {
+   "family": "Gidole",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 457,
+   "specimen": "https://fonts.google.com/specimen/Gidole"
+  },
+  {
+   "family": "Golos Text",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 400..900"
+   ],
+   "license": "OFL",
+   "popularity": 96,
+   "specimen": "https://fonts.google.com/specimen/Golos+Text"
+  },
+  {
+   "family": "Gothic A1",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "korean",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 144,
+   "specimen": "https://fonts.google.com/specimen/Gothic+A1"
+  },
+  {
+   "family": "Great Vibes",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 183,
+   "specimen": "https://fonts.google.com/specimen/Great+Vibes"
+  },
+  {
+   "family": "Hachi Maru Pop",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 474,
+   "specimen": "https://fonts.google.com/specimen/Hachi+Maru+Pop"
+  },
+  {
+   "family": "Handjet",
+   "category": "Display",
+   "subsets": [
+    "arabic",
+    "armenian",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "ELGR: 1..2",
+    "ELSH: 0..16",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 492,
+   "specimen": "https://fonts.google.com/specimen/Handjet"
+  },
+  {
+   "family": "Hina Mincho",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 175,
+   "specimen": "https://fonts.google.com/specimen/Hina+Mincho"
+  },
+  {
+   "family": "Huninn",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 493,
+   "specimen": "https://fonts.google.com/specimen/Huninn"
+  },
+  {
+   "family": "IBM Plex Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 63,
+   "specimen": "https://fonts.google.com/specimen/IBM+Plex+Mono"
+  },
+  {
+   "family": "IBM Plex Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wdth: 75..100",
+    "wght: 100..700"
+   ],
+   "license": "OFL",
+   "popularity": 56,
+   "specimen": "https://fonts.google.com/specimen/IBM+Plex+Sans"
+  },
+  {
+   "family": "IBM Plex Sans JP",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 144,
+   "specimen": "https://fonts.google.com/specimen/IBM+Plex+Sans+JP"
+  },
+  {
+   "family": "IBM Plex Serif",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 106,
+   "specimen": "https://fonts.google.com/specimen/IBM+Plex+Serif"
+  },
+  {
+   "family": "Inter",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "opsz: 14..32",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 3,
+   "specimen": "https://fonts.google.com/specimen/Inter"
+  },
+  {
+   "family": "Inter Tight",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 93,
+   "specimen": "https://fonts.google.com/specimen/Inter+Tight"
+  },
+  {
+   "family": "Iosevka Charon",
+   "category": "Monospace",
+   "subsets": [
+    "armenian",
+    "braille",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 565,
+   "specimen": "https://fonts.google.com/specimen/Iosevka+Charon"
+  },
+  {
+   "family": "Iosevka Charon Mono",
+   "category": "Monospace",
+   "subsets": [
+    "armenian",
+    "braille",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 501,
+   "specimen": "https://fonts.google.com/specimen/Iosevka+Charon+Mono"
+  },
+  {
+   "family": "Istok Web",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 100,
+   "specimen": "https://fonts.google.com/specimen/Istok+Web"
+  },
+  {
+   "family": "JetBrains Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [
+    "wght: 100..800"
+   ],
+   "license": "OFL",
+   "popularity": 18,
+   "specimen": "https://fonts.google.com/specimen/JetBrains+Mono"
+  },
+  {
+   "family": "Jost",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 16,
+   "specimen": "https://fonts.google.com/specimen/Jost"
+  },
+  {
+   "family": "Jura",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "kayah-li",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 200,
+   "specimen": "https://fonts.google.com/specimen/Jura"
+  },
+  {
+   "family": "Kablammo",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "emoji",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [
+    "MORF: 0..60"
+   ],
+   "license": "OFL",
+   "popularity": 580,
+   "specimen": "https://fonts.google.com/specimen/Kablammo"
+  },
+  {
+   "family": "Kaisei Decol",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 259,
+   "specimen": "https://fonts.google.com/specimen/Kaisei+Decol"
+  },
+  {
+   "family": "Kaisei HarunoUmi",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 802,
+   "specimen": "https://fonts.google.com/specimen/Kaisei+HarunoUmi"
+  },
+  {
+   "family": "Kaisei Opti",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 851,
+   "specimen": "https://fonts.google.com/specimen/Kaisei+Opti"
+  },
+  {
+   "family": "Kaisei Tokumin",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "700",
+    "800"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 234,
+   "specimen": "https://fonts.google.com/specimen/Kaisei+Tokumin"
+  },
+  {
+   "family": "Kelly Slab",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 573,
+   "specimen": "https://fonts.google.com/specimen/Kelly+Slab"
+  },
+  {
+   "family": "Kiwi Maru",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 312,
+   "specimen": "https://fonts.google.com/specimen/Kiwi+Maru"
+  },
+  {
+   "family": "Klee One",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "greek-ext",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "600"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 367,
+   "specimen": "https://fonts.google.com/specimen/Klee+One"
+  },
+  {
+   "family": "Kosugi",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "APACHE2",
+   "popularity": 397,
+   "specimen": "https://fonts.google.com/specimen/Kosugi"
+  },
+  {
+   "family": "Kosugi Maru",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "APACHE2",
+   "popularity": 184,
+   "specimen": "https://fonts.google.com/specimen/Kosugi+Maru"
+  },
+  {
+   "family": "Kurale",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "devanagari",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 227,
+   "specimen": "https://fonts.google.com/specimen/Kurale"
+  },
+  {
+   "family": "LINE Seed JP",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek-ext",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "400",
+    "700",
+    "800"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 129,
+   "specimen": "https://fonts.google.com/specimen/LINE+Seed+JP"
+  },
+  {
+   "family": "LXGW Marker Gothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 492,
+   "specimen": "https://fonts.google.com/specimen/LXGW+Marker+Gothic"
+  },
+  {
+   "family": "LXGW WenKai Mono TC",
+   "category": "Monospace",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "lisu",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 431,
+   "specimen": "https://fonts.google.com/specimen/LXGW+WenKai+Mono+TC"
+  },
+  {
+   "family": "LXGW WenKai TC",
+   "category": "Handwriting",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "lisu",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 364,
+   "specimen": "https://fonts.google.com/specimen/LXGW+WenKai+TC"
+  },
+  {
+   "family": "Ledger",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1143,
+   "specimen": "https://fonts.google.com/specimen/Ledger"
+  },
+  {
+   "family": "Libertinus Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 358,
+   "specimen": "https://fonts.google.com/specimen/Libertinus+Sans"
+  },
+  {
+   "family": "Libertinus Serif",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 520,
+   "specimen": "https://fonts.google.com/specimen/Libertinus+Serif"
+  },
+  {
+   "family": "Libertinus Serif Display",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 521,
+   "specimen": "https://fonts.google.com/specimen/Libertinus+Serif+Display"
+  },
+  {
+   "family": "Libre Franklin",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 77,
+   "specimen": "https://fonts.google.com/specimen/Libre+Franklin"
+  },
+  {
+   "family": "Lilex",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "symbols2",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 100..700"
+   ],
+   "license": "OFL",
+   "popularity": 991,
+   "specimen": "https://fonts.google.com/specimen/Lilex"
+  },
+  {
+   "family": "Liter",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1289,
+   "specimen": "https://fonts.google.com/specimen/Liter"
+  },
+  {
+   "family": "Literata",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "opsz: 7..72",
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 80,
+   "specimen": "https://fonts.google.com/specimen/Literata"
+  },
+  {
+   "family": "Lobster",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 84,
+   "specimen": "https://fonts.google.com/specimen/Lobster"
+  },
+  {
+   "family": "Lora",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 11,
+   "specimen": "https://fonts.google.com/specimen/Lora"
+  },
+  {
+   "family": "Lunasima",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 451,
+   "specimen": "https://fonts.google.com/specimen/Lunasima"
+  },
+  {
+   "family": "M PLUS 1p",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "300",
+    "400",
+    "500",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 47,
+   "specimen": "https://fonts.google.com/specimen/M+PLUS+1p"
+  },
+  {
+   "family": "M PLUS Rounded 1c",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "300",
+    "400",
+    "500",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 119,
+   "specimen": "https://fonts.google.com/specimen/M+PLUS+Rounded+1c"
+  },
+  {
+   "family": "Manrope",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800"
+   ],
+   "axes": [
+    "wght: 200..800"
+   ],
+   "license": "OFL",
+   "popularity": 22,
+   "specimen": "https://fonts.google.com/specimen/Manrope"
+  },
+  {
+   "family": "Marck Script",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 480,
+   "specimen": "https://fonts.google.com/specimen/Marck+Script"
+  },
+  {
+   "family": "Marmelad",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 226,
+   "specimen": "https://fonts.google.com/specimen/Marmelad"
+  },
+  {
+   "family": "Martian Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800"
+   ],
+   "axes": [
+    "wdth: 75..112.5",
+    "wght: 100..800"
+   ],
+   "license": "OFL",
+   "popularity": 965,
+   "specimen": "https://fonts.google.com/specimen/Martian+Mono"
+  },
+  {
+   "family": "Merriweather",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "opsz: 18..144",
+    "wdth: 87..112",
+    "wght: 300..900"
+   ],
+   "license": "OFL",
+   "popularity": 9,
+   "specimen": "https://fonts.google.com/specimen/Merriweather"
+  },
+  {
+   "family": "Moderustic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800"
+   ],
+   "axes": [
+    "wght: 300..800"
+   ],
+   "license": "OFL",
+   "popularity": 345,
+   "specimen": "https://fonts.google.com/specimen/Moderustic"
+  },
+  {
+   "family": "Monomakh",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 508,
+   "specimen": "https://fonts.google.com/specimen/Monomakh"
+  },
+  {
+   "family": "Montserrat",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 5,
+   "specimen": "https://fonts.google.com/specimen/Montserrat"
+  },
+  {
+   "family": "Montserrat Alternates",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 81,
+   "specimen": "https://fonts.google.com/specimen/Montserrat+Alternates"
+  },
+  {
+   "family": "Montserrat Underline",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 1375,
+   "specimen": "https://fonts.google.com/specimen/Montserrat+Underline"
+  },
+  {
+   "family": "Mulish",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 200..1000"
+   ],
+   "license": "OFL",
+   "popularity": 30,
+   "specimen": "https://fonts.google.com/specimen/Mulish"
+  },
+  {
+   "family": "Murecho",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 115,
+   "specimen": "https://fonts.google.com/specimen/Murecho"
+  },
+  {
+   "family": "Nata Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 270,
+   "specimen": "https://fonts.google.com/specimen/Nata+Sans"
+  },
+  {
+   "family": "Neucha",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "latin"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 205,
+   "specimen": "https://fonts.google.com/specimen/Neucha"
+  },
+  {
+   "family": "News Cycle",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 127,
+   "specimen": "https://fonts.google.com/specimen/News+Cycle"
+  },
+  {
+   "family": "Nobile",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 642,
+   "specimen": "https://fonts.google.com/specimen/Nobile"
+  },
+  {
+   "family": "Noto Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "devanagari",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 62.5..100",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 6,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans"
+  },
+  {
+   "family": "Noto Sans Display",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 62.5..100",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 86,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+Display"
+  },
+  {
+   "family": "Noto Sans HK",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-hongkong",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 213,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+HK"
+  },
+  {
+   "family": "Noto Sans JP",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 9,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+JP"
+  },
+  {
+   "family": "Noto Sans KR",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "korean",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 20,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+KR"
+  },
+  {
+   "family": "Noto Sans Mono",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wdth: 62.5..100",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 151,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+Mono"
+  },
+  {
+   "family": "Noto Sans SC",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-simplified",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 24,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+SC"
+  },
+  {
+   "family": "Noto Sans TC",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 12,
+   "specimen": "https://fonts.google.com/specimen/Noto+Sans+TC"
+  },
+  {
+   "family": "Noto Serif",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "math",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 62.5..100",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 21,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif"
+  },
+  {
+   "family": "Noto Serif Display",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 62.5..100",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 227,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif+Display"
+  },
+  {
+   "family": "Noto Serif HK",
+   "category": "Serif",
+   "subsets": [
+    "chinese-hongkong",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 396,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif+HK"
+  },
+  {
+   "family": "Noto Serif JP",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 53,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif+JP"
+  },
+  {
+   "family": "Noto Serif KR",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "korean",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 56,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif+KR"
+  },
+  {
+   "family": "Noto Serif SC",
+   "category": "Serif",
+   "subsets": [
+    "chinese-simplified",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 115,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif+SC"
+  },
+  {
+   "family": "Noto Serif TC",
+   "category": "Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 111,
+   "specimen": "https://fonts.google.com/specimen/Noto+Serif+TC"
+  },
+  {
+   "family": "Nunito",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 200..1000"
+   ],
+   "license": "OFL",
+   "popularity": 15,
+   "specimen": "https://fonts.google.com/specimen/Nunito"
+  },
+  {
+   "family": "Nunito Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "YTLC: 440..540",
+    "opsz: 6..12",
+    "wdth: 75..125",
+    "wght: 200..1000"
+   ],
+   "license": "OFL",
+   "popularity": 26,
+   "specimen": "https://fonts.google.com/specimen/Nunito+Sans"
+  },
+  {
+   "family": "Oi",
+   "category": "Display",
+   "subsets": [
+    "arabic",
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "tamil",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1495,
+   "specimen": "https://fonts.google.com/specimen/Oi"
+  },
+  {
+   "family": "Old Standard TT",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 101,
+   "specimen": "https://fonts.google.com/specimen/Old+Standard+TT"
+  },
+  {
+   "family": "Onest",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 95,
+   "specimen": "https://fonts.google.com/specimen/Onest"
+  },
+  {
+   "family": "Open Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [
+    "wdth: 75..100",
+    "wght: 300..800"
+   ],
+   "license": "OFL",
+   "popularity": 3,
+   "specimen": "https://fonts.google.com/specimen/Open+Sans"
+  },
+  {
+   "family": "Oranienbaum",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 248,
+   "specimen": "https://fonts.google.com/specimen/Oranienbaum"
+  },
+  {
+   "family": "Orelega One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 592,
+   "specimen": "https://fonts.google.com/specimen/Orelega+One"
+  },
+  {
+   "family": "Oswald",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 200..700"
+   ],
+   "license": "OFL",
+   "popularity": 9,
+   "specimen": "https://fonts.google.com/specimen/Oswald"
+  },
+  {
+   "family": "Overpass",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 38,
+   "specimen": "https://fonts.google.com/specimen/Overpass"
+  },
+  {
+   "family": "Overpass Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 300..700"
+   ],
+   "license": "OFL",
+   "popularity": 321,
+   "specimen": "https://fonts.google.com/specimen/Overpass+Mono"
+  },
+  {
+   "family": "PT Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 196,
+   "specimen": "https://fonts.google.com/specimen/PT+Mono"
+  },
+  {
+   "family": "PT Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 16,
+   "specimen": "https://fonts.google.com/specimen/PT+Sans"
+  },
+  {
+   "family": "PT Sans Caption",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 304,
+   "specimen": "https://fonts.google.com/specimen/PT+Sans+Caption"
+  },
+  {
+   "family": "PT Sans Narrow",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 39,
+   "specimen": "https://fonts.google.com/specimen/PT+Sans+Narrow"
+  },
+  {
+   "family": "PT Serif",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 71,
+   "specimen": "https://fonts.google.com/specimen/PT+Serif"
+  },
+  {
+   "family": "PT Serif Caption",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 343,
+   "specimen": "https://fonts.google.com/specimen/PT+Serif+Caption"
+  },
+  {
+   "family": "Pacifico",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 133,
+   "specimen": "https://fonts.google.com/specimen/Pacifico"
+  },
+  {
+   "family": "Pangolin",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 120,
+   "specimen": "https://fonts.google.com/specimen/Pangolin"
+  },
+  {
+   "family": "Pattaya",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "thai",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 655,
+   "specimen": "https://fonts.google.com/specimen/Pattaya"
+  },
+  {
+   "family": "Philosopher",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 316,
+   "specimen": "https://fonts.google.com/specimen/Philosopher"
+  },
+  {
+   "family": "Piazzolla",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "opsz: 8..30",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 554,
+   "specimen": "https://fonts.google.com/specimen/Piazzolla"
+  },
+  {
+   "family": "Pixelify Sans",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 213,
+   "specimen": "https://fonts.google.com/specimen/Pixelify+Sans"
+  },
+  {
+   "family": "Play",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "700"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 62,
+   "specimen": "https://fonts.google.com/specimen/Play"
+  },
+  {
+   "family": "Playfair",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "opsz: 5..1200",
+    "wdth: 87.5..112.5",
+    "wght: 300..900"
+   ],
+   "license": "OFL",
+   "popularity": 146,
+   "specimen": "https://fonts.google.com/specimen/Playfair"
+  },
+  {
+   "family": "Playfair Display",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 400..900"
+   ],
+   "license": "OFL",
+   "popularity": 16,
+   "specimen": "https://fonts.google.com/specimen/Playfair+Display"
+  },
+  {
+   "family": "Playfair Display SC",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i",
+    "900",
+    "900i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 88,
+   "specimen": "https://fonts.google.com/specimen/Playfair+Display+SC"
+  },
+  {
+   "family": "Playpen Sans",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "emoji",
+    "greek",
+    "latin",
+    "latin-ext",
+    "math",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800"
+   ],
+   "axes": [
+    "wght: 100..800"
+   ],
+   "license": "OFL",
+   "popularity": 407,
+   "specimen": "https://fonts.google.com/specimen/Playpen+Sans"
+  },
+  {
+   "family": "Pliant",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 100..125",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 1608,
+   "specimen": "https://fonts.google.com/specimen/Pliant"
+  },
+  {
+   "family": "Pochaevsk",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 708,
+   "specimen": "https://fonts.google.com/specimen/Pochaevsk"
+  },
+  {
+   "family": "Podkova",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "800"
+   ],
+   "axes": [
+    "wght: 400..800"
+   ],
+   "license": "OFL",
+   "popularity": 204,
+   "specimen": "https://fonts.google.com/specimen/Podkova"
+  },
+  {
+   "family": "Poiret One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 95,
+   "specimen": "https://fonts.google.com/specimen/Poiret+One"
+  },
+  {
+   "family": "Ponomar",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 906,
+   "specimen": "https://fonts.google.com/specimen/Ponomar"
+  },
+  {
+   "family": "Prata",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 228,
+   "specimen": "https://fonts.google.com/specimen/Prata"
+  },
+  {
+   "family": "Press Start 2P",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 130,
+   "specimen": "https://fonts.google.com/specimen/Press+Start+2P"
+  },
+  {
+   "family": "Prosto One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 343,
+   "specimen": "https://fonts.google.com/specimen/Prosto+One"
+  },
+  {
+   "family": "Raleway",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 10,
+   "specimen": "https://fonts.google.com/specimen/Raleway"
+  },
+  {
+   "family": "Rampart One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 187,
+   "specimen": "https://fonts.google.com/specimen/Rampart+One"
+  },
+  {
+   "family": "Reggae One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 640,
+   "specimen": "https://fonts.google.com/specimen/Reggae+One"
+  },
+  {
+   "family": "Roboto",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wdth: 75..100",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 2,
+   "specimen": "https://fonts.google.com/specimen/Roboto"
+  },
+  {
+   "family": "Roboto Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 10,
+   "specimen": "https://fonts.google.com/specimen/Roboto+Condensed"
+  },
+  {
+   "family": "Roboto Flex",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "1000"
+   ],
+   "axes": [
+    "GRAD: -200..150",
+    "XOPQ: 27..175",
+    "XTRA: 323..603",
+    "YOPQ: 25..135",
+    "YTAS: 649..854",
+    "YTDE: -305..-98",
+    "YTFI: 560..788",
+    "YTLC: 416..570",
+    "YTUC: 528..760",
+    "opsz: 8..144",
+    "slnt: -10..0",
+    "wdth: 25..151",
+    "wght: 100..1000"
+   ],
+   "license": "OFL",
+   "popularity": 68,
+   "specimen": "https://fonts.google.com/specimen/Roboto+Flex"
+  },
+  {
+   "family": "Roboto Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 100..700"
+   ],
+   "license": "OFL",
+   "popularity": 4,
+   "specimen": "https://fonts.google.com/specimen/Roboto+Mono"
+  },
+  {
+   "family": "Roboto Serif",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "GRAD: -50..100",
+    "opsz: 8..144",
+    "wdth: 50..150",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 76,
+   "specimen": "https://fonts.google.com/specimen/Roboto+Serif"
+  },
+  {
+   "family": "Roboto Slab",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 100..900"
+   ],
+   "license": "APACHE2",
+   "popularity": 28,
+   "specimen": "https://fonts.google.com/specimen/Roboto+Slab"
+  },
+  {
+   "family": "Rubik",
+   "category": "Sans Serif",
+   "subsets": [
+    "arabic",
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 300..900"
+   ],
+   "license": "OFL",
+   "popularity": 7,
+   "specimen": "https://fonts.google.com/specimen/Rubik"
+  },
+  {
+   "family": "Rubik 80s Fade",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1726,
+   "specimen": "https://fonts.google.com/specimen/Rubik+80s+Fade"
+  },
+  {
+   "family": "Rubik Beastly",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 470,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Beastly"
+  },
+  {
+   "family": "Rubik Broken Fax",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 625,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Broken+Fax"
+  },
+  {
+   "family": "Rubik Bubbles",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 597,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Bubbles"
+  },
+  {
+   "family": "Rubik Burned",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 481,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Burned"
+  },
+  {
+   "family": "Rubik Dirt",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 259,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Dirt"
+  },
+  {
+   "family": "Rubik Distressed",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 909,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Distressed"
+  },
+  {
+   "family": "Rubik Doodle Shadow",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 314,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Doodle+Shadow"
+  },
+  {
+   "family": "Rubik Doodle Triangles",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 986,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Doodle+Triangles"
+  },
+  {
+   "family": "Rubik Gemstones",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 948,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Gemstones"
+  },
+  {
+   "family": "Rubik Glitch",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 393,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Glitch"
+  },
+  {
+   "family": "Rubik Glitch Pop",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1702,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Glitch+Pop"
+  },
+  {
+   "family": "Rubik Iso",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 892,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Iso"
+  },
+  {
+   "family": "Rubik Lines",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1895,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Lines"
+  },
+  {
+   "family": "Rubik Maps",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 525,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Maps"
+  },
+  {
+   "family": "Rubik Marker Hatch",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1864,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Marker+Hatch"
+  },
+  {
+   "family": "Rubik Maze",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 516,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Maze"
+  },
+  {
+   "family": "Rubik Microbe",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1852,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Microbe"
+  },
+  {
+   "family": "Rubik Mono One",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 160,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Mono+One"
+  },
+  {
+   "family": "Rubik Moonrocks",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 824,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Moonrocks"
+  },
+  {
+   "family": "Rubik Pixels",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1618,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Pixels"
+  },
+  {
+   "family": "Rubik Puddles",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 973,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Puddles"
+  },
+  {
+   "family": "Rubik Scribble",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1387,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Scribble"
+  },
+  {
+   "family": "Rubik Spray Paint",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 519,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Spray+Paint"
+  },
+  {
+   "family": "Rubik Storm",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 542,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Storm"
+  },
+  {
+   "family": "Rubik Vinyl",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 460,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Vinyl"
+  },
+  {
+   "family": "Rubik Wet Paint",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "hebrew",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 401,
+   "specimen": "https://fonts.google.com/specimen/Rubik+Wet+Paint"
+  },
+  {
+   "family": "Ruda",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 400..900"
+   ],
+   "license": "OFL",
+   "popularity": 145,
+   "specimen": "https://fonts.google.com/specimen/Ruda"
+  },
+  {
+   "family": "Ruslan Display",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 215,
+   "specimen": "https://fonts.google.com/specimen/Ruslan+Display"
+  },
+  {
+   "family": "Russo One",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 64,
+   "specimen": "https://fonts.google.com/specimen/Russo+One"
+  },
+  {
+   "family": "SN Pro",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 803,
+   "specimen": "https://fonts.google.com/specimen/SN+Pro"
+  },
+  {
+   "family": "STIX Two Text",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "OFL",
+   "popularity": 110,
+   "specimen": "https://fonts.google.com/specimen/STIX+Two+Text"
+  },
+  {
+   "family": "Sansation",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 210,
+   "specimen": "https://fonts.google.com/specimen/Sansation"
+  },
+  {
+   "family": "Sawarabi Gothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 163,
+   "specimen": "https://fonts.google.com/specimen/Sawarabi+Gothic"
+  },
+  {
+   "family": "Scada",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 756,
+   "specimen": "https://fonts.google.com/specimen/Scada"
+  },
+  {
+   "family": "Science Gothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "CTRS: 0..85",
+    "slnt: -10..0",
+    "wdth: 50..200",
+    "wght: 100..900"
+   ],
+   "license": "OFL",
+   "popularity": 367,
+   "specimen": "https://fonts.google.com/specimen/Science+Gothic"
+  },
+  {
+   "family": "Seymour One",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 387,
+   "specimen": "https://fonts.google.com/specimen/Seymour+One"
+  },
+  {
+   "family": "Shafarik",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "glagolitic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1024,
+   "specimen": "https://fonts.google.com/specimen/Shafarik"
+  },
+  {
+   "family": "Shantell Sans",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [
+    "BNCE: -100..100",
+    "INFM: 0..100",
+    "SPAC: 0..100",
+    "wght: 300..800"
+   ],
+   "license": "OFL",
+   "popularity": 220,
+   "specimen": "https://fonts.google.com/specimen/Shantell+Sans"
+  },
+  {
+   "family": "Sofia Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 122,
+   "specimen": "https://fonts.google.com/specimen/Sofia+Sans"
+  },
+  {
+   "family": "Sofia Sans Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 188,
+   "specimen": "https://fonts.google.com/specimen/Sofia+Sans+Condensed"
+  },
+  {
+   "family": "Sofia Sans Extra Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 118,
+   "specimen": "https://fonts.google.com/specimen/Sofia+Sans+Extra+Condensed"
+  },
+  {
+   "family": "Sofia Sans Semi Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 154,
+   "specimen": "https://fonts.google.com/specimen/Sofia+Sans+Semi+Condensed"
+  },
+  {
+   "family": "Source Code Pro",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 20,
+   "specimen": "https://fonts.google.com/specimen/Source+Code+Pro"
+  },
+  {
+   "family": "Source Sans 3",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 15,
+   "specimen": "https://fonts.google.com/specimen/Source+Sans+3"
+  },
+  {
+   "family": "Source Serif 4",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "opsz: 8..60",
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 37,
+   "specimen": "https://fonts.google.com/specimen/Source+Serif+4"
+  },
+  {
+   "family": "Spectral",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 53,
+   "specimen": "https://fonts.google.com/specimen/Spectral"
+  },
+  {
+   "family": "Spectral SC",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 294,
+   "specimen": "https://fonts.google.com/specimen/Spectral+SC"
+  },
+  {
+   "family": "Stalinist One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 433,
+   "specimen": "https://fonts.google.com/specimen/Stalinist+One"
+  },
+  {
+   "family": "Stick",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 666,
+   "specimen": "https://fonts.google.com/specimen/Stick"
+  },
+  {
+   "family": "Tektur",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wdth: 75..100",
+    "wght: 400..900"
+   ],
+   "license": "OFL",
+   "popularity": 165,
+   "specimen": "https://fonts.google.com/specimen/Tektur"
+  },
+  {
+   "family": "Tenor Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 71,
+   "specimen": "https://fonts.google.com/specimen/Tenor+Sans"
+  },
+  {
+   "family": "TikTok Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "opsz: 12..36",
+    "slnt: -6..0",
+    "wdth: 75..150",
+    "wght: 300..900"
+   ],
+   "license": "OFL",
+   "popularity": 799,
+   "specimen": "https://fonts.google.com/specimen/TikTok+Sans"
+  },
+  {
+   "family": "Tinos",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "hebrew",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 138,
+   "specimen": "https://fonts.google.com/specimen/Tinos"
+  },
+  {
+   "family": "Tiny5",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 636,
+   "specimen": "https://fonts.google.com/specimen/Tiny5"
+  },
+  {
+   "family": "Train One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 401,
+   "specimen": "https://fonts.google.com/specimen/Train+One"
+  },
+  {
+   "family": "Triodion",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 461,
+   "specimen": "https://fonts.google.com/specimen/Triodion"
+  },
+  {
+   "family": "Tuffy",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext",
+    "phoenician"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1928,
+   "specimen": "https://fonts.google.com/specimen/Tuffy"
+  },
+  {
+   "family": "Ubuntu",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "UFL",
+   "popularity": 32,
+   "specimen": "https://fonts.google.com/specimen/Ubuntu"
+  },
+  {
+   "family": "Ubuntu Condensed",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "UFL",
+   "popularity": 180,
+   "specimen": "https://fonts.google.com/specimen/Ubuntu+Condensed"
+  },
+  {
+   "family": "Ubuntu Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "700",
+    "700i"
+   ],
+   "axes": [],
+   "license": "UFL",
+   "popularity": 106,
+   "specimen": "https://fonts.google.com/specimen/Ubuntu+Mono"
+  },
+  {
+   "family": "Ubuntu Sans",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [
+    "wdth: 75..100",
+    "wght: 100..800"
+   ],
+   "license": "UFL",
+   "popularity": 235,
+   "specimen": "https://fonts.google.com/specimen/Ubuntu+Sans"
+  },
+  {
+   "family": "Ubuntu Sans Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "greek-ext",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 400..700"
+   ],
+   "license": "UFL",
+   "popularity": 908,
+   "specimen": "https://fonts.google.com/specimen/Ubuntu+Sans+Mono"
+  },
+  {
+   "family": "Unbounded",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900"
+   ],
+   "axes": [
+    "wght: 200..900"
+   ],
+   "license": "OFL",
+   "popularity": 67,
+   "specimen": "https://fonts.google.com/specimen/Unbounded"
+  },
+  {
+   "family": "Underdog",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 764,
+   "specimen": "https://fonts.google.com/specimen/Underdog"
+  },
+  {
+   "family": "UoqMunThenKhung",
+   "category": "Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "symbols2"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 510,
+   "specimen": "https://fonts.google.com/specimen/UoqMunThenKhung"
+  },
+  {
+   "family": "Viaoda Libre",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 284,
+   "specimen": "https://fonts.google.com/specimen/Viaoda+Libre"
+  },
+  {
+   "family": "Victor Mono",
+   "category": "Monospace",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i"
+   ],
+   "axes": [
+    "wght: 100..700"
+   ],
+   "license": "OFL",
+   "popularity": 698,
+   "specimen": "https://fonts.google.com/specimen/Victor+Mono"
+  },
+  {
+   "family": "Vollkorn",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i"
+   ],
+   "axes": [
+    "wght: 400..900"
+   ],
+   "license": "OFL",
+   "popularity": 58,
+   "specimen": "https://fonts.google.com/specimen/Vollkorn"
+  },
+  {
+   "family": "Vollkorn SC",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "600",
+    "700",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 276,
+   "specimen": "https://fonts.google.com/specimen/Vollkorn+SC"
+  },
+  {
+   "family": "WDXL Lubrifont JP N",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "symbols2"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 844,
+   "specimen": "https://fonts.google.com/specimen/WDXL+Lubrifont+JP+N"
+  },
+  {
+   "family": "WDXL Lubrifont SC",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-simplified",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "symbols2"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1620,
+   "specimen": "https://fonts.google.com/specimen/WDXL+Lubrifont+SC"
+  },
+  {
+   "family": "WDXL Lubrifont TC",
+   "category": "Sans Serif",
+   "subsets": [
+    "chinese-traditional",
+    "cyrillic",
+    "latin",
+    "latin-ext",
+    "symbols2"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 1758,
+   "specimen": "https://fonts.google.com/specimen/WDXL+Lubrifont+TC"
+  },
+  {
+   "family": "Wix Madefor Display",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "800"
+   ],
+   "axes": [
+    "wght: 400..800"
+   ],
+   "license": "OFL",
+   "popularity": 275,
+   "specimen": "https://fonts.google.com/specimen/Wix+Madefor+Display"
+  },
+  {
+   "family": "Wix Madefor Text",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i"
+   ],
+   "axes": [
+    "wght: 400..800"
+   ],
+   "license": "OFL",
+   "popularity": 282,
+   "specimen": "https://fonts.google.com/specimen/Wix+Madefor+Text"
+  },
+  {
+   "family": "Yanone Kaffeesatz",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+   ],
+   "axes": [
+    "wght: 200..700"
+   ],
+   "license": "OFL",
+   "popularity": 232,
+   "specimen": "https://fonts.google.com/specimen/Yanone+Kaffeesatz"
+  },
+  {
+   "family": "Yeseva One",
+   "category": "Display",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 370,
+   "specimen": "https://fonts.google.com/specimen/Yeseva+One"
+  },
+  {
+   "family": "Yomogi",
+   "category": "Handwriting",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext",
+    "vietnamese"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 630,
+   "specimen": "https://fonts.google.com/specimen/Yomogi"
+  },
+  {
+   "family": "Ysabeau",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 465,
+   "specimen": "https://fonts.google.com/specimen/Ysabeau"
+  },
+  {
+   "family": "Ysabeau Infant",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 526,
+   "specimen": "https://fonts.google.com/specimen/Ysabeau+Infant"
+  },
+  {
+   "family": "Ysabeau Office",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "1",
+    "1i",
+    "100",
+    "100i",
+    "200",
+    "200i",
+    "300",
+    "300i",
+    "400",
+    "400i",
+    "500",
+    "500i",
+    "600",
+    "600i",
+    "700",
+    "700i",
+    "800",
+    "800i",
+    "900",
+    "900i",
+    "1000",
+    "1000i"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 1053,
+   "specimen": "https://fonts.google.com/specimen/Ysabeau+Office"
+  },
+  {
+   "family": "Ysabeau SC",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "cyrillic-ext",
+    "greek",
+    "latin",
+    "latin-ext",
+    "math",
+    "symbols",
+    "vietnamese"
+   ],
+   "styles": [
+    "1",
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "1000"
+   ],
+   "axes": [
+    "wght: 1..1000"
+   ],
+   "license": "OFL",
+   "popularity": 614,
+   "specimen": "https://fonts.google.com/specimen/Ysabeau+SC"
+  },
+  {
+   "family": "Yuji Boku",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 501,
+   "specimen": "https://fonts.google.com/specimen/Yuji+Boku"
+  },
+  {
+   "family": "Yuji Mai",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 149,
+   "specimen": "https://fonts.google.com/specimen/Yuji+Mai"
+  },
+  {
+   "family": "Yuji Syuku",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 531,
+   "specimen": "https://fonts.google.com/specimen/Yuji+Syuku"
+  },
+  {
+   "family": "Zen Antique",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 189,
+   "specimen": "https://fonts.google.com/specimen/Zen+Antique"
+  },
+  {
+   "family": "Zen Antique Soft",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 250,
+   "specimen": "https://fonts.google.com/specimen/Zen+Antique+Soft"
+  },
+  {
+   "family": "Zen Kaku Gothic Antique",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "700",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 124,
+   "specimen": "https://fonts.google.com/specimen/Zen+Kaku+Gothic+Antique"
+  },
+  {
+   "family": "Zen Kaku Gothic New",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "700",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 58,
+   "specimen": "https://fonts.google.com/specimen/Zen+Kaku+Gothic+New"
+  },
+  {
+   "family": "Zen Kurenaido",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 242,
+   "specimen": "https://fonts.google.com/specimen/Zen+Kurenaido"
+  },
+  {
+   "family": "Zen Maru Gothic",
+   "category": "Sans Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "300",
+    "400",
+    "500",
+    "700",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 71,
+   "specimen": "https://fonts.google.com/specimen/Zen+Maru+Gothic"
+  },
+  {
+   "family": "Zen Old Mincho",
+   "category": "Serif",
+   "subsets": [
+    "cyrillic",
+    "greek",
+    "japanese",
+    "latin",
+    "latin-ext"
+   ],
+   "styles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "900"
+   ],
+   "axes": [],
+   "license": "OFL",
+   "popularity": 83,
+   "specimen": "https://fonts.google.com/specimen/Zen+Old+Mincho"
+  }
+ ]
+}

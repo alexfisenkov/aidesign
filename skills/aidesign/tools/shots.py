@@ -7,6 +7,12 @@
 их сам. Снимок нужен, чтобы человек видел варианты в любом браузере: встроенный браузер
 приложения может не пускать живое превью в рамку панели.
 
+Превью открываются только через сервер, не по file://: иначе в снимке плашка «Открыто как
+файл», а видео и эффекты не грузятся. По умолчанию — сервер панели `ad.py` (его порт в
+`serve.pid` рядом с этим файлом, страница — внутри `.aidesign-work/`); другая папка —
+`--base http://127.0.0.1:PORT/ --root <папка>` для сервера `ad.py --serve-http PORT --directory <папка>`.
+Сервер не отвечает — понятный отказ с кодом 1, браузер не запускается.
+
 Снимает Chromium через Playwright (`npx --no-install playwright screenshot`); браузера Playwright
 нужной версии нет — пробует Chrome и Edge компьютера (`--channel`). Нет Node.js или браузера —
 понятный отказ с кодом 1, прогон идёт дальше: превью смотрят живыми на панели или кнопкой
@@ -17,11 +23,13 @@
 import argparse
 import json
 import os
-import pathlib
 import re
 import shutil
 import subprocess
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
 
 for _s in (sys.stdout, sys.stderr):                       # cp1251-консоль Windows
     try:
@@ -34,6 +42,42 @@ WAIT_MS = 800                                             # входная ан�
 TIMEOUT_S = 180
 NO_SHOTS = ("снимков не будет — прогон идёт дальше: превью видно живым на панели "
             "и кнопкой «Открыть в новой вкладке»")
+
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+PIDF = os.path.join(HERE, "serve.pid")                    # сервер панели ad.py: «порт pid»
+NO_SERVER = ("превью снимаются только через сервер — по file:// в снимке плашка «Открыто как файл». "
+             "Поднять сервер панели: python3 .aidesign-work/ad.py — и повторить; страница вне "
+             ".aidesign-work — python3 .aidesign-work/ad.py --serve-http 8000 --directory <папка> и "
+             "shots.py … --base http://127.0.0.1:8000/ --root <папка>")
+
+
+def answers(url):
+    """Адрес отвечает 2xx/3xx. Без прокси: сервер на этом компьютере."""
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    try:
+        with opener.open(url, timeout=3) as r:
+            return 200 <= r.status < 400
+    except (urllib.error.URLError, OSError, ValueError):
+        return False
+
+
+def panel_server():
+    """(база, корень) сервера панели, если он записан в serve.pid и отвечает; иначе None."""
+    try:
+        port = int(open(PIDF, encoding="utf-8").read().split()[0])
+    except (OSError, ValueError, IndexError):
+        return None
+    base = "http://127.0.0.1:%d/" % port
+    return (base, HERE) if answers(base + "dashboard.html") else None
+
+
+def page_url(page, base, root):
+    """Адрес страницы на сервере или None, если страница не внутри его папки."""
+    rel = os.path.relpath(os.path.realpath(page), os.path.realpath(root))
+    if rel == ".." or rel.startswith(".." + os.sep) or os.path.isabs(rel):
+        return None
+    return base.rstrip("/") + "/" + urllib.parse.quote(rel.replace(os.sep, "/"))
 
 
 def which(name):
@@ -64,10 +108,9 @@ def first_error(text, code):
     return words[-1] if words else "код %d" % code
 
 
-def shoot_once(npx, page, out, width, height, channel):
+def shoot_once(npx, url, out, width, height, channel):
     cmd = [npx, "--no-install", "playwright", "screenshot"] + (["--channel", channel] if channel else []) + [
-        "--viewport-size", "%d,%d" % (width, height), "--wait-for-timeout", str(WAIT_MS),
-        pathlib.Path(page).resolve().as_uri(), out]
+        "--viewport-size", "%d,%d" % (width, height), "--wait-for-timeout", str(WAIT_MS), url, out]
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_S,
                            encoding="utf-8", errors="replace")
@@ -78,11 +121,11 @@ def shoot_once(npx, page, out, width, height, channel):
     return None
 
 
-def shoot(npx, page, out, width, height):
+def shoot(npx, url, out, width, height):
     """Один снимок; None — получилось, иначе текст первой ошибки (браузер Playwright)."""
     first = None
     for channel in CHANNELS:
-        err = shoot_once(npx, page, out, width, height, channel)
+        err = shoot_once(npx, url, out, width, height, channel)
         if not err:
             return None
         first = first or err
@@ -91,18 +134,29 @@ def shoot(npx, page, out, width, height):
     return first
 
 
-def take(pages):
+def take(pages, base=None, root=None):
     """(снимки, ошибка): по записи {file, shot1280, shot390} на превью; на первой ошибке — стоп."""
     why = missing_tool()
     if why:
         return [], why
+    server = (base, root) if base else panel_server()
+    if not server:
+        return [], "сервер панели не отвечает: %s — %s" % (NO_SERVER, NO_SHOTS)
+    urls = {}
+    for page in pages:
+        url = page_url(page, *server)
+        if not url:
+            return [], "%s не внутри папки сервера %s: %s — %s" % (page, server[1], NO_SERVER, NO_SHOTS)
+        if not answers(url):
+            return [], "сервер не отдаёт %s: %s — %s" % (url, NO_SERVER, NO_SHOTS)
+        urls[page] = url
     npx, done = which("npx"), []
     for page in pages:
         stem = os.path.splitext(page)[0]
         rec = {"file": page}
         for key, w, h in SIZES:
             out = "%s-%d.png" % (stem, w)
-            err = shoot(npx, page, out, w, h)
+            err = shoot(npx, urls[page], out, w, h)
             if err:
                 return done, "снимок %s (%d) не вышел: %s — %s" % (os.path.basename(page), w, err, NO_SHOTS)
             rec[key] = out
@@ -113,13 +167,18 @@ def take(pages):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Снимки превью 1280 и 390 рядом с файлом")
     ap.add_argument("pages", nargs="+", help="HTML-файлы превью")
+    ap.add_argument("--base", help="адрес сервера, например http://127.0.0.1:8000/ (ad.py --serve-http)")
+    ap.add_argument("--root", help="папка, которую отдаёт этот сервер")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
+    if bool(a.base) != bool(a.root) or (a.base and not re.match(r"^https?://", a.base)):
+        print("--base http://… и --root <папка> задаются вместе", file=sys.stderr)
+        return 2
     lost = [p for p in a.pages if not os.path.isfile(p)]
     if lost:
         print("нет файла: %s" % ", ".join(lost), file=sys.stderr)
         return 2
-    done, err = take(a.pages)
+    done, err = take(a.pages, a.base, a.root)
     if a.json:
         print(json.dumps({"ok": not err, "shots": done, "error": err}, ensure_ascii=False))
     else:

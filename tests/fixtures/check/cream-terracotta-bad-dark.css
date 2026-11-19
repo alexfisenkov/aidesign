@@ -1,0 +1,13 @@
+/* Образец: основная тема тёмная (:root), светлая — переопределение [data-theme="light"];
+   крем и терракота вместе внутри светлой темы — находка остаётся. */
+:root {
+  --color-bg: #1A1512;
+  --color-text: #F3E9E5;
+  --color-primary: #8FB3A4;
+}
+
+[data-theme="light"] {
+  --color-bg: #F4F1EA;
+  --color-text: #2A1D16;
+  --color-primary: #D97757;
+}

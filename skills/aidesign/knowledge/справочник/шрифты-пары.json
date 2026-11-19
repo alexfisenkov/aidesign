@@ -1,0 +1,2478 @@
+{
+ "version": 1,
+ "about": "Шрифтовые пары AI Design: у обоих шрифтов есть кириллица (по google-fonts.json), начертания существуют, ссылка — Google Fonts css2. Пара — ориентир по характеру, проверка на живом русском тексте обязательна.",
+ "pairs": [
+  {
+   "id": "playfair-onest",
+   "name": "Playfair Display + Onest",
+   "heading": "Playfair Display",
+   "body": "Onest",
+   "character": "контрастная антиква и спокойный русский гротеск",
+   "tags": [
+    "классический",
+    "дорогой",
+    "элегантный",
+    "ресторан"
+   ],
+   "for": "рестораны, свадьбы, премиальные услуги",
+   "weights": {
+    "heading": [
+     600
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Onest:wght@400;700&display=swap"
+  },
+  {
+   "id": "cormorant-manrope",
+   "name": "Cormorant Garamond + Manrope",
+   "heading": "Cormorant Garamond",
+   "body": "Manrope",
+   "character": "тонкая книжная антиква крупно и чистый гротеск",
+   "tags": [
+    "роскошный",
+    "тихий",
+    "ювелир",
+    "мода",
+    "дорогой"
+   ],
+   "for": "ювелиры, бутики, косметология премиум",
+   "weights": {
+    "heading": [
+     500
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Manrope:wght@400;700&display=swap"
+  },
+  {
+   "id": "lora-golos",
+   "name": "Lora + Golos Text",
+   "heading": "Lora",
+   "body": "Golos Text",
+   "character": "тёплая антиква с мягкими засечками и русский интерфейсный гротеск",
+   "tags": [
+    "уютный",
+    "тёплый",
+    "домашний",
+    "кофейня"
+   ],
+   "for": "кофейни, пекарни, семейные кафе, блоги",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "ptserif-ptsans",
+   "name": "PT Serif + PT Sans",
+   "heading": "PT Serif",
+   "body": "PT Sans",
+   "character": "русская классика одной семьи: надёжно и без сюрпризов",
+   "tags": [
+    "строгий",
+    "официальный",
+    "надёжный",
+    "юрист",
+    "школа"
+   ],
+   "for": "юристы, нотариусы, школы, официальные организации",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "literata-commissioner",
+   "name": "Literata + Commissioner",
+   "heading": "Literata",
+   "body": "Commissioner",
+   "character": "книжная антиква для долгого чтения и гибкий гротеск",
+   "tags": [
+    "чтение",
+    "статьи",
+    "эксперт",
+    "умный"
+   ],
+   "for": "эксперты, лонгриды, онлайн-курсы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Literata:wght@700&family=Commissioner:wght@400;700&display=swap"
+  },
+  {
+   "id": "prata-jost",
+   "name": "Prata + Jost",
+   "heading": "Prata",
+   "body": "Jost",
+   "character": "модная дидона и строгая геометрия",
+   "tags": [
+    "мода",
+    "салон",
+    "стильный",
+    "элегантный"
+   ],
+   "for": "салоны красоты, мода, фотостудии",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Prata&family=Jost:wght@400;700&display=swap"
+  },
+  {
+   "id": "forum-mulish",
+   "name": "Forum + Mulish",
+   "heading": "Forum",
+   "body": "Mulish",
+   "character": "античная прописная и мягкий гротеск",
+   "tags": [
+    "торжественный",
+    "архитектура",
+    "музей",
+    "классический"
+   ],
+   "for": "музеи, архитекторы, гостиницы",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Forum&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "yeseva-nunitosans",
+   "name": "Yeseva One + Nunito Sans",
+   "heading": "Yeseva One",
+   "body": "Nunito Sans",
+   "character": "женственная дидона с мягким характером и округлый гротеск",
+   "tags": [
+    "женственный",
+    "нежный",
+    "цветы",
+    "кондитерская"
+   ],
+   "for": "флористы, кондитерские, свадебные салоны",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Yeseva+One&family=Nunito+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "alice-istok",
+   "name": "Alice + Istok Web",
+   "heading": "Alice",
+   "body": "Istok Web",
+   "character": "сказочная антиква и простой гротеск",
+   "tags": [
+    "сказочный",
+    "детский",
+    "книги",
+    "добрый"
+   ],
+   "for": "детские книги, кукольные театры, сказкотерапия",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Alice&family=Istok+Web:wght@400;700&display=swap"
+  },
+  {
+   "id": "spectral-plexsans",
+   "name": "Spectral + IBM Plex Sans",
+   "heading": "Spectral",
+   "body": "IBM Plex Sans",
+   "character": "умная экранная антиква и инженерный гротеск",
+   "tags": [
+    "умный",
+    "аналитика",
+    "консалтинг",
+    "деловой"
+   ],
+   "for": "консалтинг, аналитика, исследования",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Spectral:wght@700&family=IBM+Plex+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "merriweather-sourcesans",
+   "name": "Merriweather + Source Sans 3",
+   "heading": "Merriweather",
+   "body": "Source Sans 3",
+   "character": "крепкая газетная антиква и спокойный гротеск",
+   "tags": [
+    "надёжный",
+    "газета",
+    "новости",
+    "серьёзный"
+   ],
+   "for": "новости, бухгалтеры, юридические фирмы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Source+Sans+3:wght@400;700&display=swap"
+  },
+  {
+   "id": "ebgaramond-wixtext",
+   "name": "EB Garamond + Wix Madefor Text",
+   "heading": "EB Garamond",
+   "body": "Wix Madefor Text",
+   "character": "старая книжная антиква и современная вёрстка",
+   "tags": [
+    "история",
+    "книга",
+    "классический",
+    "старинный"
+   ],
+   "for": "издательства, экскурсии, краеведы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Wix+Madefor+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "vollkorn-firasans",
+   "name": "Vollkorn + Fira Sans",
+   "heading": "Vollkorn",
+   "body": "Fira Sans",
+   "character": "сильная книжная антиква и техничный гротеск",
+   "tags": [
+    "образование",
+    "учёба",
+    "надёжный"
+   ],
+   "for": "курсы, университеты, лекторы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Vollkorn:wght@700&family=Fira+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "bitter-rubik",
+   "name": "Bitter + Rubik",
+   "heading": "Bitter",
+   "body": "Rubik",
+   "character": "крепкая брусковая антиква и дружелюбный гротеск",
+   "tags": [
+    "крепкий",
+    "мастер",
+    "ремонт",
+    "дружелюбный"
+   ],
+   "for": "ремонт, мастерские, фермеры",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Bitter:wght@700&family=Rubik:wght@400;700&display=swap"
+  },
+  {
+   "id": "oldstandard-arsenal",
+   "name": "Old Standard TT + Arsenal",
+   "heading": "Old Standard TT",
+   "body": "Arsenal",
+   "character": "дореформенная классика и сдержанный гротеск",
+   "tags": [
+    "старинный",
+    "антиквариат",
+    "история",
+    "классический"
+   ],
+   "for": "антиквариат, исторические клубы, реставрация",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@700&family=Arsenal:wght@400;700&display=swap"
+  },
+  {
+   "id": "sourceserif-onest",
+   "name": "Source Serif 4 + Onest",
+   "heading": "Source Serif 4",
+   "body": "Onest",
+   "character": "спокойная современная редакционная антиква",
+   "tags": [
+    "спокойный",
+    "редакционный",
+    "эксперт",
+    "психолог"
+   ],
+   "for": "психологи, эксперты, авторские блоги",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@700&family=Onest:wght@400;700&display=swap"
+  },
+  {
+   "id": "alegreya-alegreyasans",
+   "name": "Alegreya + Alegreya Sans",
+   "heading": "Alegreya",
+   "body": "Alegreya Sans",
+   "character": "каллиграфическая семья: живая и литературная",
+   "tags": [
+    "литература",
+    "живой",
+    "писатель"
+   ],
+   "for": "писатели, литературные клубы, книжные",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Alegreya:wght@700&family=Alegreya+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "notoserifdisplay-manrope",
+   "name": "Noto Serif Display + Manrope",
+   "heading": "Noto Serif Display",
+   "body": "Manrope",
+   "character": "высококонтрастная дисплейная антиква для крупных заголовков",
+   "tags": [
+    "дорогой",
+    "премиум",
+    "ювелир",
+    "люкс"
+   ],
+   "for": "люкс, ювелиры, отели",
+   "weights": {
+    "heading": [
+     500
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@500&family=Manrope:wght@400;700&display=swap"
+  },
+  {
+   "id": "brygada-ysabeauoffice",
+   "name": "Brygada 1918 + Ysabeau Office",
+   "heading": "Brygada 1918",
+   "body": "Ysabeau Office",
+   "character": "довоенная антиква и гуманистический гротеск",
+   "tags": [
+    "архитектура",
+    "музей",
+    "история"
+   ],
+   "for": "архитектурные бюро, музеи, краеведение",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Brygada+1918:wght@700&family=Ysabeau+Office:wght@400;700&display=swap"
+  },
+  {
+   "id": "piazzolla-geologica",
+   "name": "Piazzolla + Geologica",
+   "heading": "Piazzolla",
+   "body": "Geologica",
+   "character": "острая антиква и новый гротеск с характером",
+   "tags": [
+    "современный",
+    "редакционный",
+    "смелый"
+   ],
+   "for": "журналы, медиа, культурные проекты",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Piazzolla:wght@700&family=Geologica:wght@400;700&display=swap"
+  },
+  {
+   "id": "ledger-ptsans",
+   "name": "Ledger + PT Sans",
+   "heading": "Ledger",
+   "body": "PT Sans",
+   "character": "бухгалтерская антиква и ясный гротеск",
+   "tags": [
+    "финансы",
+    "бухгалтерия",
+    "деньги",
+    "надёжный"
+   ],
+   "for": "бухгалтерия, финансовые консультанты",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Ledger&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "kurale-nunito",
+   "name": "Kurale + Nunito",
+   "heading": "Kurale",
+   "body": "Nunito",
+   "character": "сказочная народная антиква и округлый гротеск",
+   "tags": [
+    "народный",
+    "сказочный",
+    "детский",
+    "ремесло"
+   ],
+   "for": "народные промыслы, детские праздники",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Kurale&family=Nunito:wght@400;700&display=swap"
+  },
+  {
+   "id": "gabriela-mulish",
+   "name": "Gabriela + Mulish",
+   "heading": "Gabriela",
+   "body": "Mulish",
+   "character": "мягкая антиква с росчерками, как вывеска пекарни",
+   "tags": [
+    "пекарня",
+    "домашний",
+    "тёплый",
+    "выпечка"
+   ],
+   "for": "пекарни, домашняя кухня, кафе",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Gabriela&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "oranienbaum-jost",
+   "name": "Oranienbaum + Jost",
+   "heading": "Oranienbaum",
+   "body": "Jost",
+   "character": "петербургская дидона и геометрия",
+   "tags": [
+    "петербург",
+    "бутик",
+    "отель",
+    "элегантный"
+   ],
+   "for": "бутики, отели, экскурсии по Петербургу",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Oranienbaum&family=Jost:wght@400;700&display=swap"
+  },
+  {
+   "id": "podkova-ubuntu",
+   "name": "Podkova + Ubuntu",
+   "heading": "Podkova",
+   "body": "Ubuntu",
+   "character": "дружелюбная брусковая и простой гротеск",
+   "tags": [
+    "дружелюбный",
+    "ферма",
+    "деревенский"
+   ],
+   "for": "фермы, загородные базы, хозтовары",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "UFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Podkova:wght@700&family=Ubuntu:wght@400;700&display=swap"
+  },
+  {
+   "id": "stix-plexsans",
+   "name": "STIX Two Text + IBM Plex Sans",
+   "heading": "STIX Two Text",
+   "body": "IBM Plex Sans",
+   "character": "академическая антиква и инженерный гротеск",
+   "tags": [
+    "наука",
+    "медицина",
+    "академический",
+    "точный"
+   ],
+   "for": "клиники, лаборатории, наука",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@700&family=IBM+Plex+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "cormorant-golos",
+   "name": "Cormorant + Golos Text",
+   "heading": "Cormorant",
+   "body": "Golos Text",
+   "character": "вечерняя антиква крупно и русский гротеск",
+   "tags": [
+    "вечер",
+    "бар",
+    "вино",
+    "интимный"
+   ],
+   "for": "винотеки, бары, рестораны вечером",
+   "weights": {
+    "heading": [
+     500
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "lora-manrope",
+   "name": "Lora + Manrope",
+   "heading": "Lora",
+   "body": "Manrope",
+   "character": "тёплая антиква и аккуратный гротеск",
+   "tags": [
+    "тёплый",
+    "бережный",
+    "психолог",
+    "спокойный"
+   ],
+   "for": "психологи, коучи, частные врачи",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Manrope:wght@400;700&display=swap"
+  },
+  {
+   "id": "libertinus-pair",
+   "name": "Libertinus Serif + Libertinus Sans",
+   "heading": "Libertinus Serif",
+   "body": "Libertinus Sans",
+   "character": "единая учёная семья",
+   "tags": [
+    "научный",
+    "издательство",
+    "строгий"
+   ],
+   "for": "научные издательства, переводчики",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Libertinus+Serif:wght@700&family=Libertinus+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "charis-firasans",
+   "name": "Charis SIL + Fira Sans",
+   "heading": "Charis SIL",
+   "body": "Fira Sans",
+   "character": "антиква для долгого чтения с экрана и ясный гротеск",
+   "tags": [
+    "чтение",
+    "документация",
+    "библиотека"
+   ],
+   "for": "библиотеки, справочники, документация",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Charis+SIL:wght@700&family=Fira+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "bonanova-montserrat",
+   "name": "Bona Nova + Montserrat",
+   "heading": "Bona Nova",
+   "body": "Montserrat",
+   "character": "ренессансная антиква и геометрия",
+   "tags": [
+    "вино",
+    "гастрономия",
+    "ресторан"
+   ],
+   "for": "винные бары, гастро-проекты",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Bona+Nova:wght@700&family=Montserrat:wght@400;700&display=swap"
+  },
+  {
+   "id": "plexserif-plexsans",
+   "name": "IBM Plex Serif + IBM Plex Sans",
+   "heading": "IBM Plex Serif",
+   "body": "IBM Plex Sans",
+   "character": "инженерная семья: антиква и гротеск",
+   "tags": [
+    "инженерный",
+    "деловой",
+    "технологичный"
+   ],
+   "for": "IT-консалтинг, инженерные компании",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@700&family=IBM+Plex+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "gentium-commissioner",
+   "name": "Gentium Book Plus + Commissioner",
+   "heading": "Gentium Book Plus",
+   "body": "Commissioner",
+   "character": "словарная многоязычная антиква и гибкий гротеск",
+   "tags": [
+    "языки",
+    "переводчик",
+    "школа"
+   ],
+   "for": "языковые школы, переводчики",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:wght@700&family=Commissioner:wght@400;700&display=swap"
+  },
+  {
+   "id": "spectral-golos",
+   "name": "Spectral + Golos Text",
+   "heading": "Spectral",
+   "body": "Golos Text",
+   "character": "спокойная экранная антиква и русский гротеск",
+   "tags": [
+    "спокойный",
+    "коуч",
+    "эксперт"
+   ],
+   "for": "коучи, наставники, консультанты",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Spectral:wght@700&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "merriweather-nunitosans",
+   "name": "Merriweather + Nunito Sans",
+   "heading": "Merriweather",
+   "body": "Nunito Sans",
+   "character": "газетная антиква, смягчённая округлым гротеском",
+   "tags": [
+    "блог",
+    "сообщество",
+    "мягкий"
+   ],
+   "for": "блоги, сообщества, НКО",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Nunito+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "prata-wixtext",
+   "name": "Prata + Wix Madefor Text",
+   "heading": "Prata",
+   "body": "Wix Madefor Text",
+   "character": "дидона и современный текстовый гротеск",
+   "tags": [
+    "косметология",
+    "женственный",
+    "дорогой"
+   ],
+   "for": "косметологи, клиники эстетики",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Prata&family=Wix+Madefor+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "vollkorn-golos",
+   "name": "Vollkorn + Golos Text",
+   "heading": "Vollkorn",
+   "body": "Golos Text",
+   "character": "плотная книжная антиква и русский гротеск",
+   "tags": [
+    "семейный",
+    "надёжный",
+    "традиционный"
+   ],
+   "for": "семейные рестораны, частные школы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Vollkorn:wght@700&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "playfair-firasans",
+   "name": "Playfair Display + Fira Sans",
+   "heading": "Playfair Display",
+   "body": "Fira Sans",
+   "character": "контрастная антиква и техничный гротеск",
+   "tags": [
+    "театр",
+    "событие",
+    "торжественный"
+   ],
+   "for": "театры, концертные залы, афиши",
+   "weights": {
+    "heading": [
+     600
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Fira+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "unbounded-onest",
+   "name": "Unbounded + Onest",
+   "heading": "Unbounded",
+   "body": "Onest",
+   "character": "широкий смелый гротеск и спокойный текст",
+   "tags": [
+    "смелый",
+    "молодёжь",
+    "событие",
+    "современный"
+   ],
+   "for": "события, молодёжные проекты, IT",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Onest:wght@400;700&display=swap"
+  },
+  {
+   "id": "unbounded-golos",
+   "name": "Unbounded + Golos Text",
+   "heading": "Unbounded",
+   "body": "Golos Text",
+   "character": "широкие заголовки с напором и ровный русский текст",
+   "tags": [
+    "спорт",
+    "фитнес",
+    "энергия",
+    "смелый"
+   ],
+   "for": "фитнес-клубы, спортивные школы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "russo-ptsans",
+   "name": "Russo One + PT Sans",
+   "heading": "Russo One",
+   "body": "PT Sans",
+   "character": "спортивный техничный заголовок и ясный текст",
+   "tags": [
+    "спорт",
+    "авто",
+    "мужской",
+    "жёсткий"
+   ],
+   "for": "автосервисы, единоборства, спорт",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Russo+One&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "oswald-sourcesans",
+   "name": "Oswald + Source Sans 3",
+   "heading": "Oswald",
+   "body": "Source Sans 3",
+   "character": "узкий плакатный заголовок и спокойный гротеск",
+   "tags": [
+    "плакат",
+    "спорт",
+    "новости",
+    "энергия"
+   ],
+   "for": "спорт, афиши, новости",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Source+Sans+3:wght@400;700&display=swap"
+  },
+  {
+   "id": "daysone-mulish",
+   "name": "Days One + Mulish",
+   "heading": "Days One",
+   "body": "Mulish",
+   "character": "округлый широкий заголовок и мягкий текст",
+   "tags": [
+    "игры",
+    "дети",
+    "весёлый",
+    "круглый"
+   ],
+   "for": "детские игровые, квесты",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Days+One&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "montserratalt-nunito",
+   "name": "Montserrat Alternates + Nunito",
+   "heading": "Montserrat Alternates",
+   "body": "Nunito",
+   "character": "дружелюбная геометрия с необычными буквами",
+   "tags": [
+    "дружелюбный",
+    "детский",
+    "сад",
+    "весёлый"
+   ],
+   "for": "детские сады, развивающие центры",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@700&family=Nunito:wght@400;700&display=swap"
+  },
+  {
+   "id": "tenor-mulish",
+   "name": "Tenor Sans + Mulish",
+   "heading": "Tenor Sans",
+   "body": "Mulish",
+   "character": "изящный гуманистический гротеск",
+   "tags": [
+    "спа",
+    "изящный",
+    "нежный",
+    "уход"
+   ],
+   "for": "спа, косметология, массаж",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "jost-literata",
+   "name": "Jost + Literata",
+   "heading": "Jost",
+   "body": "Literata",
+   "character": "геометрия Баухауса и книжный текст",
+   "tags": [
+    "дизайн",
+    "студия",
+    "современный",
+    "умный"
+   ],
+   "for": "дизайн-студии, архитекторы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Jost:wght@700&family=Literata:wght@400;700&display=swap"
+  },
+  {
+   "id": "geologica-plexmono",
+   "name": "Geologica + IBM Plex Mono",
+   "heading": "Geologica",
+   "body": "IBM Plex Mono",
+   "character": "новый гротеск и моноширинный для цифр и кода",
+   "tags": [
+    "технологичный",
+    "цифры",
+    "код"
+   ],
+   "for": "сервисы с данными, IT-продукты",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Geologica:wght@700&family=IBM+Plex+Mono:wght@400;700&display=swap"
+  },
+  {
+   "id": "commissioner-jetbrains",
+   "name": "Commissioner + JetBrains Mono",
+   "heading": "Commissioner",
+   "body": "JetBrains Mono",
+   "character": "гибкий гротеск и моноширинный для кода",
+   "tags": [
+    "код",
+    "разработчик",
+    "технологичный"
+   ],
+   "for": "разработчики, IT-школы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Commissioner:wght@700&family=JetBrains+Mono:wght@400;700&display=swap"
+  },
+  {
+   "id": "exo2-rubik",
+   "name": "Exo 2 + Rubik",
+   "heading": "Exo 2",
+   "body": "Rubik",
+   "character": "футуристичный заголовок и дружелюбный текст",
+   "tags": [
+    "игры",
+    "киберспорт",
+    "будущее"
+   ],
+   "for": "киберспорт, компьютерные клубы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Rubik:wght@400;700&display=swap"
+  },
+  {
+   "id": "sofiacond-sofia",
+   "name": "Sofia Sans Condensed + Sofia Sans",
+   "heading": "Sofia Sans Condensed",
+   "body": "Sofia Sans",
+   "character": "узкий и обычный гротеск одной семьи",
+   "tags": [
+    "расписание",
+    "новости",
+    "плотный"
+   ],
+   "for": "расписания, транспорт, новости",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@700&family=Sofia+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "alumni-manrope",
+   "name": "Alumni Sans + Manrope",
+   "heading": "Alumni Sans",
+   "body": "Manrope",
+   "character": "высокий узкий плакатный заголовок",
+   "tags": [
+    "фестиваль",
+    "бар",
+    "афиша",
+    "смелый"
+   ],
+   "for": "фестивали, бары, афиши",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Alumni+Sans:wght@700&family=Manrope:wght@400;700&display=swap"
+  },
+  {
+   "id": "yanone-ptsans",
+   "name": "Yanone Kaffeesatz + PT Sans",
+   "heading": "Yanone Kaffeesatz",
+   "body": "PT Sans",
+   "character": "кофейный ретро-узкий заголовок и ясный текст",
+   "tags": [
+    "кофейня",
+    "ретро",
+    "бургер",
+    "уличный"
+   ],
+   "for": "кофейни, бургерные, уличная еда",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@700&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "delagothic-onest",
+   "name": "Dela Gothic One + Onest",
+   "heading": "Dela Gothic One",
+   "body": "Onest",
+   "character": "тяжёлый плакатный заголовок и спокойный гротеск",
+   "tags": [
+    "смелый",
+    "дерзкий",
+    "барбершоп",
+    "стритвир"
+   ],
+   "for": "барбершопы, стритвир, тату",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;700&display=swap"
+  },
+  {
+   "id": "rubikmono-rubik",
+   "name": "Rubik Mono One + Rubik",
+   "heading": "Rubik Mono One",
+   "body": "Rubik",
+   "character": "плакатные прописные и тот же характер в тексте",
+   "tags": [
+    "брутальный",
+    "плакат",
+    "смелый",
+    "событие"
+   ],
+   "for": "события, брутальные лендинги",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Rubik:wght@400;700&display=swap"
+  },
+  {
+   "id": "wixdisplay-wixtext",
+   "name": "Wix Madefor Display + Wix Madefor Text",
+   "heading": "Wix Madefor Display",
+   "body": "Wix Madefor Text",
+   "character": "современная пара одной семьи",
+   "tags": [
+    "современный",
+    "сервис",
+    "малый",
+    "бизнес",
+    "аккуратный"
+   ],
+   "for": "сервисы, малый бизнес, онлайн-запись",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@700&family=Wix+Madefor+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "philosopher-mulish",
+   "name": "Philosopher + Mulish",
+   "heading": "Philosopher",
+   "body": "Mulish",
+   "character": "мягкий гуманистический с характером",
+   "tags": [
+    "мягкий",
+    "психолог",
+    "йога",
+    "спокойный"
+   ],
+   "for": "йога, психологи, практики",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Philosopher:wght@700&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "jura-commissioner",
+   "name": "Jura + Commissioner",
+   "heading": "Jura",
+   "body": "Commissioner",
+   "character": "техничный тонкий заголовок и гибкий текст",
+   "tags": [
+    "техника",
+    "электроника",
+    "точный"
+   ],
+   "for": "ремонт электроники, умный дом",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Jura:wght@700&family=Commissioner:wght@400;700&display=swap"
+  },
+  {
+   "id": "advent-golos",
+   "name": "Advent Pro + Golos Text",
+   "heading": "Advent Pro",
+   "body": "Golos Text",
+   "character": "технический узкий заголовок",
+   "tags": [
+    "авто",
+    "техника",
+    "мужской"
+   ],
+   "for": "автосервисы, тюнинг, электроника",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Advent+Pro:wght@700&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "comfortaa-nunito",
+   "name": "Comfortaa + Nunito",
+   "heading": "Comfortaa",
+   "body": "Nunito",
+   "character": "округлый мягкий заголовок и округлый текст",
+   "tags": [
+    "детский",
+    "мягкий",
+    "няня",
+    "забота"
+   ],
+   "for": "няни, детские сады, детские врачи",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&family=Nunito:wght@400;700&display=swap"
+  },
+  {
+   "id": "ysabeau-ysabeauoffice",
+   "name": "Ysabeau + Ysabeau Office",
+   "heading": "Ysabeau",
+   "body": "Ysabeau Office",
+   "character": "гуманистический с каллиграфией и его рабочая версия",
+   "tags": [
+    "культура",
+    "тонкий",
+    "интеллигентный"
+   ],
+   "for": "культурные проекты, лектории",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Ysabeau:wght@700&family=Ysabeau+Office:wght@400;700&display=swap"
+  },
+  {
+   "id": "geologica-literata",
+   "name": "Geologica + Literata",
+   "heading": "Geologica",
+   "body": "Literata",
+   "character": "новый гротеск и книжная антиква для текста",
+   "tags": [
+    "статьи",
+    "эксперт",
+    "современный"
+   ],
+   "for": "авторские медиа, эксперты",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Geologica:wght@700&family=Literata:wght@400;700&display=swap"
+  },
+  {
+   "id": "manrope-plexmono",
+   "name": "Manrope + IBM Plex Mono",
+   "heading": "Manrope",
+   "body": "IBM Plex Mono",
+   "character": "строгий гротеск и моноширинный для таблиц",
+   "tags": [
+    "финансы",
+    "цифры",
+    "строгий"
+   ],
+   "for": "финансовые сервисы, отчёты",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=IBM+Plex+Mono:wght@400;700&display=swap"
+  },
+  {
+   "id": "seymour-nunitosans",
+   "name": "Seymour One + Nunito Sans",
+   "heading": "Seymour One",
+   "body": "Nunito Sans",
+   "character": "толстый игривый заголовок и мягкий текст",
+   "tags": [
+    "праздник",
+    "детский",
+    "весёлый"
+   ],
+   "for": "детские праздники, аниматоры",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Seymour+One&family=Nunito+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "kellyslab-ptsans",
+   "name": "Kelly Slab + PT Sans",
+   "heading": "Kelly Slab",
+   "body": "PT Sans",
+   "character": "советский плакат и ясный текст",
+   "tags": [
+    "ретро",
+    "советский",
+    "плакат"
+   ],
+   "for": "кафе в стиле СССР, ретро-клубы",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Kelly+Slab&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "ruslan-ptserif",
+   "name": "Ruslan Display + PT Serif",
+   "heading": "Ruslan Display",
+   "body": "PT Serif",
+   "character": "древнерусская вязь в заголовке и книжный текст",
+   "tags": [
+    "древнерусский",
+    "народный",
+    "ремесло"
+   ],
+   "for": "ремёсла, этно-фестивали, медовухи",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Ruslan+Display&family=PT+Serif:wght@400;700&display=swap"
+  },
+  {
+   "id": "monomakh-ysabeau",
+   "name": "Monomakh + Ysabeau",
+   "heading": "Monomakh",
+   "body": "Ysabeau",
+   "character": "летописный заголовок и гуманистический текст",
+   "tags": [
+    "летопись",
+    "храм",
+    "история"
+   ],
+   "for": "храмы, иконописные мастерские, краеведы",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Monomakh&family=Ysabeau:wght@400;700&display=swap"
+  },
+  {
+   "id": "poiret-mulish",
+   "name": "Poiret One + Mulish",
+   "heading": "Poiret One",
+   "body": "Mulish",
+   "character": "тонкий ар-деко и мягкий гротеск",
+   "tags": [
+    "ар-деко",
+    "коктейль",
+    "элегантный"
+   ],
+   "for": "коктейльные бары, салоны, ретро-вечеринки",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Poiret+One&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "elmessiri-mulish",
+   "name": "El Messiri + Mulish",
+   "heading": "El Messiri",
+   "body": "Mulish",
+   "character": "восточный гротеск и мягкий текст",
+   "tags": [
+    "восточный",
+    "чайхана",
+    "пряный"
+   ],
+   "for": "восточная кухня, чайханы, специи",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=El+Messiri:wght@700&family=Mulish:wght@400;700&display=swap"
+  },
+  {
+   "id": "cuprum-ptsans",
+   "name": "Cuprum + PT Sans",
+   "heading": "Cuprum",
+   "body": "PT Sans",
+   "character": "узкий газетный заголовок",
+   "tags": [
+    "газета",
+    "плотный",
+    "новости"
+   ],
+   "for": "местные новости, доски объявлений",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Cuprum:wght@700&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "firacond-firasans",
+   "name": "Fira Sans Condensed + Fira Sans",
+   "heading": "Fira Sans Condensed",
+   "body": "Fira Sans",
+   "character": "узкий и обычный гротеск для плотных таблиц",
+   "tags": [
+    "таблицы",
+    "расписание",
+    "плотный"
+   ],
+   "for": "транспорт, расписания, прайс-листы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@700&family=Fira+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "didact-literata",
+   "name": "Didact Gothic + Literata",
+   "heading": "Didact Gothic",
+   "body": "Literata",
+   "character": "школьный геометрический гротеск и книжный текст",
+   "tags": [
+    "школа",
+    "учёба",
+    "букварь"
+   ],
+   "for": "начальная школа, логопеды",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Literata:wght@400;700&display=swap"
+  },
+  {
+   "id": "arsenal-spectral",
+   "name": "Arsenal + Spectral",
+   "heading": "Arsenal",
+   "body": "Spectral",
+   "character": "сдержанный гротеск в заголовке и экранная антиква",
+   "tags": [
+    "сдержанный",
+    "интеллигентный",
+    "текст"
+   ],
+   "for": "лектории, НКО, библиотеки",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Arsenal:wght@700&family=Spectral:wght@400;700&display=swap"
+  },
+  {
+   "id": "sofia-ptserif",
+   "name": "Sofia Sans + PT Serif",
+   "heading": "Sofia Sans",
+   "body": "PT Serif",
+   "character": "гибкий гротеск и русская книжная антиква",
+   "tags": [
+    "надёжный",
+    "образование"
+   ],
+   "for": "частные школы, курсы для взрослых",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@700&family=PT+Serif:wght@400;700&display=swap"
+  },
+  {
+   "id": "raleway-lora",
+   "name": "Raleway + Lora",
+   "heading": "Raleway",
+   "body": "Lora",
+   "character": "тонкий элегантный гротеск крупно и тёплая антиква",
+   "tags": [
+    "элегантный",
+    "свадьба",
+    "фото"
+   ],
+   "for": "фотографы, свадебные агентства",
+   "weights": {
+    "heading": [
+     600
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Raleway:wght@600&family=Lora:wght@400;700&display=swap"
+  },
+  {
+   "id": "montserrat-merriweather",
+   "name": "Montserrat + Merriweather",
+   "heading": "Montserrat",
+   "body": "Merriweather",
+   "character": "геометрия в заголовке и газетная антиква в тексте",
+   "tags": [
+    "деловой",
+    "надёжный",
+    "агентство"
+   ],
+   "for": "агентства, недвижимость",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Merriweather:wght@400;700&display=swap"
+  },
+  {
+   "id": "geologica-onest",
+   "name": "Geologica + Onest",
+   "heading": "Geologica",
+   "body": "Onest",
+   "character": "острый новый гротеск и спокойный текст",
+   "tags": [
+    "современный",
+    "свежий",
+    "стартап"
+   ],
+   "for": "новые сервисы, онлайн-школы",
+   "weights": {
+    "heading": [
+     700
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Geologica:wght@700&family=Onest:wght@400;700&display=swap"
+  },
+  {
+   "id": "tektur-commissioner",
+   "name": "Tektur + Commissioner",
+   "heading": "Tektur",
+   "body": "Commissioner",
+   "character": "техно-дисплей и гибкий текст",
+   "tags": [
+    "техника",
+    "дроны",
+    "будущее"
+   ],
+   "for": "дроны, робототехника, электроника",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Tektur:wght@400&family=Commissioner:wght@400;700&display=swap"
+  },
+  {
+   "id": "handjet-plexsans",
+   "name": "Handjet + IBM Plex Sans",
+   "heading": "Handjet",
+   "body": "IBM Plex Sans",
+   "character": "табло из светодиодов и инженерный текст",
+   "tags": [
+    "табло",
+    "событие",
+    "транспорт"
+   ],
+   "for": "мероприятия, транспорт, табло",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Handjet:wght@400&family=IBM+Plex+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "martian-manrope",
+   "name": "Martian Mono + Manrope",
+   "heading": "Martian Mono",
+   "body": "Manrope",
+   "character": "моноширинный заголовок и строгий текст",
+   "tags": [
+    "код",
+    "разработчик",
+    "минимализм"
+   ],
+   "for": "разработчики, хостинг",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400&family=Manrope:wght@400;700&display=swap"
+  },
+  {
+   "id": "pixelify-onest",
+   "name": "Pixelify Sans + Onest",
+   "heading": "Pixelify Sans",
+   "body": "Onest",
+   "character": "мягкий пиксель и спокойный текст",
+   "tags": [
+    "игры",
+    "пиксель",
+    "ретро"
+   ],
+   "for": "инди-игры, компьютерные клубы",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400&family=Onest:wght@400;700&display=swap"
+  },
+  {
+   "id": "pressstart-jetbrains",
+   "name": "Press Start 2P + JetBrains Mono",
+   "heading": "Press Start 2P",
+   "body": "JetBrains Mono",
+   "character": "пиксельная игра 8 бит",
+   "tags": [
+    "игры",
+    "ретро",
+    "8бит"
+   ],
+   "for": "ретро-игры, турниры",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;700&display=swap"
+  },
+  {
+   "id": "caveat-golos",
+   "name": "Caveat + Golos Text",
+   "heading": "Caveat",
+   "body": "Golos Text",
+   "character": "рукописный акцент и русский гротеск",
+   "tags": [
+    "рукописный",
+    "авторский",
+    "тёплый",
+    "кафе"
+   ],
+   "for": "авторские кафе, мастерские",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "neucha-ptsans",
+   "name": "Neucha + PT Sans",
+   "heading": "Neucha",
+   "body": "PT Sans",
+   "character": "школьный почерк и ясный текст",
+   "tags": [
+    "школа",
+    "почерк",
+    "репетитор"
+   ],
+   "for": "репетиторы, детские кружки",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Neucha&family=PT+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "marck-cormorant",
+   "name": "Marck Script + Cormorant Garamond",
+   "heading": "Marck Script",
+   "body": "Cormorant Garamond",
+   "character": "каллиграфия и тонкая антиква",
+   "tags": [
+    "свадьба",
+    "каллиграфия",
+    "приглашение"
+   ],
+   "for": "свадьбы, приглашения, флористы",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Marck+Script&family=Cormorant+Garamond:wght@400;700&display=swap"
+  },
+  {
+   "id": "badscript-lora",
+   "name": "Bad Script + Lora",
+   "heading": "Bad Script",
+   "body": "Lora",
+   "character": "почерк письма и тёплая антиква",
+   "tags": [
+    "письмо",
+    "подарок",
+    "тёплый"
+   ],
+   "for": "подарки, открытки, цветы",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Bad+Script&family=Lora:wght@400;700&display=swap"
+  },
+  {
+   "id": "amatic-nunito",
+   "name": "Amatic SC + Nunito",
+   "heading": "Amatic SC",
+   "body": "Nunito",
+   "character": "мелом на доске и мягкий текст",
+   "tags": [
+    "меню",
+    "доска",
+    "ферма",
+    "лавка"
+   ],
+   "for": "фермерские лавки, меню кафе",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400&family=Nunito:wght@400;700&display=swap"
+  },
+  {
+   "id": "shantell-golos",
+   "name": "Shantell Sans + Golos Text",
+   "heading": "Shantell Sans",
+   "body": "Golos Text",
+   "character": "живой маркер и ровный текст",
+   "tags": [
+    "обучение",
+    "живой",
+    "мастер-класс"
+   ],
+   "for": "мастер-классы, обучение детей",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Shantell+Sans:wght@400&family=Golos+Text:wght@400;700&display=swap"
+  },
+  {
+   "id": "balsamiq-nunitosans",
+   "name": "Balsamiq Sans + Nunito Sans",
+   "heading": "Balsamiq Sans",
+   "body": "Nunito Sans",
+   "character": "набросок от руки и мягкий текст",
+   "tags": [
+    "набросок",
+    "мастерская",
+    "творчество"
+   ],
+   "for": "творческие мастерские, хобби",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@400&family=Nunito+Sans:wght@400;700&display=swap"
+  },
+  {
+   "id": "pangolin-rubik",
+   "name": "Pangolin + Rubik",
+   "heading": "Pangolin",
+   "body": "Rubik",
+   "character": "детский почерк и дружелюбный текст",
+   "tags": [
+    "детский",
+    "почерк",
+    "весёлый"
+   ],
+   "for": "детские студии, игрушки",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Pangolin&family=Rubik:wght@400;700&display=swap"
+  },
+  {
+   "id": "comforter-cormorant",
+   "name": "Comforter + Cormorant",
+   "heading": "Comforter",
+   "body": "Cormorant",
+   "character": "размашистая кисть и тонкая антиква",
+   "tags": [
+    "кисть",
+    "каллиграфия",
+    "элегантный"
+   ],
+   "for": "каллиграфы, свадебная полиграфия",
+   "weights": {
+    "heading": [
+     400
+    ],
+    "body": [
+     400,
+     700
+    ]
+   },
+   "license": {
+    "heading": "OFL",
+    "body": "OFL"
+   },
+   "url": "https://fonts.googleapis.com/css2?family=Comforter&family=Cormorant:wght@400;700&display=swap"
+  }
+ ]
+}

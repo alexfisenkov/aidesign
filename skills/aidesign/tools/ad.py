@@ -111,8 +111,13 @@ THEME_STATUSES = ("wait", "asked", "answered", "decided")
 OPTION_IDS = ("a", "b", "c")
 FULL_ROUND = len(OPTION_IDS)
 TOOLS = ("check.py", "setup.py", "backup.py", "scaffold.py", "designsystem.py", "rules.py",
-         "shots.py", "media.py")                         # копии рядом с ad.py
+         "shots.py", "media.py",
+         "check_parse.py", "check_tailwind.py", "check_dom.py", "check_cascade.py", "check_boxes.py",
+         "check_parity.py", "check_browser.py",            # части check.py (импортирует их из своей папки)
+         "browser.py", "extract.py", "pick.py", "film.py")  # копии рядом с ad.py
 MEDIA_CATALOG = os.path.join("knowledge", "медиа", "генераторы.json")   # каталог генераторов для media.py
+# Папки целиком: скрипты браузерного модуля (рядом с browser.py) и справочник (pick.py ищет его рядом с собой).
+TOOL_DIRS = ((os.path.join("tools", "browser"), "browser"), (os.path.join("knowledge", "справочник"), "справочник"))
 SHOT_KEYS = (("shot1280", 1280), ("shot390", 390))       # снимки превью: компьютер и телефон
 FIGMA_MODES = ("free", "paid")
 MEDIA_SOURCES = ("own", "generate", "mixed", "code", "placeholder")
@@ -337,6 +342,12 @@ def install_page(skill):
     if cat and os.path.isfile(cat):
         shutil.copyfile(cat, os.path.join(A, os.path.basename(cat)))
         copied.append(os.path.basename(cat))
+    for src, dst in TOOL_DIRS:
+        path = os.path.join(skill, src) if skill else ""
+        if path and os.path.isdir(path):
+            shutil.copytree(path, os.path.join(A, dst), dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+            copied.append(dst + "/")
     if copied:
         notes.append("инструменты: %s" % ", ".join("%s/%s" % (WORK, t) for t in copied))
     return notes

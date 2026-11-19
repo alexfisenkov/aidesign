@@ -100,6 +100,19 @@ class Doctor(Base):
         self.assertTrue(by["python"]["present"])           # скрипт сам идёт под Python
         self.assertIsNone(by["figma"]["present"])          # подключение MCP видит только агент
 
+    def test_playwright_shows_its_version_not_a_bare_build_number(self):
+        os.makedirs(os.path.join(self.browsers, "chromium-1243"))
+        home = os.path.join(self.tmp, "cache")
+        code, out = self.run_setup("doctor", "--json", AIDESIGN_BROWSER_HOME=home)
+        pw = next(r for r in json.loads(out) if r["id"] == "playwright")
+        self.assertEqual(pw["version"], "сборка Chromium 1243")
+        write(os.path.join(home, "node_modules", "playwright", "package.json"), '{"version": "1.56.1"}')
+        code, out = self.run_setup("doctor", "--json", AIDESIGN_BROWSER_HOME=home)
+        pw = next(r for r in json.loads(out) if r["id"] == "playwright")
+        self.assertEqual(pw["version"], "1.56.1 (сборка Chromium 1243)")
+        code, out = self.run_setup("doctor", AIDESIGN_BROWSER_HOME=home)
+        self.assertIn("1.56.1 (сборка Chromium 1243)", out)
+
     def test_requested_need_turns_missing_into_code_1(self):
         self.fake("node", "v20.11.0")
         self.fake("git", "git version 2.44.1")

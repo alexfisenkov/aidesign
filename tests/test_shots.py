@@ -2,14 +2,19 @@
 
 Шов — командная строка. Настоящий браузер не запускается: `npx` — поддельная программа
 во временной папке (AIDESIGN_SHOTS_PATH): пишет аргументы в журнал и кладёт «снимок».
+Превью снимаются только через сервер: в тесте — свой http-сервер на 127.0.0.1 (как сервер
+панели ad.py: `serve.pid` рядом с копией shots.py, или `--base`/`--root`).
 """
 
+import functools
+import http.server
 import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -40,17 +45,38 @@ def write(path, text, exe=False):
         os.chmod(path, 0o755)
 
 
+class Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *a):
+        pass
+
+
+def serve(directory):
+    httpd = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(Quiet, directory=directory))
+    threading.Thread(target=httpd.serve_forever, daemon=True).start()
+    return httpd
+
+
 @unittest.skipUnless(UNIX, "поддельный npx — скрипт с #!")
 class Shots(unittest.TestCase):
+    """Как в проекте: копия shots.py в .aidesign-work/, сервер панели записан в serve.pid."""
+
     def setUp(self):
         self.tmp = tempfile.mkdtemp(prefix="shots-test-")
         self.bin = os.path.join(self.tmp, "bin")
         os.makedirs(self.bin)
         self.calls = os.path.join(self.tmp, "calls.log")
-        self.page = os.path.join(self.tmp, "rounds", "01", "a.html")
+        self.work = os.path.join(self.tmp, ".aidesign-work")
+        self.shots = os.path.join(self.work, "shots.py")
+        write(os.path.join(self.work, "dashboard.html"), "<!doctype html><title>panel</title>")
+        shutil.copy(SHOTS, self.shots)
+        self.page = os.path.join(self.work, "run--wip", "rounds", "01", "a.html")
         write(self.page, "<!doctype html><title>a</title>")
+        self.httpd = serve(self.work)
+        write(os.path.join(self.work, "serve.pid"), "%d %d\n" % (self.httpd.server_address[1], os.getpid()))
 
     def tearDown(self):
+        self.httpd.shutdown()
+        self.httpd.server_close()
         shutil.rmtree(self.tmp, ignore_errors=True)
 
     def npx(self, mode="ok"):
@@ -58,7 +84,7 @@ class Shots(unittest.TestCase):
 
     def run_shots(self, *args):
         env = dict(os.environ, AIDESIGN_SHOTS_PATH=self.bin)
-        r = subprocess.run([sys.executable, "-B", SHOTS] + list(args), capture_output=True, text=True,
+        r = subprocess.run([sys.executable, "-B", self.shots] + list(args), capture_output=True, text=True,
                            encoding="utf-8", env=env, cwd=self.tmp, timeout=60)
         return r.returncode, r.stdout + r.stderr
 
@@ -67,7 +93,7 @@ class Shots(unittest.TestCase):
         code, out = self.run_shots(self.page, "--json")
         self.assertEqual(code, 0, out)
         got = json.loads(out)
-        base = os.path.join(self.tmp, "rounds", "01")
+        base = os.path.join(self.work, "run--wip", "rounds", "01")
         self.assertEqual(got["shots"], [{"file": self.page, "shot1280": os.path.join(base, "a-1280.png"),
                                          "shot390": os.path.join(base, "a-390.png")}])
         self.assertTrue(os.path.isfile(os.path.join(base, "a-1280.png")))
@@ -77,14 +103,48 @@ class Shots(unittest.TestCase):
         self.assertIn("playwright screenshot", calls)
         self.assertIn("1280,800", calls)
         self.assertIn("390,844", calls)
-        self.assertIn("file://", calls)
+        port = self.httpd.server_address[1]
+        self.assertIn("http://127.0.0.1:%d/run--wip/rounds/01/a.html" % port, calls)   # через сервер панели
+        self.assertNotIn("file://", calls)                                        # без плашки «Открыто как файл»
+
+    def test_without_a_server_it_refuses_clearly(self):
+        self.npx()
+        os.remove(os.path.join(self.work, "serve.pid"))
+        code, out = self.run_shots(self.page)
+        self.assertEqual(code, 1, out)
+        self.assertIn("сервер", out)
+        self.assertIn("ad.py", out)
+        self.assertFalse(os.path.exists(self.calls))                              # браузер не звали
+        self.assertFalse(os.path.exists(os.path.join(self.work, "run--wip", "rounds", "01", "a-1280.png")))
+
+    def test_a_dead_recorded_server_is_a_refusal(self):
+        self.npx()
+        self.httpd.shutdown()
+        self.httpd.server_close()
+        self.httpd = serve(self.tmp)                                              # заглушка для tearDown
+        code, out = self.run_shots(self.page)
+        self.assertEqual(code, 1, out)
+        self.assertFalse(os.path.exists(self.calls))
+
+    def test_a_site_server_by_base_and_root(self):
+        self.npx()
+        site = os.path.join(self.tmp, "site")
+        write(os.path.join(site, "index.html"), "<!doctype html><title>s</title>")
+        other = serve(site)
+        self.addCleanup(other.server_close)
+        self.addCleanup(other.shutdown)
+        base = "http://127.0.0.1:%d/" % other.server_address[1]
+        code, out = self.run_shots(os.path.join(site, "index.html"), "--base", base, "--root", site)
+        self.assertEqual(code, 0, out)
+        with open(self.calls, encoding="utf-8") as f:
+            self.assertIn(base + "index.html", f.read())
 
     def test_without_npx_says_so_and_exits_1(self):
         code, out = self.run_shots(self.page)
         self.assertEqual(code, 1, out)
         self.assertIn("Playwright", out)
         self.assertIn("Открыть в новой вкладке", out)
-        self.assertFalse(os.path.exists(os.path.join(self.tmp, "rounds", "01", "a-1280.png")))
+        self.assertFalse(os.path.exists(os.path.join(self.work, "run--wip", "rounds", "01", "a-1280.png")))
 
     def test_without_bundled_chromium_falls_back_to_installed_chrome(self):
         self.npx("no-bundled")
@@ -94,7 +154,7 @@ class Shots(unittest.TestCase):
             calls = f.read()
         self.assertIn("--no-install", calls)               # пакет из сети тихо не качаем
         self.assertIn("--channel chrome", calls)
-        self.assertTrue(os.path.isfile(os.path.join(self.tmp, "rounds", "01", "a-390.png")))
+        self.assertTrue(os.path.isfile(os.path.join(self.work, "run--wip", "rounds", "01", "a-390.png")))
 
     def test_broken_browser_is_a_refusal_not_a_crash(self):
         self.npx("broken")

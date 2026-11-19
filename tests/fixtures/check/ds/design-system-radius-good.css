@@ -1,0 +1,3 @@
+.card { border-radius: var(--radius-md); }
+.tag { border-radius: 8px; }
+.avatar { border-radius: 50%; }

@@ -19,6 +19,7 @@ AI Design собран на знаниях из открытых дизайн-с
 - **Копирайт:** `Copyright 2025 Paul Bakaus`
 - **Адрес:** https://github.com/pbakaus/impeccable
 - **Что взято:** каталог примет шаблонного дизайна (62 правила детектора, `crates/live/assets/antipatterns.json`), «пол качества» (`skill/reference/craft-floor.md`), правила типографики, цвета, раскладки, движения (`typeset.md`, `colorize.md`, `layout.md`, `animate.md`), режимы посетителя (`mode-*.md`), формат DESIGN.md (`document.md`), извлечение токенов (`extract.md`); для раздела движения и медиа — `skill/reference/animate.md` (движение, режимы посетителя), `overdrive.md` (громкие приёмы, морфинг, WebGL), `live.md` (фиксация идентичности готового сайта, план трёх вариантов превью). Перевод на русский, пересказ, объединение с другими источниками; изменённые файлы помечены шапкой «Источник … Изменено …». Код детектора не копировался: `tools/check.py` написан заново на Python.
+- **Паритет детектора (0.4.0):** по мотивам реестра и правил детектора (`crates/foundation/src/registry.rs`, `crates/detect/src/regex_matchers.rs`, `crates/core/src/checks/*`, браузерные правила `crates/core/src/browser/*`) написаны заново `tools/check_parity.py`, `check_cascade.py`, `check_boxes.py`, `check_browser.py` и `tools/browser/layout.mjs` (шапки «По мотивам»); таблица соответствия всем 62 правилам — `knowledge/язык/антипаттерны.md#impeccable-parity`. 14 образцов из `tests/fixtures/antipatterns/` перенесены в `tests/fixtures/check/impeccable/` для тестов, у каждого шапка «Источник … Изменено: добавлена эта шапка …».
 - **Не взято:** `skill/reference/ios.md` и `android.md` (производные от ehmo/platform-design-skills, MIT) — не переносились.
 - **NOTICE:** содержимое `NOTICE.md` Impeccable перенесено дословно в файл `NOTICE` этого репозитория.
 
@@ -44,7 +45,15 @@ AI Design собран на знаниях из открытых дизайн-с
 - **Копирайт:** `Copyright (c) 2024 Next Level Builder`
 - **Адрес:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
 - **Что взято:** признаки стилей (`src/ui-ux-pro-max/data/styles.csv`) — отбор 17 семейств, перевод и пересказ с поправками по каталогу антипаттернов; UX-правила и правила WCAG 2.2 (`ux-guidelines.csv`); характеры шрифтовых пар (`typography.csv`); схемы лендингов (`landing.csv`, десять из 34); типы графиков по данным (`charts.csv`, семь из 25); сверка кириллицы шрифтов по `google-fonts.csv`.
+- **Справочник (0.4.0):** по мотивам устройства UI UX Pro Max — машиночитаемые данные, подбор по отрасли правилами закрытой грамматики, сторож контраста, вывод тёмной темы, метаданные Google Fonts — написаны `skills/aidesign/knowledge/справочник/` и `tools/pick.py`. Стили, палитры, шрифтовые пары, отрасли и паттерны лендингов в справочнике свои, по-русски и с кириллицей; палитры и пары источника не переносились. Выборка метаданных шрифтов (`data/google-fonts.csv`, `data/google-font-licenses.json`) использована для `google-fonts.json` — см. раздел Google Fonts.
 - **Не взято:** премиум-версия (uupm.cc) — не использовалась; CSV-базы целиком не копировались.
+
+### Google Fonts (метаданные) — `google/fonts` (038b637)
+
+- **Лицензия:** у каждого семейства своя — OFL-1.1, Apache-2.0 или UFL-1.0; она записана в поле `license` у каждого семейства в `google-fonts.json`.
+- **Копирайт:** у каждого семейства свой, в его папке репозитория (`OFL.txt`, `LICENSE.txt`).
+- **Адрес:** https://github.com/google/fonts
+- **Что взято:** только метаданные семейств с подмножеством `cyrillic` из `METADATA.pb` — название, категория, подмножества, начертания, оси, лицензия, страница (`skills/aidesign/knowledge/справочник/google-fonts.json`), в выборке UI UX Pro Max; имена дизайнеров убраны. Файлы шрифтов в репозиторий не кладутся: страницы подключают шрифты ссылкой Google Fonts.
 
 ### web-design-guidelines (Vercel) — `vercel-labs/agent-skills`, папка `skills/web-design-guidelines` (1a2c79d)
 
@@ -78,7 +87,7 @@ AI Design собран на знаниях из открытых дизайн-с
 - **Лицензия:** MIT
 - **Копирайт:** `Copyright (c) 2026 Meng To`
 - **Адрес:** https://github.com/MengTo/Skills
-- **Что взято:** из `scroll-world-storytelling` — три режима отрисовки и запрет смешивать их, «колесо не перехватывать никогда», раскладка истории на сцены, стилевые этюды, меняющие материал и свет; из `add-shader-cursor-trail` — правила включения эффекта курсора (касание, reduced-motion, forced-colors) для раздела движения. Перевод и пересказ.
+- **Что взято:** из `scroll-world-storytelling` — три режима отрисовки и запрет смешивать их, «колесо не перехватывать никогда», раскладка истории на сцены, стилевые этюды, меняющие материал и свет, раскладка на 5–7 битов для «сайта как фильма» (`knowledge/медиа/сайт-как-фильм.md`; по мотивам той же раскладки на сцены — движок `assets/scroll-film.js`, `assets/film-page.html`, `assets/film-seams.mjs` и `tools/film.py`, написанные заново, шапки «По мотивам»); из `add-shader-cursor-trail` — правила включения эффекта курсора (касание, reduced-motion, forced-colors) для раздела движения. Перевод и пересказ.
 
 ### Пакет `shaders` и shaders.com (не входит в репозиторий)
 
@@ -126,7 +135,7 @@ AI Design собран на знаниях из открытых дизайн-с
 - **Лицензия:** MIT
 - **Копирайт:** `Copyright (c) 2025 thevangelist`
 - **Адрес:** https://github.com/dembrandt/dembrandt
-- **Что взято:** описание команд и флагов извлечения токенов с сайта (`README.md`). Код не копировался; инструмент запускается через `npx` только с согласия человека.
+- **Что взято:** описание извлечения токенов с сайта (`README.md`); по мотивам — эвристика ролей цвета по весам контекста (логотип, бренд, главная кнопка, первый экран) и уверенность по числу употреблений и закрытие окна cookies кнопкой «принять», как посетитель (`lib/extractors/consent.ts`): `tools/extract.py`, `tools/browser/extract_color.py`, `tools/browser/consent.mjs` (шапки «По мотивам»). Код не копировался, написан заново; сам dembrandt AI Design не вызывает.
 
 ### Dembrandt skills — `dembrandt/dembrandt-skills` (66d0331)
 
@@ -140,7 +149,7 @@ AI Design собран на знаниях из открытых дизайн-с
 - **Лицензия:** MIT
 - **Копирайт:** `Copyright (c) 2026 cyw`
 - **Адрес:** https://github.com/oso95/scroll-world
-- **Что взято:** для раздела движения и медиа — из `skills/scroll-world/SKILL.md` (шаги 6–8, «Gotchas») пересказаны правила перемотки через Blob, объединения перемоток, телефонной версии 9:16, стыков и проверки, а также интервью об арт-направлении и смета до генерации (видео в сайте); по мотивам — бесшовные стыки сцен (морфинг). Код движка и шаблоны промптов не переносились.
+- **Что взято:** для раздела движения и медиа — из `skills/scroll-world/SKILL.md` (шаги 6–8, «Gotchas») пересказаны правила перемотки через Blob, объединения перемоток, телефонной версии 9:16, стыков и проверки, а также интервью об арт-направлении и смета до генерации (видео в сайте); по мотивам — бесшовные стыки сцен (морфинг). Для «сайта как фильма» (0.4.0) из `skills/scroll-world/SKILL.md` (шаги 1–8), `references/prompts.md` и `references/pipeline.md` пересказаны конвейер, смета и шаблоны промптов сцен и стыков — сокращённо, как договор передачи движения (`knowledge/медиа/сайт-как-фильм.md`, шапка «Источник … Изменено …»). Движок страницы `assets/scroll-film.js`, `assets/film-page.html`, `assets/film-seams.mjs` и `tools/film.py` написаны заново по мотивам `references/scrub-engine.js` и конвейера (`references/pipeline.md`); у каждого шапка «По мотивам» с oso95/scroll-world и MengTo/Skills: прямой `<video src>` основным путём, Blob только по http, освобождение памяти, обычная страница при reduced-motion.
 
 ### AIMaster, авторские инструкции — `alexfisenkov/aimaster` (пакет 2026.11.19)
 

@@ -29,6 +29,8 @@ STATE_KEYS = {"version", "slug", "dir", "title", "mode", "questions", "entry", "
               "refs", "themes", "rounds", "direction", "check", "report", "assumptions", "result", "rev",
               "backups", "figma", "toolkit", "media"}
 NEW_TOOLS = ("setup.py", "backup.py", "scaffold.py", "designsystem.py", "shots.py", "media.py")
+CHECK_PARTS = ("check_parse.py", "check_tailwind.py", "check_dom.py", "check_cascade.py", "check_boxes.py",
+               "check_parity.py", "check_browser.py")
 STAGES = ["preflight", "refs", "interview", "previews", "build", "check", "handoff"]
 
 
@@ -123,6 +125,35 @@ class Init(Project):
         out = self.init()
         for name in NEW_TOOLS + ("check.py",):
             self.assertEqual(read(os.path.join(self.a, name)), "# %s\n" % name, out)
+
+    def test_init_copies_the_mechanisms_of_0_4_0(self):
+        """Стиль по ссылке, справочник, браузерная проверка, фильм: инструменты, папка browser/ и справочник."""
+        tools = ("browser.py", "extract.py", "pick.py", "film.py") + CHECK_PARTS
+        for name in tools:
+            write(os.path.join(self.skill, "tools", name), "# %s\n" % name)
+        for name in ("common.mjs", "layout.mjs", "guard.py"):
+            write(os.path.join(self.skill, "tools", "browser", name), "// %s\n" % name)
+        write(os.path.join(self.skill, "tools", "browser", "__pycache__", "guard.cpython-39.pyc"), "x")
+        write(os.path.join(self.skill, "knowledge", "справочник", "стили.json"), "[]")
+        out = self.init()
+        for name in tools:
+            self.assertEqual(read(os.path.join(self.a, name)), "# %s\n" % name, out)
+        for name in ("common.mjs", "layout.mjs", "guard.py"):
+            self.assertEqual(read(os.path.join(self.a, "browser", name)), "// %s\n" % name, out)
+        self.assertFalse(os.path.exists(os.path.join(self.a, "browser", "__pycache__")))
+        self.assertEqual(read(os.path.join(self.a, "справочник", "стили.json")), "[]")
+
+    def test_copied_pick_and_check_work_from_the_project(self):
+        """Настоящая папка навыка: копии в .aidesign-work/ находят справочник и части check.py сами."""
+        self.ok("init", "--slug", "real", "--skill-dir", SKILL)
+        page = os.path.join(self.root, "index.html")
+        write(page, "<!doctype html><html lang=ru><title>t</title><h1>Привет</h1></html>")
+        for args in (["pick.py", "list", "industries"], ["check.py", "--no-config", page],
+                     ["browser.py", "doctor", "--json"]):
+            r = subprocess.run([sys.executable, "-B", os.path.join(self.a, args[0])] + args[1:],
+                               capture_output=True, text=True, encoding="utf-8", cwd=self.root, timeout=120)
+            self.assertNotEqual(r.returncode, 2, "%s: %s" % (args[0], r.stdout + r.stderr))
+            self.assertNotIn("Traceback", r.stderr, args[0])
 
     def test_init_installs_panel_examples_registry_and_gitignore(self):
         self.init()

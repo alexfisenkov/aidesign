@@ -1,0 +1,59 @@
+/* Образец: палитра potter-clay справочника — светлая и тёмная тема в одном tokens.css (как пишет pick.py --tokens). */
+:root {
+  --color-bg: #F6F0EA;
+  --color-surface: #FEF8F2;
+  --color-text: #2A1D16;
+  --color-muted: #736962;
+  --color-border: #908680;
+  --color-divider: #D9D2CC;
+  --color-primary: #7E4A33;
+  --color-on-primary: #FFFFFF;
+  --color-accent: #5F7A6E;
+  --color-on-accent: #FFFFFF;
+  --color-ring: #7E4A33;
+  --color-danger: #B63132;
+  --color-on-danger: #FFFFFF;
+  --color-success: #21763C;
+  --color-warning: #F0B135;
+  --color-on-warning: #2A1D16;
+}
+
+[data-theme="dark"] {
+  --color-bg: #1A1512;
+  --color-surface: #251F1C;
+  --color-text: #F3E9E5;
+  --color-muted: #918A86;
+  --color-border: #736C69;
+  --color-divider: #383330;
+  --color-primary: #CF957C;
+  --color-on-primary: #1A1512;
+  --color-accent: #90AC9F;
+  --color-on-accent: #1A1512;
+  --color-ring: #CF957C;
+  --color-danger: #FD736D;
+  --color-on-danger: #1A1512;
+  --color-success: #7CCD8E;
+  --color-warning: #F0B135;
+  --color-on-warning: #1A1512;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-bg: #1A1512;
+    --color-surface: #251F1C;
+    --color-text: #F3E9E5;
+    --color-muted: #918A86;
+    --color-border: #736C69;
+    --color-divider: #383330;
+    --color-primary: #CF957C;
+    --color-on-primary: #1A1512;
+    --color-accent: #90AC9F;
+    --color-on-accent: #1A1512;
+    --color-ring: #CF957C;
+    --color-danger: #FD736D;
+    --color-on-danger: #1A1512;
+    --color-success: #7CCD8E;
+    --color-warning: #F0B135;
+    --color-on-warning: #1A1512;
+  }
+}

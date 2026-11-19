@@ -1,0 +1,12 @@
+/* Образец: неоновый акцент только в светлой теме, почти чёрный фон только в тёмной — разные темы, находки нет. */
+:root {
+  --color-bg: #FFFFFF;
+  --color-accent: #39FF14;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0B0B0B;
+    --color-accent: #9AA7B0;
+  }
+}

@@ -2,23 +2,32 @@
 # По мотивам: pbakaus/impeccable antipatterns (Apache-2.0) — crates/live/assets/antipatterns.json; код написан заново.
 # Совпадают id правил: blinking-cursor, bounce-easing, gradient-text, hard-offset-shadow, justified-text,
 # marquee, overused-font, pulsing-dot, skipped-heading, tight-leading, tiny-text, wide-tracking.
-"""Проверка шаблонности: ищет в HTML и CSS приметы типового ИИ-дизайна.
+"""Проверка шаблонности: ищет в HTML, CSS и компонентах приметы типового ИИ-дизайна.
 
-Запуск:  python3 check.py <файл или папка>… [--json] [--rules]
+Запуск:  python3 check.py <файл или папка>… [--json] [--rules] [--fast] [--no-config]
+         python3 check.py --browser <адрес или файл>… [--own-site] [--json]
+         python3 check.py --hook          (для хука Claude Code: JSON правки на входе)
 Вывод:   файл:строка — [правило] что не так — как исправить
          Находок: N
-Выход:   0 — находок нет, 1 — есть находки, 2 — ошибка ввода.
+Выход:   0 — находок нет, 1 — есть находки, 2 — ошибка ввода (или нет браузера для --browser).
 
+Файлы: .html .htm .css .scss .jsx .tsx .vue .svelte .astro; классы Tailwind (class,
+className, cn(), clsx()), styled-components/emotion и объекты style={{…}}.
 Каждое правило ссылается на раздел каталога knowledge/язык/антипаттерны.md.
 Осознанный выбор (например, необрутализм) помечают комментарием
-`aidesign-ignore: <id> — причина` на той же или предыдущей строке.
-Только стандартная библиотека Python 3.9+.
+`aidesign-ignore: <id> — причина` на той же или предыдущей строке; на весь файл —
+`aidesign-ignore-file: <id> — причина`; на проект — `.aidesign-check.json`
+(`{"ignoreRules": [...], "ignoreFiles": ["glob", ...]}`).
+Только стандартная библиотека Python 3.9+. Части лежат рядом: check_parse.py,
+check_tailwind.py, check_dom.py, check_parity.py, check_browser.py.
 """
 
 import argparse
 import bisect
 import colorsys
+import fnmatch
 import json
+import os
 import re
 import sys
 from dataclasses import asdict, dataclass
@@ -26,8 +35,20 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Callable, Iterable, List, Optional, Tuple
 
-EXTENSIONS = {".html", ".htm", ".css"}
+HERE = os.path.dirname(os.path.abspath(__file__))
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+try:                                    # части проверки лежат рядом; без них — только базовые правила
+    import check_parse
+except ImportError:                     # pragma: no cover — старая копия только с check.py
+    check_parse = None
+
+COMPONENT_EXT = {".jsx", ".tsx", ".vue", ".svelte", ".astro"}
+MARKUP_EXT = {".html", ".htm"} | (COMPONENT_EXT if check_parse else set())
+CSS_EXT = {".css", ".scss"}
+EXTENSIONS = MARKUP_EXT | CSS_EXT
 SKIP_DIRS = {"node_modules", ".git", ".sources", "__pycache__", ".aidesign-work", ".aispa-work"}
+CONFIG_NAME = ".aidesign-check.json"
 
 
 @dataclass
@@ -47,6 +68,9 @@ class Decl:
     value: str
     line: int
     block: int
+    owner: int = -1        # смещение тега-хозяина для style="" / классов Tailwind; -1 — правило CSS
+    origin: str = ""       # "tw" — значение выведено из класса Tailwind
+    at: str = ""           # условие @media/@supports/@keyframes вокруг правила; "" — без условия
 
 
 # ---------- разбор файла ----------
@@ -56,52 +80,139 @@ def _blank(match: "re.Match") -> str:
     return re.sub(r"[^\n]", " ", match.group(0))
 
 
+def split_top(body: str, sep: str = ";") -> List[Tuple[int, str]]:
+    """Делит по разделителю вне скобок и кавычек; отдаёт (смещение, кусок)."""
+    out, depth, quote, start = [], 0, "", 0
+    for i, ch in enumerate(body):
+        if quote:
+            quote = "" if ch == quote else quote
+        elif ch in "\"'":
+            quote = ch
+        elif ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth = max(0, depth - 1)
+        elif ch == sep and depth == 0:
+            out.append((start, body[start:i]))
+            start = i + 1
+    out.append((start, body[start:]))
+    return out
+
+
+def compose_selector(parent: str, child: str) -> str:
+    """Вложенный селектор SCSS/styled: `&` — родитель, иначе потомок."""
+    if not parent:
+        return child
+    parts = []
+    for c in (x.strip() for x in child.split(",")):
+        for p in (x.strip() for x in parent.split(",")):
+            parts.append(c.replace("&", p) if "&" in c else p + " " + c)
+    return ", ".join(parts[:12])
+
+
 class Doc:
     """Один файл: исходник, видимый текст, CSS-объявления, строки игнора."""
 
     def __init__(self, path: Path, text: str):
         self.path = path
         self.text = text
-        self.is_html = path.suffix.lower() in {".html", ".htm"}
+        suffix = path.suffix.lower()
+        self.kind = suffix
+        self.is_html = suffix in MARKUP_EXT
         self._nl = [i for i, ch in enumerate(text) if ch == "\n"]
         self.decls: List[Decl] = []
         self._blocks = 0
-        if self.is_html:
+        if suffix in COMPONENT_EXT and check_parse:
+            check_parse.load_component(self)
+        elif self.is_html:
             for m in re.finditer(r"<style[^>]*>(.*?)</style>", text, re.S | re.I):
-                self._parse_css(m.group(1), m.start(1))
+                self.parse_css(m.group(1), m.start(1))
             for m in re.finditer(r"\sstyle\s*=\s*\"([^\"]*)\"", text, re.I):
-                self._parse_decls("[style]", m.group(1), m.start(1))
+                self.parse_decls("[style]", m.group(1), m.start(1), owner=text.rfind("<", 0, m.start()))
             self.scripts = "\n".join(re.findall(r"<script[^>]*>(.*?)</script>", text, re.S | re.I))
             masked = re.sub(r"<!--.*?-->", _blank, text, flags=re.S)
             masked = re.sub(r"<(script|style)[^>]*>.*?</\1>", _blank, masked, flags=re.S | re.I)
             self.markup = masked
             self.visible = re.sub(r"<[^>]*>", _blank, masked)
+            if check_parse:
+                check_parse.load_classes(self)
         else:
-            self._parse_css(text, 0)
+            self.parse_css(text, 0)
             self.scripts = ""
             self.markup = ""
             self.visible = ""
         self.ignores = self._collect_ignores()
+        self.ignore_file = self._collect_file_ignores()
 
     def line_of(self, offset: int) -> int:
         return bisect.bisect_left(self._nl, offset) + 1
 
-    def _parse_css(self, css: str, base: int) -> None:
+    def parse_css(self, css: str, base: int, root: Optional[str] = None) -> None:
+        """CSS с вложенностью (SCSS, styled-components): селекторы собираются по стеку."""
         clean = re.sub(r"/\*.*?\*/", _blank, css, flags=re.S)
-        for m in re.finditer(r"([^{}]*)\{([^{}]*)\}", clean):
-            selector = " ".join(m.group(1).split())
-            self._parse_decls(selector, m.group(2), base + m.start(2))
+        if self.kind == ".scss" or re.search(r"lang=[\"']s[ac]ss", self.text[:4000]):
+            clean = re.sub(r"(?<![:\"'\w(])//[^\n]*", _blank, clean)      # строчные комментарии SCSS
+        clean = re.sub(r"#\{[^{}]*\}", _blank, clean)                     # интерполяция SCSS #{…}
+        stack: List[Tuple[str, int, bool, str]] = []          # (селектор, блок, at-правило, условие @…)
+        if root is not None:
+            self._blocks += 1
+            stack.append((root, self._blocks, False, ""))
+        start = 0
 
-    def _parse_decls(self, selector: str, body: str, base: int) -> None:
+        def owner_selector() -> str:
+            for sel, _, at, _ in reversed(stack):
+                if not at:
+                    return sel
+            return ""
+
+        for i, ch in enumerate(clean):
+            if ch == "{":
+                head = clean[start:i]
+                semi = head.rfind(";")
+                if semi >= 0 and stack:
+                    self._decls_into(stack[-1], head[:semi], base + start)
+                    head = head[semi + 1:]
+                sel = " ".join(head.split())
+                self._blocks += 1
+                ctx = stack[-1][3] if stack else ""
+                if sel.startswith("@"):
+                    stack.append((sel, self._blocks, True, (ctx + " " + sel).strip()))
+                else:
+                    stack.append((compose_selector(owner_selector(), sel), self._blocks, False, ctx))
+                start = i + 1
+            elif ch == "}":
+                if stack:
+                    self._decls_into(stack[-1], clean[start:i], base + start)
+                    stack.pop()
+                start = i + 1
+        if stack:
+            self._decls_into(stack[-1], clean[start:], base + start)
+
+    def _decls_into(self, frame, body: str, base: int) -> None:
+        sel, block, _, ctx = frame
+        self._add_decls(sel, body, base, block, -1, ctx)
+
+    def parse_decls(self, selector: str, body: str, base: int, owner: int = -1) -> None:
         self._blocks += 1
-        pos = 0
-        for part in body.split(";"):
-            if ":" in part:
+        self._add_decls(selector, body, base, self._blocks, owner)
+
+    def _add_decls(self, selector: str, body: str, base: int, block: int, owner: int, at: str = "") -> None:
+        for pos, part in split_top(body):
+            if ":" in part and not part.strip().startswith("@"):
                 prop, value = part.split(":", 1)
+                if not re.fullmatch(r"\s*-{0,2}[a-zA-Z][\w-]*\s*", prop):
+                    continue
                 lead = len(part) - len(part.lstrip())
                 self.decls.append(Decl(selector, prop.strip().lower(), value.strip(),
-                                       self.line_of(base + pos + lead), self._blocks))
-            pos += len(part) + 1
+                                       self.line_of(base + pos + lead), block, owner, "", at))
+
+    def new_block(self) -> int:
+        self._blocks += 1
+        return self._blocks
+
+    def add_decl(self, selector: str, prop: str, value: str, offset: int, block: int,
+                 owner: int = -1, origin: str = "") -> None:
+        self.decls.append(Decl(selector, prop, value, self.line_of(offset), block, owner, origin))
 
     def _collect_ignores(self) -> dict:
         result: dict = {}
@@ -112,6 +223,12 @@ class Doc:
                 for ln in (i, i + 1):
                     result.setdefault(ln, set()).update(ids)
         return result
+
+    def _collect_file_ignores(self) -> set:
+        ids: set = set()
+        for m in re.finditer(r"aidesign-ignore-file:\s*([a-z0-9,\s-]+)", self.text):
+            ids.update(t for t in re.split(r"[\s,]+", m.group(1)) if t and t != "-")
+        return ids
 
     def block(self, decl: Decl) -> List[Decl]:
         return [d for d in self.decls if d.block == decl.block]
@@ -323,7 +440,7 @@ def c_tiny_text(doc: Doc) -> List[Hit]:
 
 def c_gradient_text(doc: Doc) -> List[Hit]:
     hits = decl_hits(doc, lambda d: d.prop in {"background-clip", "-webkit-background-clip"} and d.value.startswith("text"))
-    return hits + text_hits(doc, re.compile(r"\bbg-clip-text\b"), "markup")
+    return hits + text_hits(doc, re.compile(r"\bclass(?:Name)?\s*=\s*[\"'{`][^\"'`]*\bbg-clip-text\b"), "markup")
 
 
 # ---------- проверки: цвет и поверхность ----------
@@ -344,17 +461,49 @@ def page_backgrounds(doc: Doc) -> List[Tuple[Decl, Tuple[float, float, float]]]:
     return out
 
 
+DARK_THEME = re.compile(r"\[data-(?:theme|mode|color-scheme)\s*=\s*[\"']?dark|(?:^|[\s,.])(?:\.dark|\.theme-dark|\.dark-mode)\b"
+                        r"|(?:^|\s)\.dark\b", re.I)
+
+
+LIGHT_THEME = re.compile(r"\[data-(?:theme|mode|color-scheme)\s*=\s*[\"']?light|(?:^|[\s,])\.(?:light|theme-light|light-mode)\b", re.I)
+
+
+def _marker(d: Decl) -> Optional[str]:
+    """Явная тема блока: по селектору или @media; None — блок без маркера (:root, html, компоненты)."""
+    if re.search(r"prefers-color-scheme\s*:\s*dark", d.at) or DARK_THEME.search(d.selector):
+        return "dark"
+    if re.search(r"prefers-color-scheme\s*:\s*light", d.at) or LIGHT_THEME.search(d.selector):
+        return "light"
+    return None
+
+
+def theme_of(d: Decl, doc: Optional["Doc"] = None) -> str:
+    """Тема объявления: явный маркер блока важнее всего; блок без маркера — тема файла по умолчанию.
+
+    Светлая и тёмная тема в одном tokens.css — две разные страницы: сочетания цветов
+    (крем + терракота, чёрный фон + неон) считаются только внутри одной темы. По умолчанию
+    файл светлый; если в нём есть только светлые переопределения ([data-theme=light], .light,
+    @media (prefers-color-scheme: light)), значит основная тема (:root) — тёмная."""
+    mark = _marker(d)
+    if mark:
+        return mark
+    if doc is None:
+        return "light"
+    if not hasattr(doc, "_default_theme"):
+        marks = {_marker(x) for x in doc.decls} - {None}
+        doc._default_theme = "dark" if marks == {"light"} else "light"
+    return doc._default_theme
+
+
 def c_dark_neon(doc: Doc) -> List[Hit]:
-    if not any(c[1] < 0.1 for _, c in page_backgrounds(doc)):
-        return []
-    return first([(d.line, "") for d in doc.decls if any(is_neon(c) for c in colors_in(d.value))])
+    dark = {theme_of(d, doc) for d, c in page_backgrounds(doc) if c[1] < 0.1}
+    return first([(d.line, "") for d in doc.decls
+                  if theme_of(d, doc) in dark and any(is_neon(c) for c in colors_in(d.value))])
 
 
 def c_cream_terracotta(doc: Doc) -> List[Hit]:
-    cream = [d for d, c in page_backgrounds(doc) if 28 <= c[0] <= 58 and c[1] > 0.88 and c[2] > 0.15]
-    if not cream:
-        return []
-    terra = [d for d in doc.decls for c in colors_in(d.value)
+    cream = {theme_of(d, doc) for d, c in page_backgrounds(doc) if 28 <= c[0] <= 58 and c[1] > 0.88 and c[2] > 0.15}
+    terra = [d for d in doc.decls if theme_of(d, doc) in cream for c in colors_in(d.value)
              if 8 <= c[0] <= 26 and 0.4 <= c[2] <= 0.85 and 0.42 <= c[1] <= 0.66]
     return first([(terra[0].line, "")]) if terra else []
 
@@ -544,7 +693,8 @@ def c_transition_all(doc: Doc) -> List[Hit]:
 
 def c_reduced_motion(doc: Doc) -> List[Hit]:
     # shared_reduced_motion ставит scan(): правило есть в соседнем CSS той же проверки.
-    if "prefers-reduced-motion" in doc.text or getattr(doc, "shared_reduced_motion", False):
+    if re.search(r"prefers-reduced-motion|\bmotion-(reduce|safe):|useReducedMotion", doc.text) \
+            or getattr(doc, "shared_reduced_motion", False):
         return []
     motion = [d for d in doc.decls if (d.prop.startswith("animation") or d.prop.startswith("transition"))
               and not d.value.startswith("none")]
@@ -857,18 +1007,88 @@ def collect_files(paths: Iterable) -> List[Path]:
     return files
 
 
-def scan(paths: Iterable) -> List[Finding]:
+# Правила паритета с Impeccable (статика): лежат в check_parity.py, получают этот модуль целиком.
+try:
+    import check_parity
+    RULES.extend(check_parity.build(sys.modules[__name__]))
+except ImportError:                     # pragma: no cover
+    check_parity = None
+
+# Быстрые правила для хука после каждой правки: механика, которую стоит показать сразу.
+# Вкус, ритм и текст (шрифт, надзаголовки, штампы, интервалы) — в полной проверке в конце.
+FAST = {
+    "gradient-text", "ai-violet-gradient", "glow-shadow", "side-stripe", "border-accent-on-rounded",
+    "tiny-text", "undersized-ui-text", "crushed-tracking", "tight-leading", "justified-text",
+    "low-contrast", "gray-on-color", "cramped-padding", "clipped-overflow-container", "buried-raster",
+    "hidden-at-rest", "scroll-hijack", "video-autoplay", "transition-all", "vh-hero", "z-index-chaos",
+    "placeholder-image", "placeholder-text", "invented-metrics", "zoom-disabled", "img-no-alt",
+    "img-no-size", "click-div", "icon-button-no-label", "input-no-label", "outline-none",
+    "positive-tabindex", "design-system-radius", "design-system-font-size",
+}
+
+
+def find_config(path: Path) -> Optional[Path]:
+    for d in [path.resolve().parent] + list(path.resolve().parent.parents):
+        if (d / CONFIG_NAME).is_file():
+            return d / CONFIG_NAME
+    return None
+
+
+def load_config(cfg: Path) -> dict:
+    """`.aidesign-check.json`: ignoreRules — id правил, ignoreFiles — шаблоны путей от папки файла."""
+    try:
+        data = json.loads(cfg.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as err:
+        raise ValueError("%s: не читается как JSON (%s)" % (cfg, err))
+    if not isinstance(data, dict):
+        raise ValueError("%s: ждём объект {\"ignoreRules\": [...], \"ignoreFiles\": [...]}" % cfg)
+    rules, files = data.get("ignoreRules", []), data.get("ignoreFiles", [])
+    if not all(isinstance(x, str) for x in list(rules) + list(files)):
+        raise ValueError("%s: ignoreRules и ignoreFiles — списки строк" % cfg)
+    return {"dir": cfg.parent, "rules": set(rules), "files": list(files)}
+
+
+def config_skips(conf: Optional[dict], path: Path) -> Tuple[bool, set]:
+    if not conf:
+        return False, set()
+    try:
+        rel = path.resolve().relative_to(conf["dir"].resolve()).as_posix()
+    except ValueError:
+        rel = path.as_posix()
+    for pat in conf["files"]:
+        pat = pat.lstrip("./") if pat.startswith("./") else pat
+        if fnmatch.fnmatch(rel, pat) or fnmatch.fnmatch(rel, pat.replace("**/", "")) \
+                or rel.startswith(pat.rstrip("/") + "/"):
+            return True, set()
+    return False, conf["rules"]
+
+
+def scan(paths: Iterable, fast: bool = False, use_config: bool = True) -> List[Finding]:
     """Проверяет файлы и папки; возвращает находки, отсортированные по файлу и строке."""
     findings: List[Finding] = []
-    docs = [Doc(f, f.read_text(encoding="utf-8", errors="replace")) for f in collect_files(paths)]
+    configs: dict = {}
+    docs = []
+    for f in collect_files(paths):
+        conf = None
+        if use_config:
+            cfg = find_config(f)
+            if cfg is not None and cfg not in configs:
+                configs[cfg] = load_config(cfg)
+            conf = configs.get(cfg) if cfg else None
+        skip_file, skip_rules = config_skips(conf, f)
+        if not skip_file:
+            docs.append((Doc(f, f.read_text(encoding="utf-8", errors="replace")), skip_rules))
     # Общий CSS сайта: @media (prefers-reduced-motion) в одном .css действует на все файлы проверки.
-    shared = any(not d.is_html and "prefers-reduced-motion" in d.text for d in docs)
-    for doc in docs:
+    shared = any(not d.is_html and "prefers-reduced-motion" in d.text for d, _ in docs)
+    for doc, skip_rules in docs:
         f = doc.path
         doc.shared_reduced_motion = shared
+        off = skip_rules | doc.ignore_file
+        if "all" in off:
+            continue
         seen = set()
         for rule in RULES:
-            if rule.html_only and not doc.is_html:
+            if (rule.html_only and not doc.is_html) or rule.id in off or (fast and rule.id not in FAST):
                 continue
             for line, detail in rule.check(doc):
                 ignored = doc.ignores.get(line, set())
@@ -881,36 +1101,97 @@ def scan(paths: Iterable) -> List[Finding]:
     return findings
 
 
-def main(argv: Optional[List[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description="Проверка шаблонности HTML/CSS (aidesign)")
-    parser.add_argument("paths", nargs="*", help="файлы или папки")
-    parser.add_argument("--json", action="store_true", help="вывод в JSON")
-    parser.add_argument("--rules", action="store_true", help="показать список правил")
-    args = parser.parse_args(argv)
-    if args.rules:
-        for r in RULES:
-            print("%-22s %s → %s" % (r.id, r.description, r.ref))
-        return 0
-    if not args.paths:
-        print("Ошибка: укажите файл или папку с HTML/CSS.", file=sys.stderr)
-        return 2
-    try:
-        files = collect_files(args.paths)
-    except FileNotFoundError as err:
-        print("Ошибка: нет такого пути: %s" % err, file=sys.stderr)
-        return 2
-    if not files:
-        print("Ошибка: в указанных путях нет файлов .html, .htm или .css.", file=sys.stderr)
-        return 2
-    findings = scan(files)
-    if args.json:
+def report(findings: List[Finding], as_json: bool) -> None:
+    if as_json:
         print(json.dumps({"count": len(findings), "findings": [asdict(f) for f in findings]},
                          ensure_ascii=False, indent=2))
     else:
         for f in findings:
             print("%s:%d — [%s] %s — %s" % (f.path, f.line, f.rule, f.message, f.fix))
         print("Находок: %d" % len(findings))
+
+
+def hook() -> int:
+    """Хук Claude Code (PostToolUse): правленый файл — быстрые правила; находки — в stderr и код 2.
+
+    Код 2 здесь — протокол хука («покажи агенту»), а не ошибка ввода. Любой сбой — тихий 0:
+    хук не должен мешать правке.
+    """
+    try:
+        data = json.loads(sys.stdin.read() or "{}")
+        tool_input = data.get("tool_input") or {}
+        target = Path(tool_input.get("file_path") or tool_input.get("path") or "")
+        if not target.is_file() or target.suffix.lower() not in EXTENSIONS:
+            return 0
+        findings = scan([target], fast=True)
+    except Exception:                    # noqa: BLE001 — хук молчит при любом сбое
+        return 0
+    if not findings:
+        return 0
+    for f in findings:
+        print("%s:%d — [%s] %s — %s" % (f.path, f.line, f.rule, f.message, f.fix), file=sys.stderr)
+    print("AI Design: быстрые правила, %d находок — поправь или пометь aidesign-ignore с причиной. "
+          "Полная проверка — в конце: python3 .aidesign-work/check.py <папка сайта>" % len(findings),
+          file=sys.stderr)
+    return 2
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    parser = argparse.ArgumentParser(description="Проверка шаблонности HTML/CSS и компонентов (aidesign)")
+    parser.add_argument("paths", nargs="*", help="файлы или папки (с --browser — адреса или файлы)")
+    parser.add_argument("--json", action="store_true", help="вывод в JSON")
+    parser.add_argument("--rules", action="store_true", help="показать список правил")
+    parser.add_argument("--fast", action="store_true", help="только быстрые правила (для хука)")
+    parser.add_argument("--no-config", action="store_true", help="не читать .aidesign-check.json")
+    parser.add_argument("--browser", action="store_true", help="правила раскладки в браузере")
+    parser.add_argument("--own-site", action="store_true", help="сайт человека: robots.txt не спрашиваем")
+    parser.add_argument("--hook", action="store_true", help="режим хука Claude Code (JSON на входе)")
+    args = parser.parse_args(argv)
+    if args.hook:
+        return hook()
+    if args.rules:
+        browser_rules = check_browser_rules()
+        for r in RULES + browser_rules:
+            mark = " [быстрое]" if r.id in FAST else (" [браузер]" if r in browser_rules else "")
+            print("%-30s %s → %s%s" % (r.id, r.description, r.ref, mark))
+        return 0
+    if not args.paths:
+        print("Ошибка: укажите файл или папку с HTML/CSS.", file=sys.stderr)
+        return 2
+    if args.browser:
+        try:
+            import check_browser
+        except ImportError:
+            print("Ошибка: рядом с check.py нет check_browser.py.", file=sys.stderr)
+            return 2
+        code, findings = check_browser.run_cli(sys.modules[__name__], args.paths, own_site=args.own_site)
+        if code == 2:
+            return 2
+        report(findings, args.json)
+        return 1 if findings else 0
+    try:
+        files = collect_files(args.paths)
+    except FileNotFoundError as err:
+        print("Ошибка: нет такого пути: %s" % err, file=sys.stderr)
+        return 2
+    if not files:
+        print("Ошибка: в указанных путях нет файлов %s." % ", ".join(sorted(EXTENSIONS)), file=sys.stderr)
+        return 2
+    try:
+        findings = scan(files, fast=args.fast, use_config=not args.no_config)
+    except ValueError as err:
+        print("Ошибка конфига: %s" % err, file=sys.stderr)
+        return 2
+    report(findings, args.json)
     return 1 if findings else 0
+
+
+def check_browser_rules() -> List[Rule]:
+    try:
+        import check_browser
+    except ImportError:
+        return []
+    return check_browser.rules(sys.modules[__name__])
 
 
 if __name__ == "__main__":

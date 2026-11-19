@@ -1,0 +1,3040 @@
+{
+ "version": 1,
+ "about": "Отрасли AI Design: стартовые гипотезы стиля, палитр, пар и паттерна лендинга. Слова человека и интервью главнее (knowledge/язык/решения-споров.md, спор 7). Правила — закрытая грамматика pick.py: условие из CONDITIONS → действия style:/pattern:/mode:/constraint:/mood:.",
+ "constraints": {
+  "photo-led": "Главное — настоящие фото места, людей и продукта; стоки под видом своих нельзя.",
+  "hours-and-map": "Часы, адрес и карта видны сразу; на телефоне — в одно касание.",
+  "price-visible": "Цены или «от» — на виду, без «узнайте по телефону».",
+  "booking-sticky": "Кнопка записи закреплена на телефоне и есть после цен.",
+  "big-text": "Крупный текст и кнопки: многим посетителям за 45, сайт открывают с телефона.",
+  "calm-motion": "Движение тихое или никакого: доверие важнее эффекта.",
+  "light-theme": "Светлая тема: сайт открывают днём и читают долго.",
+  "documents": "Лицензии, дипломы, договор — показать, не прятать.",
+  "privacy": "Деликатность: без лиц и историй клиентов без их согласия.",
+  "kids-safe": "Для родителей: безопасность, педагоги, возраст и расписание — на виду.",
+  "real-results": "Только реальные работы и цифры; нет данных — видимая заглушка, не выдумка.",
+  "phone-first": "Сначала связь: звонок и мессенджер в одно касание.",
+  "menu-readable": "Меню — текстом, не картинкой: читается, ищется, увеличивается.",
+  "plain-words": "Простые слова вместо канцелярита и жаргона.",
+  "one-loud": "Не больше одного громкого приёма на экран.",
+  "night-photos": "Фото вечером в настоящем свете места; тьма — ступенями, не чёрным с неоном.",
+  "dates-visible": "Даты, время и место — в первом экране."
+ },
+ "industries": [
+  {
+   "id": "coffee",
+   "title": "кофейня",
+   "keywords": [
+    "кофейня",
+    "кофейни",
+    "кофе",
+    "кофе с собой",
+    "бариста",
+    "обжарка"
+   ],
+   "styles": [
+    "warm-local",
+    "earth-materials",
+    "magazine",
+    "craft-paper"
+   ],
+   "palettes": [
+    "espresso",
+    "cappuccino",
+    "rye-bread",
+    "cocoa",
+    "cardamom",
+    "brick"
+   ],
+   "pairs": [
+    "lora-golos",
+    "yanone-ptsans",
+    "caveat-golos",
+    "gabriela-mulish"
+   ],
+   "landing": "place-showcase",
+   "avoid": [
+    "cream-terracotta",
+    "stock-as-own",
+    "placeholder-image"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:hours-and-map",
+     "constraint:menu-readable"
+    ],
+    "if_warm": [
+     "style:warm-local",
+     "mood:уютный"
+    ],
+    "if_night": [
+     "mode:dark",
+     "style:evening-lounge"
+    ],
+    "if_modern": [
+     "style:swiss-grid"
+    ],
+    "if_bold": [
+     "style:sticker-pack"
+    ]
+   },
+   "note": "Кофейня у дома живёт фото и часами работы; «уютно» не значит крем с терракотой."
+  },
+  {
+   "id": "bakery",
+   "title": "пекарня",
+   "keywords": [
+    "пекарня",
+    "пекарни",
+    "хлеб",
+    "выпечка",
+    "булочная",
+    "круассаны"
+   ],
+   "styles": [
+    "warm-local",
+    "farm-market",
+    "craft-paper",
+    "luxury-light"
+   ],
+   "palettes": [
+    "rye-bread",
+    "cinnamon",
+    "honey-cake",
+    "indian-summer",
+    "linen"
+   ],
+   "pairs": [
+    "gabriela-mulish",
+    "lora-golos",
+    "amatic-nunito"
+   ],
+   "landing": "place-showcase",
+   "avoid": [
+    "cream-terracotta",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:hours-and-map",
+     "constraint:price-visible"
+    ],
+    "if_luxury": [
+     "style:luxury-light"
+    ],
+    "if_eco": [
+     "style:farm-market"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "confectionery",
+   "title": "кондитерская и торты на заказ",
+   "keywords": [
+    "кондитерская",
+    "торты",
+    "торт на заказ",
+    "десерты",
+    "пирожные",
+    "капкейки"
+   ],
+   "styles": [
+    "romantic-serif",
+    "soft-clay",
+    "bento-services",
+    "luxury-light"
+   ],
+   "palettes": [
+    "caramel",
+    "honey-cake",
+    "pistachio-eclair",
+    "peony",
+    "lollipop"
+   ],
+   "pairs": [
+    "yeseva-nunitosans",
+    "badscript-lora",
+    "prata-jost"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "stock-as-own",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible"
+    ],
+    "if_kids": [
+     "style:soft-clay",
+     "mood:праздник"
+    ],
+    "if_luxury": [
+     "style:luxury-light"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "restaurant",
+   "title": "ресторан",
+   "keywords": [
+    "ресторан",
+    "рестораны",
+    "кухня",
+    "шеф",
+    "ужин",
+    "банкет"
+   ],
+   "styles": [
+    "magazine",
+    "evening-lounge",
+    "luxury-light",
+    "earth-materials"
+   ],
+   "palettes": [
+    "olive-grove",
+    "eggplant",
+    "pomegranate",
+    "wine-cellar"
+   ],
+   "pairs": [
+    "playfair-onest",
+    "bonanova-montserrat",
+    "cormorant-golos"
+   ],
+   "landing": "menu-first",
+   "avoid": [
+    "stock-as-own",
+    "dark-neon"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:menu-readable",
+     "constraint:hours-and-map",
+     "constraint:photo-led"
+    ],
+    "if_night": [
+     "mode:dark",
+     "style:evening-lounge",
+     "constraint:night-photos"
+    ],
+    "if_luxury": [
+     "style:luxury-light"
+    ],
+    "if_warm": [
+     "style:earth-materials"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "bar",
+   "title": "бар и винотека",
+   "keywords": [
+    "бар",
+    "бары",
+    "коктейли",
+    "паб",
+    "винотека",
+    "вино",
+    "пивной"
+   ],
+   "styles": [
+    "evening-lounge",
+    "poster-brutal",
+    "film-photo",
+    "noir-premium"
+   ],
+   "palettes": [
+    "jazz",
+    "wine-cellar",
+    "velvet-night",
+    "embers",
+    "brick",
+    "olive"
+   ],
+   "pairs": [
+    "cormorant-golos",
+    "alumni-manrope",
+    "poiret-mulish"
+   ],
+   "landing": "place-showcase",
+   "avoid": [
+    "dark-neon",
+    "glow",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:night-photos",
+     "constraint:hours-and-map",
+     "constraint:menu-readable"
+    ],
+    "if_light": [
+     "mode:light",
+     "style:magazine"
+    ],
+    "if_bold": [
+     "style:poster-brutal"
+    ],
+    "if_classic": [
+     "style:film-photo"
+    ]
+   },
+   "note": "Бар по умолчанию тёмный, но ступенями и тёплым светом, а не чёрным с неоном."
+  },
+  {
+   "id": "family-cafe",
+   "title": "семейное кафе и столовая",
+   "keywords": [
+    "кафе",
+    "семейное кафе",
+    "столовая",
+    "бизнес-ланч",
+    "обеды"
+   ],
+   "styles": [
+    "warm-local",
+    "color-blocks",
+    "calm-business"
+   ],
+   "palettes": [
+    "pumpkin",
+    "tomato",
+    "morning",
+    "orange"
+   ],
+   "pairs": [
+    "vollkorn-golos",
+    "lora-golos",
+    "caveat-golos"
+   ],
+   "landing": "menu-first",
+   "avoid": [
+    "stock-as-own",
+    "emoji-icons"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:menu-readable",
+     "constraint:price-visible",
+     "constraint:hours-and-map"
+    ],
+    "if_kids": [
+     "style:color-blocks"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "tea-shop",
+   "title": "чайная и травы",
+   "keywords": [
+    "чайная",
+    "чай",
+    "чайный магазин",
+    "травы",
+    "травяной сбор"
+   ],
+   "styles": [
+    "earth-materials",
+    "book-page",
+    "craft-paper"
+   ],
+   "palettes": [
+    "tea-house",
+    "chamomile-tea",
+    "rosehip",
+    "sage"
+   ],
+   "pairs": [
+    "elmessiri-mulish",
+    "lora-manrope",
+    "alegreya-alegreyasans"
+   ],
+   "landing": "corner-shop",
+   "avoid": [
+    "ai-violet",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led"
+    ],
+    "if_calm": [
+     "style:book-page"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "food-delivery",
+   "title": "доставка еды",
+   "keywords": [
+    "доставка еды",
+    "доставка",
+    "роллы",
+    "пицца",
+    "шаурма",
+    "бургеры"
+   ],
+   "styles": [
+    "color-blocks",
+    "bento-services",
+    "sticker-pack"
+   ],
+   "palettes": [
+    "paprika",
+    "tomato",
+    "orange",
+    "turmeric",
+    "brick"
+   ],
+   "pairs": [
+    "yanone-ptsans",
+    "unbounded-onest",
+    "daysone-mulish"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "stock-as-own",
+    "placeholder-image"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:phone-first",
+     "constraint:photo-led"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "farm-shop",
+   "title": "фермерская лавка",
+   "keywords": [
+    "фермерская лавка",
+    "фермерские продукты",
+    "лавка",
+    "молочка",
+    "мясная лавка",
+    "сыр"
+   ],
+   "styles": [
+    "farm-market",
+    "warm-local",
+    "craft-paper",
+    "magazine"
+   ],
+   "palettes": [
+    "peat",
+    "august",
+    "jute",
+    "sunflower"
+   ],
+   "pairs": [
+    "amatic-nunito",
+    "podkova-ubuntu",
+    "bitter-rubik"
+   ],
+   "landing": "corner-shop",
+   "avoid": [
+    "stock-as-own",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible",
+     "constraint:hours-and-map"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "barbershop",
+   "title": "барбершоп",
+   "keywords": [
+    "барбершоп",
+    "барбер",
+    "мужская стрижка",
+    "борода",
+    "бритьё"
+   ],
+   "styles": [
+    "noir-premium",
+    "workshop",
+    "friendly-neobrutal",
+    "poster-brutal"
+   ],
+   "palettes": [
+    "leather",
+    "concrete",
+    "granite",
+    "wet-asphalt",
+    "dark-chocolate"
+   ],
+   "pairs": [
+    "delagothic-onest",
+    "russo-ptsans",
+    "oswald-sourcesans"
+   ],
+   "landing": "booking-first",
+   "avoid": [
+    "dark-neon",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:booking-sticky",
+     "constraint:price-visible",
+     "constraint:real-results"
+    ],
+    "if_bold": [
+     "style:friendly-neobrutal"
+    ],
+    "if_luxury": [
+     "style:noir-premium",
+     "mode:dark"
+    ],
+    "if_classic": [
+     "style:workshop"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "beauty-salon",
+   "title": "салон красоты и парикмахерская",
+   "keywords": [
+    "салон красоты",
+    "парикмахерская",
+    "стрижка",
+    "окрашивание",
+    "стилист"
+   ],
+   "styles": [
+    "romantic-serif",
+    "bento-services",
+    "pastel-care",
+    "luxury-light"
+   ],
+   "palettes": [
+    "peony",
+    "powder",
+    "cashmere",
+    "silk"
+   ],
+   "pairs": [
+    "prata-jost",
+    "tenor-mulish",
+    "yeseva-nunitosans"
+   ],
+   "landing": "booking-first",
+   "avoid": [
+    "stock-as-own",
+    "ai-violet"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:booking-sticky",
+     "constraint:price-visible",
+     "constraint:real-results"
+    ],
+    "if_luxury": [
+     "style:luxury-light"
+    ],
+    "if_modern": [
+     "style:bento-services"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "nails",
+   "title": "маникюр и педикюр",
+   "keywords": [
+    "маникюр",
+    "ногти",
+    "педикюр",
+    "нейл-мастер",
+    "нейл-студия"
+   ],
+   "styles": [
+    "bento-services",
+    "pastel-care",
+    "sticker-pack"
+   ],
+   "palettes": [
+    "powder",
+    "peach",
+    "lollipop",
+    "seashell"
+   ],
+   "pairs": [
+    "tenor-mulish",
+    "prata-wixtext",
+    "comfortaa-nunito"
+   ],
+   "landing": "booking-first",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:booking-sticky",
+     "constraint:price-visible",
+     "constraint:real-results"
+    ],
+    "if_bold": [
+     "style:sticker-pack"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "brows-lashes",
+   "title": "брови и ресницы",
+   "keywords": [
+    "брови",
+    "ресницы",
+    "бровист",
+    "лашмейкер",
+    "ламинирование"
+   ],
+   "styles": [
+    "pastel-care",
+    "gallery-white",
+    "bento-services"
+   ],
+   "palettes": [
+    "powder",
+    "cashmere",
+    "peach",
+    "peony"
+   ],
+   "pairs": [
+    "prata-jost",
+    "tenor-mulish",
+    "raleway-lora"
+   ],
+   "landing": "before-after",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:booking-sticky",
+     "constraint:real-results",
+     "constraint:privacy"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "cosmetology",
+   "title": "косметология",
+   "keywords": [
+    "косметолог",
+    "косметология",
+    "уход за кожей",
+    "чистка лица",
+    "эстетика"
+   ],
+   "styles": [
+    "clinic-clean",
+    "pastel-care",
+    "luxury-light"
+   ],
+   "palettes": [
+    "peach",
+    "marble",
+    "first-snow",
+    "mint"
+   ],
+   "pairs": [
+    "prata-wixtext",
+    "notoserifdisplay-manrope",
+    "tenor-mulish"
+   ],
+   "landing": "before-after",
+   "avoid": [
+    "stock-as-own",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:privacy",
+     "constraint:booking-sticky"
+    ],
+    "if_luxury": [
+     "style:luxury-light"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "massage",
+   "title": "массаж и остеопатия",
+   "keywords": [
+    "массаж",
+    "массажист",
+    "остеопат",
+    "остеопатия",
+    "мануальный"
+   ],
+   "styles": [
+    "pastel-care",
+    "earth-materials",
+    "calm-business"
+   ],
+   "palettes": [
+    "sage-water",
+    "sage",
+    "towel",
+    "warm-palm",
+    "sea-salt"
+   ],
+   "pairs": [
+    "lora-manrope",
+    "tenor-mulish",
+    "philosopher-mulish"
+   ],
+   "landing": "booking-first",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:booking-sticky",
+     "constraint:documents",
+     "constraint:calm-motion"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "spa",
+   "title": "спа и баня",
+   "keywords": [
+    "спа",
+    "баня",
+    "бани",
+    "сауна",
+    "хаммам",
+    "парение"
+   ],
+   "styles": [
+    "earth-materials",
+    "glass-over-photo",
+    "evening-lounge"
+   ],
+   "palettes": [
+    "cedar",
+    "sea-salt",
+    "embers",
+    "towel"
+   ],
+   "pairs": [
+    "tenor-mulish",
+    "cormorant-manrope",
+    "forum-mulish"
+   ],
+   "landing": "booking-first",
+   "avoid": [
+    "glass",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:booking-sticky",
+     "constraint:price-visible"
+    ],
+    "if_night": [
+     "mode:dark",
+     "style:evening-lounge"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "lawyer",
+   "title": "юрист и адвокат",
+   "keywords": [
+    "юрист",
+    "юристы",
+    "адвокат",
+    "адвокаты",
+    "юридическая",
+    "юридическая помощь",
+    "право",
+    "суд",
+    "договор"
+   ],
+   "styles": [
+    "strict-classic",
+    "expert-column",
+    "calm-business",
+    "book-page"
+   ],
+   "palettes": [
+    "ink-paper",
+    "notary",
+    "double-breasted",
+    "granite",
+    "white-nights"
+   ],
+   "pairs": [
+    "ptserif-ptsans",
+    "merriweather-sourcesans",
+    "spectral-plexsans"
+   ],
+   "landing": "expert-trust",
+   "avoid": [
+    "virtue-words",
+    "buzzwords",
+    "hero-metric"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:plain-words",
+     "constraint:calm-motion",
+     "constraint:light-theme"
+    ],
+    "if_trust": [
+     "style:strict-classic"
+    ],
+    "if_modern": [
+     "style:calm-business"
+    ],
+    "if_reading": [
+     "style:expert-column",
+     "pattern:article-hub"
+    ]
+   },
+   "note": "Доверие даёт ясность и документы, а не мрамор и колонны."
+  },
+  {
+   "id": "notary",
+   "title": "нотариус",
+   "keywords": [
+    "нотариус",
+    "нотариальная контора",
+    "доверенность",
+    "наследство"
+   ],
+   "styles": [
+    "strict-classic",
+    "calm-business",
+    "book-page"
+   ],
+   "palettes": [
+    "notary",
+    "archive",
+    "ink-paper",
+    "granite",
+    "november"
+   ],
+   "pairs": [
+    "ptserif-ptsans",
+    "ledger-ptsans",
+    "libertinus-pair"
+   ],
+   "landing": "expert-trust",
+   "avoid": [
+    "virtue-words"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:hours-and-map",
+     "constraint:plain-words"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "accounting",
+   "title": "бухгалтерия и налоги",
+   "keywords": [
+    "бухгалтер",
+    "бухгалтерия",
+    "налоги",
+    "отчётность",
+    "декларация"
+   ],
+   "styles": [
+    "calm-business",
+    "data-calm",
+    "swiss-grid",
+    "notebook"
+   ],
+   "palettes": [
+    "chancery",
+    "bank-vault",
+    "slate",
+    "calm-dashboard"
+   ],
+   "pairs": [
+    "ledger-ptsans",
+    "manrope-plexmono",
+    "plexserif-plexsans"
+   ],
+   "landing": "expert-trust",
+   "avoid": [
+    "hero-metric",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:plain-words",
+     "constraint:documents"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "finance-advisor",
+   "title": "финансовый консультант",
+   "keywords": [
+    "финансовый консультант",
+    "финансы",
+    "инвестиции",
+    "финансовый советник",
+    "ипотека"
+   ],
+   "styles": [
+    "calm-business",
+    "expert-column",
+    "data-calm"
+   ],
+   "palettes": [
+    "bank-vault",
+    "green-cloth",
+    "steel",
+    "slate",
+    "calm-dashboard"
+   ],
+   "pairs": [
+    "manrope-plexmono",
+    "spectral-plexsans",
+    "ledger-ptsans"
+   ],
+   "landing": "expert-trust",
+   "avoid": [
+    "hero-metric",
+    "invented-facts",
+    "dark-neon"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:real-results",
+     "constraint:light-theme"
+    ]
+   },
+   "note": "Финансы не обязаны быть тёмными: тема — по сцене, не по отрасли."
+  },
+  {
+   "id": "psychologist",
+   "title": "психолог",
+   "keywords": [
+    "психолог",
+    "психологи",
+    "психотерапевт",
+    "терапия",
+    "психологическая помощь",
+    "консультация психолога"
+   ],
+   "styles": [
+    "expert-column",
+    "pastel-care",
+    "book-page"
+   ],
+   "palettes": [
+    "warm-palm",
+    "sage",
+    "chamomile-tea",
+    "first-snow"
+   ],
+   "pairs": [
+    "lora-manrope",
+    "sourceserif-onest",
+    "philosopher-mulish"
+   ],
+   "landing": "expert-trust",
+   "avoid": [
+    "stock-as-own",
+    "virtue-words",
+    "section-fade"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:privacy",
+     "constraint:calm-motion",
+     "constraint:documents"
+    ],
+    "if_reading": [
+     "pattern:article-hub"
+    ]
+   },
+   "note": "Бережно и спокойно; никаких «лиц клиентов» и громких эффектов."
+  },
+  {
+   "id": "coach",
+   "title": "коуч и наставник",
+   "keywords": [
+    "коуч",
+    "коучинг",
+    "наставник",
+    "ментор",
+    "личная эффективность"
+   ],
+   "styles": [
+    "expert-column",
+    "kinetic-statement",
+    "calm-business"
+   ],
+   "palettes": [
+    "morning",
+    "november",
+    "spring-green",
+    "fjord"
+   ],
+   "pairs": [
+    "spectral-golos",
+    "geologica-onest",
+    "sourceserif-onest"
+   ],
+   "landing": "single-offer",
+   "avoid": [
+    "buzzwords",
+    "virtue-words",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:plain-words"
+    ],
+    "if_bold": [
+     "style:kinetic-statement"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "fitness",
+   "title": "фитнес-клуб",
+   "keywords": [
+    "фитнес",
+    "фитнес-клуб",
+    "спортзал",
+    "тренажёрный зал",
+    "кроссфит"
+   ],
+   "styles": [
+    "sport-poster",
+    "friendly-neobrutal",
+    "noir-premium"
+   ],
+   "palettes": [
+    "kettlebell",
+    "track",
+    "stadium",
+    "concrete",
+    "turmeric"
+   ],
+   "pairs": [
+    "unbounded-golos",
+    "oswald-sourcesans",
+    "russo-ptsans"
+   ],
+   "landing": "membership",
+   "avoid": [
+    "hero-metric",
+    "stock-as-own",
+    "dark-neon"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:photo-led",
+     "constraint:hours-and-map"
+    ],
+    "if_dark": [
+     "mode:dark",
+     "style:noir-premium"
+    ],
+    "if_calm": [
+     "style:pastel-care"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "personal-trainer",
+   "title": "персональный тренер",
+   "keywords": [
+    "персональный тренер",
+    "тренер",
+    "тренировки",
+    "онлайн-тренировки"
+   ],
+   "styles": [
+    "sport-poster",
+    "expert-column",
+    "bento-showcase"
+   ],
+   "palettes": [
+    "kettlebell",
+    "finish-line",
+    "racket",
+    "concrete",
+    "morning"
+   ],
+   "pairs": [
+    "unbounded-onest",
+    "oswald-sourcesans",
+    "geologica-onest"
+   ],
+   "landing": "card-page",
+   "avoid": [
+    "hero-metric",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:phone-first"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "yoga",
+   "title": "йога и пилатес",
+   "keywords": [
+    "йога",
+    "пилатес",
+    "растяжка",
+    "медитация",
+    "дыхание"
+   ],
+   "styles": [
+    "earth-materials",
+    "pastel-care",
+    "gallery-white"
+   ],
+   "palettes": [
+    "dusk",
+    "sage",
+    "chamomile-tea",
+    "linen"
+   ],
+   "pairs": [
+    "philosopher-mulish",
+    "tenor-mulish",
+    "lora-manrope"
+   ],
+   "landing": "membership",
+   "avoid": [
+    "ai-violet",
+    "blur-blob"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:calm-motion",
+     "constraint:price-visible"
+    ],
+    "if_minimal": [
+     "style:gallery-white"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "martial-arts",
+   "title": "единоборства",
+   "keywords": [
+    "бокс",
+    "единоборства",
+    "каратэ",
+    "борьба",
+    "самбо",
+    "самооборона"
+   ],
+   "styles": [
+    "sport-poster",
+    "poster-brutal",
+    "noir-premium"
+   ],
+   "palettes": [
+    "boxing-ring",
+    "kettlebell",
+    "tartan-track",
+    "granite",
+    "embers"
+   ],
+   "pairs": [
+    "russo-ptsans",
+    "delagothic-onest",
+    "oswald-sourcesans"
+   ],
+   "landing": "membership",
+   "avoid": [
+    "hero-metric"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:photo-led"
+    ],
+    "if_kids": [
+     "style:kids-bright",
+     "constraint:kids-safe"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "dance-school",
+   "title": "школа танцев",
+   "keywords": [
+    "танцы",
+    "школа танцев",
+    "хореография",
+    "бальные танцы"
+   ],
+   "styles": [
+    "kinetic-statement",
+    "color-blocks",
+    "romantic-serif"
+   ],
+   "palettes": [
+    "velvet",
+    "poppy",
+    "cinema"
+   ],
+   "pairs": [
+    "unbounded-onest",
+    "poiret-mulish",
+    "raleway-lora"
+   ],
+   "landing": "membership",
+   "avoid": [
+    "no-reduced-motion"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible"
+    ],
+    "if_kids": [
+     "style:kids-bright",
+     "constraint:kids-safe"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "kids-art",
+   "title": "детская школа рисования",
+   "keywords": [
+    "детская школа рисования",
+    "рисование",
+    "изостудия",
+    "художественная студия",
+    "школа рисования",
+    "детская студия"
+   ],
+   "styles": [
+    "kids-bright",
+    "color-blocks",
+    "craft-paper",
+    "soft-clay"
+   ],
+   "palettes": [
+    "crayons",
+    "gouache",
+    "watercolor",
+    "sunflower"
+   ],
+   "pairs": [
+    "neucha-ptsans",
+    "montserratalt-nunito",
+    "shantell-golos"
+   ],
+   "landing": "kids-school",
+   "avoid": [
+    "emoji-icons",
+    "stock-as-own",
+    "shape-illustration"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:kids-safe",
+     "constraint:real-results",
+     "constraint:price-visible"
+    ],
+    "if_calm": [
+     "style:craft-paper"
+    ],
+    "if_classic": [
+     "style:magazine"
+    ]
+   },
+   "note": "Главные картинки — настоящие работы детей; родителю нужны возраст, расписание и цена."
+  },
+  {
+   "id": "kids-center",
+   "title": "детский центр и садик",
+   "keywords": [
+    "детский центр",
+    "детский сад",
+    "развитие",
+    "дошкольники",
+    "раннее развитие"
+   ],
+   "styles": [
+    "soft-clay",
+    "kids-bright",
+    "pastel-care",
+    "notebook"
+   ],
+   "palettes": [
+    "plasticine",
+    "bubbles",
+    "orange",
+    "cloud",
+    "spring-green"
+   ],
+   "pairs": [
+    "comfortaa-nunito",
+    "montserratalt-nunito",
+    "pangolin-rubik"
+   ],
+   "landing": "kids-school",
+   "avoid": [
+    "emoji-icons",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:kids-safe",
+     "constraint:documents",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "tutor",
+   "title": "репетитор и подготовка к экзаменам",
+   "keywords": [
+    "репетитор",
+    "репетиторы",
+    "подготовка",
+    "егэ",
+    "огэ",
+    "экзамены"
+   ],
+   "styles": [
+    "notebook",
+    "calm-business",
+    "expert-column"
+   ],
+   "palettes": [
+    "schoolbag",
+    "navy-pencil",
+    "morning"
+   ],
+   "pairs": [
+    "neucha-ptsans",
+    "didact-literata",
+    "sofia-ptserif"
+   ],
+   "landing": "card-page",
+   "avoid": [
+    "invented-facts",
+    "hero-metric"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:price-visible",
+     "constraint:phone-first"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "language-school",
+   "title": "языковая школа",
+   "keywords": [
+    "языковая школа",
+    "английский",
+    "курсы английского",
+    "языки",
+    "китайский"
+   ],
+   "styles": [
+    "notebook",
+    "bento-showcase",
+    "magazine"
+   ],
+   "palettes": [
+    "kite",
+    "white-nights",
+    "navy-pencil"
+   ],
+   "pairs": [
+    "gentium-commissioner",
+    "geologica-onest",
+    "sofia-ptserif"
+   ],
+   "landing": "course-program",
+   "avoid": [
+    "emoji-icons"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:real-results"
+    ],
+    "if_kids": [
+     "style:kids-bright",
+     "constraint:kids-safe"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "music-school",
+   "title": "музыкальная школа",
+   "keywords": [
+    "музыкальная школа",
+    "музыка",
+    "вокал",
+    "фортепиано",
+    "гитара",
+    "барабаны"
+   ],
+   "styles": [
+    "magazine",
+    "book-page",
+    "kinetic-statement"
+   ],
+   "palettes": [
+    "score",
+    "theater-curtain",
+    "sound-studio",
+    "velvet"
+   ],
+   "pairs": [
+    "playfair-firasans",
+    "arsenal-spectral",
+    "alumni-manrope"
+   ],
+   "landing": "kids-school",
+   "avoid": [
+    "video-autoplay"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:real-results"
+    ],
+    "if_kids": [
+     "constraint:kids-safe"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "online-course",
+   "title": "онлайн-курс и школа",
+   "keywords": [
+    "онлайн-курс",
+    "курс",
+    "курсы",
+    "обучение",
+    "онлайн-школа",
+    "вебинар"
+   ],
+   "styles": [
+    "bento-showcase",
+    "expert-column",
+    "notebook"
+   ],
+   "palettes": [
+    "observatory",
+    "navy-pencil",
+    "spring-green"
+   ],
+   "pairs": [
+    "literata-commissioner",
+    "geologica-onest",
+    "unbounded-onest"
+   ],
+   "landing": "course-program",
+   "avoid": [
+    "invented-facts",
+    "hero-metric",
+    "buzzwords"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:price-visible"
+    ],
+    "if_reading": [
+     "pattern:article-hub"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "renovation",
+   "title": "ремонт квартир",
+   "keywords": [
+    "ремонт",
+    "ремонт квартир",
+    "отделка",
+    "ремонтная бригада",
+    "ремонт под ключ"
+   ],
+   "styles": [
+    "case-story",
+    "workshop",
+    "calm-business"
+   ],
+   "palettes": [
+    "tape-measure",
+    "masking-tape",
+    "putty",
+    "hard-hat",
+    "concrete",
+    "linen"
+   ],
+   "pairs": [
+    "bitter-rubik",
+    "advent-golos",
+    "montserrat-merriweather"
+   ],
+   "landing": "before-after",
+   "avoid": [
+    "stock-as-own",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:price-visible",
+     "constraint:phone-first"
+    ],
+    "if_trust": [
+     "style:calm-business"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "plumber",
+   "title": "сантехник",
+   "keywords": [
+    "сантехник",
+    "сантехника",
+    "трубы",
+    "засор",
+    "ванная"
+   ],
+   "styles": [
+    "calm-business",
+    "workshop",
+    "clinic-clean",
+    "bento-services"
+   ],
+   "palettes": [
+    "tile",
+    "toolbox",
+    "sea-salt",
+    "steel"
+   ],
+   "pairs": [
+    "russo-ptsans",
+    "bitter-rubik",
+    "wixdisplay-wixtext"
+   ],
+   "landing": "call-the-master",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:phone-first",
+     "constraint:price-visible",
+     "constraint:big-text"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "electrician",
+   "title": "электрик",
+   "keywords": [
+    "электрик",
+    "электромонтаж",
+    "проводка",
+    "умный дом",
+    "освещение"
+   ],
+   "styles": [
+    "calm-business",
+    "workshop",
+    "product-ui"
+   ],
+   "palettes": [
+    "copper-wire",
+    "schematic",
+    "signal",
+    "steel"
+   ],
+   "pairs": [
+    "jura-commissioner",
+    "russo-ptsans",
+    "advent-golos"
+   ],
+   "landing": "call-the-master",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:phone-first",
+     "constraint:price-visible",
+     "constraint:documents"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "handyman",
+   "title": "мастер на час",
+   "keywords": [
+    "мастер на час",
+    "муж на час",
+    "мелкий ремонт",
+    "сборка мебели"
+   ],
+   "styles": [
+    "calm-business",
+    "workshop",
+    "friendly-neobrutal"
+   ],
+   "palettes": [
+    "toolbox",
+    "carpenter-pencil",
+    "tape-measure",
+    "slate",
+    "morning"
+   ],
+   "pairs": [
+    "bitter-rubik",
+    "russo-ptsans",
+    "wixdisplay-wixtext"
+   ],
+   "landing": "call-the-master",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:phone-first",
+     "constraint:price-visible",
+     "constraint:big-text"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "furniture",
+   "title": "мебель на заказ",
+   "keywords": [
+    "мебель на заказ",
+    "мебель",
+    "столяр",
+    "кухни на заказ",
+    "шкафы"
+   ],
+   "styles": [
+    "workshop",
+    "case-story",
+    "swiss-grid"
+   ],
+   "palettes": [
+    "sawdust",
+    "carpenter-pencil",
+    "drafting-table",
+    "linen"
+   ],
+   "pairs": [
+    "bitter-rubik",
+    "jost-literata",
+    "montserrat-merriweather"
+   ],
+   "landing": "quiz",
+   "avoid": [
+    "stock-as-own",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:photo-led"
+    ],
+    "if_modern": [
+     "style:swiss-grid"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "cleaning",
+   "title": "клининг и химчистка",
+   "keywords": [
+    "клининг",
+    "уборка",
+    "химчистка",
+    "мойка окон"
+   ],
+   "styles": [
+    "clinic-clean",
+    "bento-services",
+    "calm-business",
+    "pastel-care"
+   ],
+   "palettes": [
+    "mint",
+    "cotton",
+    "sea-salt"
+   ],
+   "pairs": [
+    "wixdisplay-wixtext",
+    "geologica-onest",
+    "comfortaa-nunito"
+   ],
+   "landing": "before-after",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:phone-first",
+     "constraint:real-results"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "auto-service",
+   "title": "автосервис и шиномонтаж",
+   "keywords": [
+    "автосервис",
+    "шиномонтаж",
+    "ремонт авто",
+    "автомойка",
+    "сто"
+   ],
+   "styles": [
+    "workshop",
+    "poster-brutal",
+    "calm-business"
+   ],
+   "palettes": [
+    "wet-asphalt",
+    "rust",
+    "steel",
+    "signal"
+   ],
+   "pairs": [
+    "russo-ptsans",
+    "advent-golos",
+    "oswald-sourcesans"
+   ],
+   "landing": "call-the-master",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:phone-first",
+     "constraint:price-visible",
+     "constraint:hours-and-map"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "interior-design",
+   "title": "дизайн интерьера и архитектура",
+   "keywords": [
+    "дизайн интерьера",
+    "дизайнер интерьера",
+    "архитектор",
+    "архитектурное бюро"
+   ],
+   "styles": [
+    "gallery-white",
+    "case-story",
+    "swiss-grid"
+   ],
+   "palettes": [
+    "limestone",
+    "drafting-table",
+    "lichen",
+    "blueprint"
+   ],
+   "pairs": [
+    "jost-literata",
+    "forum-mulish",
+    "brygada-ysabeauoffice"
+   ],
+   "landing": "portfolio-grid",
+   "avoid": [
+    "invented-facts",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:photo-led"
+    ],
+    "if_reading": [
+     "style:magazine"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "photographer",
+   "title": "фотограф и видеограф",
+   "keywords": [
+    "фотограф",
+    "фотосессия",
+    "видеограф",
+    "фотостудия"
+   ],
+   "styles": [
+    "gallery-white",
+    "film-photo",
+    "story-scroll"
+   ],
+   "palettes": [
+    "storm",
+    "cinema",
+    "indian-summer"
+   ],
+   "pairs": [
+    "raleway-lora",
+    "jost-literata",
+    "playfair-onest"
+   ],
+   "landing": "portfolio-grid",
+   "avoid": [
+    "image-caption",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:real-results"
+    ],
+    "if_dark": [
+     "mode:dark"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "florist",
+   "title": "цветы и флористика",
+   "keywords": [
+    "флорист",
+    "цветы",
+    "букеты",
+    "цветочный магазин",
+    "доставка цветов"
+   ],
+   "styles": [
+    "botanical",
+    "romantic-serif",
+    "bento-services"
+   ],
+   "palettes": [
+    "peony",
+    "hydrangea",
+    "spring-green",
+    "lilac",
+    "sage"
+   ],
+   "pairs": [
+    "yeseva-nunitosans",
+    "marck-cormorant",
+    "badscript-lora"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "stock-as-own",
+    "ai-violet"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible",
+     "constraint:phone-first"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "wedding",
+   "title": "свадьбы и организация",
+   "keywords": [
+    "свадьба",
+    "свадьбы",
+    "свадебный организатор",
+    "свадебное агентство",
+    "выездная регистрация"
+   ],
+   "styles": [
+    "romantic-serif",
+    "film-photo",
+    "luxury-light"
+   ],
+   "palettes": [
+    "peony",
+    "silk",
+    "seashell"
+   ],
+   "pairs": [
+    "marck-cormorant",
+    "raleway-lora",
+    "playfair-onest"
+   ],
+   "landing": "portfolio-grid",
+   "avoid": [
+    "italic-serif",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:photo-led"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "ceramics",
+   "title": "керамика и ремесло",
+   "keywords": [
+    "керамика",
+    "гончар",
+    "гончарная мастерская",
+    "ручная работа",
+    "мастерская",
+    "ремесло"
+   ],
+   "styles": [
+    "craft-paper",
+    "workshop",
+    "earth-materials",
+    "gallery-white"
+   ],
+   "palettes": [
+    "potter-clay",
+    "cobalt",
+    "linen",
+    "limestone"
+   ],
+   "pairs": [
+    "alegreya-alegreyasans",
+    "caveat-golos",
+    "balsamiq-nunitosans"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "cream-terracotta",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:real-results"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "jewelry",
+   "title": "ювелир и украшения",
+   "keywords": [
+    "ювелир",
+    "украшения",
+    "ювелирная мастерская",
+    "кольца",
+    "серьги"
+   ],
+   "styles": [
+    "jewel-dark",
+    "luxury-light",
+    "gallery-white",
+    "romantic-serif"
+   ],
+   "palettes": [
+    "sapphire",
+    "marble",
+    "velvet"
+   ],
+   "pairs": [
+    "notoserifdisplay-manrope",
+    "cormorant-manrope",
+    "oranienbaum-jost"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "glow",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible"
+    ],
+    "if_light": [
+     "mode:light",
+     "style:luxury-light"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "clothing",
+   "title": "одежда и ателье",
+   "keywords": [
+    "одежда",
+    "бренд одежды",
+    "ателье",
+    "портной",
+    "пошив"
+   ],
+   "styles": [
+    "monolith-type",
+    "magazine",
+    "workshop"
+   ],
+   "palettes": [
+    "denim",
+    "tweed",
+    "linen",
+    "concrete",
+    "november"
+   ],
+   "pairs": [
+    "prata-jost",
+    "unbounded-onest",
+    "jost-literata"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible"
+    ],
+    "if_bold": [
+     "style:sticker-pack"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "dentist",
+   "title": "стоматология",
+   "keywords": [
+    "стоматолог",
+    "стоматология",
+    "зубы",
+    "имплантация",
+    "брекеты"
+   ],
+   "styles": [
+    "clinic-clean",
+    "calm-business",
+    "pastel-care",
+    "expert-column"
+   ],
+   "palettes": [
+    "mint",
+    "cloud",
+    "laboratory",
+    "sea-salt"
+   ],
+   "pairs": [
+    "stix-plexsans",
+    "wixdisplay-wixtext",
+    "geologica-onest"
+   ],
+   "landing": "clinic",
+   "avoid": [
+    "stock-as-own",
+    "theme-by-habit"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:price-visible",
+     "constraint:booking-sticky",
+     "constraint:light-theme"
+    ]
+   },
+   "note": "Медицина не обязана быть голубой: тему и цвет выбирают по сцене и бренду."
+  },
+  {
+   "id": "clinic",
+   "title": "клиника и частный врач",
+   "keywords": [
+    "клиника",
+    "врач",
+    "медицинский центр",
+    "приём врача",
+    "частный врач",
+    "педиатр"
+   ],
+   "styles": [
+    "clinic-clean",
+    "calm-business",
+    "expert-column",
+    "pastel-care"
+   ],
+   "palettes": [
+    "laboratory",
+    "first-snow",
+    "cloud"
+   ],
+   "pairs": [
+    "stix-plexsans",
+    "spectral-plexsans",
+    "wixdisplay-wixtext"
+   ],
+   "landing": "clinic",
+   "avoid": [
+    "stock-as-own",
+    "theme-by-habit"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:booking-sticky",
+     "constraint:big-text",
+     "constraint:privacy"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "vet",
+   "title": "ветеринарная клиника",
+   "keywords": [
+    "ветеринар",
+    "ветклиника",
+    "ветеринарная клиника",
+    "животные",
+    "прививки"
+   ],
+   "styles": [
+    "clinic-clean",
+    "soft-clay",
+    "calm-business",
+    "warm-local"
+   ],
+   "palettes": [
+    "spring-green",
+    "morning",
+    "mint",
+    "sage"
+   ],
+   "pairs": [
+    "comfortaa-nunito",
+    "wixdisplay-wixtext",
+    "geologica-onest"
+   ],
+   "landing": "clinic",
+   "avoid": [
+    "emoji-icons",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:phone-first",
+     "constraint:hours-and-map",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "grooming",
+   "title": "груминг",
+   "keywords": [
+    "груминг",
+    "стрижка собак",
+    "стрижка кошек",
+    "зоосалон"
+   ],
+   "styles": [
+    "soft-clay",
+    "bento-services",
+    "sticker-pack"
+   ],
+   "palettes": [
+    "bubbles",
+    "marmalade",
+    "peach",
+    "spring-green"
+   ],
+   "pairs": [
+    "comfortaa-nunito",
+    "daysone-mulish",
+    "pangolin-rubik"
+   ],
+   "landing": "before-after",
+   "avoid": [
+    "emoji-icons"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:booking-sticky",
+     "constraint:real-results",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "real-estate",
+   "title": "недвижимость",
+   "keywords": [
+    "риелтор",
+    "недвижимость",
+    "квартиры",
+    "агентство недвижимости",
+    "аренда"
+   ],
+   "styles": [
+    "calm-business",
+    "glass-over-photo",
+    "swiss-grid",
+    "magazine"
+   ],
+   "palettes": [
+    "fjord",
+    "limestone",
+    "slate",
+    "white-nights"
+   ],
+   "pairs": [
+    "montserrat-merriweather",
+    "wixdisplay-wixtext",
+    "manrope-plexmono"
+   ],
+   "landing": "property",
+   "avoid": [
+    "invented-facts",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:phone-first",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "hotel",
+   "title": "гостиница и гостевой дом",
+   "keywords": [
+    "гостиница",
+    "отель",
+    "гостевой дом",
+    "хостел",
+    "глэмпинг",
+    "турбаза"
+   ],
+   "styles": [
+    "glass-over-photo",
+    "earth-materials",
+    "luxury-light"
+   ],
+   "palettes": [
+    "baltic",
+    "birch-grove",
+    "pine",
+    "linen"
+   ],
+   "pairs": [
+    "forum-mulish",
+    "oranienbaum-jost",
+    "tenor-mulish"
+   ],
+   "landing": "hotel",
+   "avoid": [
+    "glass",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible",
+     "constraint:hours-and-map"
+    ],
+    "if_eco": [
+     "style:earth-materials"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "tourism",
+   "title": "экскурсии и туры",
+   "keywords": [
+    "экскурсии",
+    "экскурсия",
+    "туры",
+    "гид",
+    "путешествия",
+    "походы"
+   ],
+   "styles": [
+    "story-scroll",
+    "film-photo",
+    "magazine"
+   ],
+   "palettes": [
+    "white-nights",
+    "pine",
+    "fjord",
+    "lagoon"
+   ],
+   "pairs": [
+    "ebgaramond-wixtext",
+    "piazzolla-geologica",
+    "forum-mulish"
+   ],
+   "landing": "tour",
+   "avoid": [
+    "stock-as-own",
+    "scroll-hijack"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:dates-visible",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "events",
+   "title": "праздники и ведущие",
+   "keywords": [
+    "праздники",
+    "ведущий",
+    "аниматор",
+    "организация мероприятий",
+    "корпоратив"
+   ],
+   "styles": [
+    "memphis",
+    "kinetic-statement",
+    "color-blocks",
+    "friendly-neobrutal"
+   ],
+   "palettes": [
+    "lollipop",
+    "poppy",
+    "marmalade",
+    "july-noon"
+   ],
+   "pairs": [
+    "seymour-nunitosans",
+    "unbounded-onest",
+    "rubikmono-rubik"
+   ],
+   "landing": "portfolio-grid",
+   "avoid": [
+    "stock-as-own",
+    "marquee"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:phone-first"
+    ],
+    "if_kids": [
+     "style:kids-bright"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "festival",
+   "title": "фестиваль и концерт",
+   "keywords": [
+    "фестиваль",
+    "концерт",
+    "афиша",
+    "мероприятие",
+    "билеты"
+   ],
+   "styles": [
+    "poster-brutal",
+    "kinetic-statement",
+    "constructivism",
+    "evening-lounge"
+   ],
+   "palettes": [
+    "poppy",
+    "cinema",
+    "finish-line"
+   ],
+   "pairs": [
+    "alumni-manrope",
+    "rubikmono-rubik",
+    "handjet-plexsans"
+   ],
+   "landing": "event",
+   "avoid": [
+    "marquee",
+    "video-autoplay"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:dates-visible",
+     "constraint:one-loud"
+    ],
+    "if_night": [
+     "mode:dark"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "expert-blog",
+   "title": "эксперт и авторский блог",
+   "keywords": [
+    "эксперт",
+    "блог",
+    "статьи",
+    "автор",
+    "колонка"
+   ],
+   "styles": [
+    "expert-column",
+    "magazine",
+    "book-page",
+    "swiss-grid"
+   ],
+   "palettes": [
+    "library",
+    "november",
+    "ink-paper",
+    "fjord"
+   ],
+   "pairs": [
+    "literata-commissioner",
+    "geologica-literata",
+    "sourceserif-onest"
+   ],
+   "landing": "article-hub",
+   "avoid": [
+    "long-measure",
+    "virtue-words"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:plain-words",
+     "constraint:light-theme"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "consulting",
+   "title": "консалтинг",
+   "keywords": [
+    "консалтинг",
+    "консультант",
+    "бизнес-консультант",
+    "стратегия"
+   ],
+   "styles": [
+    "swiss-grid",
+    "calm-business",
+    "expert-column",
+    "bento-showcase"
+   ],
+   "palettes": [
+    "slate",
+    "fjord",
+    "green-cloth"
+   ],
+   "pairs": [
+    "spectral-plexsans",
+    "plexserif-plexsans",
+    "montserrat-merriweather"
+   ],
+   "landing": "b2b-proof",
+   "avoid": [
+    "buzzwords",
+    "hero-metric",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:plain-words"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "it-studio",
+   "title": "веб-студия и разработка",
+   "keywords": [
+    "разработка",
+    "веб-студия",
+    "сайты",
+    "приложения",
+    "программирование",
+    "it"
+   ],
+   "styles": [
+    "product-ui",
+    "dev-tool",
+    "bento-showcase",
+    "swiss-grid"
+   ],
+   "palettes": [
+    "terminal",
+    "silicon",
+    "calm-dashboard",
+    "fjord",
+    "ink-paper"
+   ],
+   "pairs": [
+    "commissioner-jetbrains",
+    "martian-manrope",
+    "geologica-plexmono"
+   ],
+   "landing": "b2b-proof",
+   "avoid": [
+    "dark-neon",
+    "mono-costume",
+    "ai-violet"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results"
+    ],
+    "if_light": [
+     "mode:light"
+    ],
+    "if_dark": [
+     "mode:dark",
+     "style:dev-tool"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "nonprofit",
+   "title": "благотворительность и фонд",
+   "keywords": [
+    "фонд",
+    "благотворительность",
+    "волонтёры",
+    "помощь",
+    "благотворительный фонд"
+   ],
+   "styles": [
+    "expert-column",
+    "story-scroll",
+    "calm-business"
+   ],
+   "palettes": [
+    "warm-palm",
+    "cornflower",
+    "spring-green"
+   ],
+   "pairs": [
+    "merriweather-nunitosans",
+    "arsenal-spectral",
+    "sourceserif-onest"
+   ],
+   "landing": "cause",
+   "avoid": [
+    "invented-facts",
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:privacy",
+     "constraint:plain-words"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "church",
+   "title": "храм и приход",
+   "keywords": [
+    "храм",
+    "приход",
+    "церковь",
+    "воскресная школа"
+   ],
+   "styles": [
+    "book-page",
+    "magazine",
+    "gallery-white"
+   ],
+   "palettes": [
+    "cinnabar",
+    "stained-glass",
+    "archive",
+    "january-snow"
+   ],
+   "pairs": [
+    "monomakh-ysabeau",
+    "ptserif-ptsans",
+    "ebgaramond-wixtext"
+   ],
+   "landing": "cause",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:dates-visible",
+     "constraint:hours-and-map",
+     "constraint:big-text"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "printing",
+   "title": "типография",
+   "keywords": [
+    "типография",
+    "печать",
+    "полиграфия",
+    "визитки",
+    "баннеры"
+   ],
+   "styles": [
+    "constructivism",
+    "swiss-grid",
+    "bento-services"
+   ],
+   "palettes": [
+    "cobalt",
+    "graphite",
+    "poppy"
+   ],
+   "pairs": [
+    "cuprum-ptsans",
+    "sofiacond-sofia",
+    "jost-literata"
+   ],
+   "landing": "small-catalog",
+   "avoid": [
+    "card-grid"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:real-results"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "car-rental",
+   "title": "прокат и аренда",
+   "keywords": [
+    "прокат",
+    "аренда",
+    "аренда авто",
+    "прокат велосипедов",
+    "прокат лодок"
+   ],
+   "styles": [
+    "calm-business",
+    "bento-services",
+    "glass-over-photo"
+   ],
+   "palettes": [
+    "wet-asphalt",
+    "lagoon",
+    "july-noon"
+   ],
+   "pairs": [
+    "advent-golos",
+    "wixdisplay-wixtext",
+    "russo-ptsans"
+   ],
+   "landing": "booking-first",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:price-visible",
+     "constraint:phone-first"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "farm",
+   "title": "фермерское хозяйство",
+   "keywords": [
+    "ферма",
+    "фермер",
+    "хозяйство",
+    "агро",
+    "рассада",
+    "мёд"
+   ],
+   "styles": [
+    "farm-market",
+    "earth-materials",
+    "story-scroll",
+    "craft-paper"
+   ],
+   "palettes": [
+    "peat",
+    "sunflower",
+    "august",
+    "fern"
+   ],
+   "pairs": [
+    "podkova-ubuntu",
+    "amatic-nunito",
+    "kurale-nunito"
+   ],
+   "landing": "corner-shop",
+   "avoid": [
+    "stock-as-own",
+    "invented-facts"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:photo-led",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "artist",
+   "title": "художник",
+   "keywords": [
+    "художник",
+    "картины",
+    "живопись",
+    "выставка",
+    "графика"
+   ],
+   "styles": [
+    "gallery-white",
+    "raw-web",
+    "magazine"
+   ],
+   "palettes": [
+    "ochre",
+    "umber",
+    "museum",
+    "concrete",
+    "linen"
+   ],
+   "pairs": [
+    "piazzolla-geologica",
+    "alegreya-alegreyasans",
+    "jost-literata"
+   ],
+   "landing": "portfolio-grid",
+   "avoid": [
+    "image-caption"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:real-results",
+     "constraint:photo-led"
+    ],
+    "if_bold": [
+     "style:raw-web"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "museum",
+   "title": "музей и галерея",
+   "keywords": [
+    "музей",
+    "галерея",
+    "выставка",
+    "экспозиция"
+   ],
+   "styles": [
+    "gallery-white",
+    "constructivism",
+    "magazine"
+   ],
+   "palettes": [
+    "museum",
+    "stained-glass",
+    "theater-curtain",
+    "marble",
+    "white-nights"
+   ],
+   "pairs": [
+    "forum-mulish",
+    "brygada-ysabeauoffice",
+    "playfair-firasans"
+   ],
+   "landing": "event",
+   "avoid": [
+    "marquee"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:dates-visible",
+     "constraint:hours-and-map"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "bookstore",
+   "title": "книжный магазин",
+   "keywords": [
+    "книжный",
+    "книжный магазин",
+    "книги",
+    "букинист"
+   ],
+   "styles": [
+    "book-page",
+    "magazine",
+    "craft-paper"
+   ],
+   "palettes": [
+    "library",
+    "tweed",
+    "november"
+   ],
+   "pairs": [
+    "charis-firasans",
+    "alegreya-alegreyasans",
+    "literata-commissioner"
+   ],
+   "landing": "corner-shop",
+   "avoid": [
+    "stock-as-own"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:hours-and-map",
+     "constraint:photo-led"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "theater",
+   "title": "театр и студия актёрского мастерства",
+   "keywords": [
+    "театр",
+    "спектакль",
+    "актёрское мастерство",
+    "театральная студия"
+   ],
+   "styles": [
+    "constructivism",
+    "kinetic-statement",
+    "evening-lounge"
+   ],
+   "palettes": [
+    "theater-curtain",
+    "velvet",
+    "cinema"
+   ],
+   "pairs": [
+    "playfair-firasans",
+    "poiret-mulish",
+    "kellyslab-ptsans"
+   ],
+   "landing": "event",
+   "avoid": [
+    "video-autoplay"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:dates-visible",
+     "constraint:one-loud"
+    ],
+    "if_kids": [
+     "constraint:kids-safe"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "esports",
+   "title": "компьютерный клуб и киберспорт",
+   "keywords": [
+    "киберспорт",
+    "компьютерный клуб",
+    "игры",
+    "турнир"
+   ],
+   "styles": [
+    "y2k",
+    "synthwave",
+    "product-ui",
+    "poster-brutal"
+   ],
+   "palettes": [
+    "scoreboard",
+    "terminal",
+    "night-forest",
+    "finish-line"
+   ],
+   "pairs": [
+    "pixelify-onest",
+    "pressstart-jetbrains",
+    "exo2-rubik"
+   ],
+   "landing": "event",
+   "avoid": [
+    "dark-neon",
+    "glow"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:dates-visible",
+     "constraint:price-visible"
+    ]
+   },
+   "note": ""
+  },
+  {
+   "id": "ritual",
+   "title": "ритуальные услуги",
+   "keywords": [
+    "ритуальные услуги",
+    "похороны",
+    "памятники",
+    "мемориальная мастерская"
+   ],
+   "styles": [
+    "strict-classic",
+    "book-page",
+    "calm-business"
+   ],
+   "palettes": [
+    "granite",
+    "archive",
+    "november"
+   ],
+   "pairs": [
+    "ptserif-ptsans",
+    "ebgaramond-wixtext",
+    "libertinus-pair"
+   ],
+   "landing": "expert-trust",
+   "avoid": [
+    "virtue-words",
+    "marquee"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:phone-first",
+     "constraint:calm-motion",
+     "constraint:plain-words",
+     "constraint:price-visible"
+    ]
+   },
+   "note": "Тихо, ясно, с ценами и телефоном; никакой рекламной бодрости."
+  },
+  {
+   "id": "security",
+   "title": "охрана и безопасность",
+   "keywords": [
+    "охрана",
+    "охранное агентство",
+    "видеонаблюдение",
+    "сигнализация"
+   ],
+   "styles": [
+    "calm-business",
+    "swiss-grid",
+    "data-calm",
+    "strict-classic"
+   ],
+   "palettes": [
+    "steel",
+    "storm",
+    "signal"
+   ],
+   "pairs": [
+    "russo-ptsans",
+    "manrope-plexmono",
+    "plexserif-plexsans"
+   ],
+   "landing": "b2b-proof",
+   "avoid": [
+    "hero-metric",
+    "dark-neon"
+   ],
+   "rules": {
+    "must_have": [
+     "constraint:documents",
+     "constraint:phone-first"
+    ]
+   },
+   "note": ""
+  }
+ ]
+}

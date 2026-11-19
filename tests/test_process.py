@@ -91,7 +91,7 @@ class SkillFile(unittest.TestCase):
         self.assertRegex(self.front, r"(?m)^name: aidesign$")
         self.assertRegex(self.front, r"(?m)^description: \S")
         self.assertRegex(self.front, r"(?m)^argument-hint: \S")
-        self.assertRegex(self.front, r"(?m)^metadata:\n  version: \"0\.3\.0\"$")
+        self.assertRegex(self.front, r"(?m)^metadata:\n  version: \"0\.4\.0\"$")
         self.assertNotIn("disable-model-invocation", self.text)
 
     def test_title_and_stage_words(self):
@@ -593,6 +593,85 @@ class MediaProcess(unittest.TestCase):
             for word in ("вслепую", "оценкой сверху", "самой дорогой известной цене", "остатку бюджета",
                          "сначала спроси"):
                 self.assertIn(word, t, "%s: нет «%s»" % (os.path.basename(path), word))
+
+
+TOOLS_DIR = os.path.join(SKILL, "tools")
+# Инструменты 0.4.0: команда в тексте → флаги, которые она называет, есть в её --help.
+MECHANISM_CALL = re.compile(r"\b(extract|pick|film|browser|check)\.py((?:[ \t]+[^\s`|;]+)*)")
+FILM_SUBS = ("plan", "estimate", "models", "frames", "encode", "page", "seams")
+
+
+def help_flags(tool, sub=None):
+    args = [sys.executable, "-B", os.path.join(TOOLS_DIR, tool + ".py")] + ([sub] if sub else []) + ["--help"]
+    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", timeout=60, cwd=tempfile.gettempdir())
+    return set(re.findall(r"--[a-z][a-z0-9-]*", r.stdout))
+
+
+class Iteration040(unittest.TestCase):
+    """0.4.0: этапы зовут стиль по ссылке, справочник, браузерную проверку и фильм их настоящими командами."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.texts = skill_texts_with_knowledge()
+        cls.help = {}
+
+    def flags(self, tool, sub=None):
+        key = (tool, sub)
+        if key not in self.help:
+            self.help[key] = help_flags(tool, sub)
+        return self.help[key]
+
+    def test_each_phase_calls_its_mechanism(self):
+        t = process_texts()
+        for name, words in (("phases/1-refs.md", ("extract.py https://", "browser.py doctor", "robots.txt",
+                                                  "report.md", "логотип")),
+                            ("phases/3-previews.md", ("pick.py \"", "--tokens", "стартовая гипотеза",
+                                                      "три разных кандидата", "check.py --browser")),
+                            ("phases/4-build.md", ("film.py plan", "film.py estimate", "film.py page",
+                                                   "film.py seams", "сайт-как-фильм.md", "--hook")),
+                            ("phases/5-check.md", ("check.py --browser", "browser.py doctor")),
+                            ("phases/0-start.md", ("browser.py doctor", "browser.py ensure --yes", "extract.py",
+                                                   "pick.py", "film.py", "справочник/"))):
+            for word in words:
+                self.assertIn(word, t[name], "%s: нет «%s»" % (name, word))
+
+    def test_every_named_flag_exists_in_the_tool(self):
+        seen = 0
+        for name, text in sorted(self.texts.items()):
+            for m in MECHANISM_CALL.finditer(text):
+                tool, rest = m.group(1), m.group(2).split()
+                sub = rest[0] if tool == "film" and rest and rest[0] in FILM_SUBS else None
+                if tool == "browser" and rest and rest[0] in ("doctor", "ensure"):
+                    sub = rest[0]
+                known = self.flags(tool, sub)
+                for flag in re.findall(r"(?<![\w-])--[a-z][a-z0-9-]*", " ".join(rest)):
+                    if flag == "--help" or (tool == "pick" and rest and rest[0] == "make-palette"):
+                        continue
+                    seen += 1
+                    with self.subTest(file=name, call="%s.py %s" % (tool, " ".join(rest[:3]))):
+                        self.assertIn(flag, known, "%s: у %s.py%s нет флага %s" % (name, tool,
+                                                                                 " " + sub if sub else "", flag))
+        self.assertGreaterEqual(seen, 15)
+
+    def test_skill_md_names_the_new_tools_and_the_parity(self):
+        t = self.texts["SKILL.md"]
+        for word in ("extract.py", "pick.py", "check.py --browser", "film.py", "browser.py",
+                     "knowledge/справочник/README.md", "Паритет"):
+            self.assertIn(word, t, word)
+
+    def test_the_parity_table_covers_all_14_sources(self):
+        parity = section(self.texts["knowledge/INDEX.md"], "Паритет")
+        rows = [l for l in parity.splitlines() if l.startswith("| ") and not l.startswith("| Источник")
+                and not l.startswith("|---")]
+        self.assertEqual(len(rows), 14, "по строке на каждый из 14 источников карты знаний")
+        for word in ("Impeccable", "Taste", "frontend-design", "UI UX Pro Max", "Web Interface Guidelines",
+                     "GSAP", "add-shader-cursor-trail", "scroll-world-storytelling", "premium-frontend-ui",
+                     "HyperFrames", "hoodini", "awesome-design-md", "dembrandt", "| scroll-world |"):
+            self.assertIn(word, parity, word)
+        for row in rows:
+            cells = [c.strip() for c in row.strip("|").split("|")]
+            self.assertEqual(len(cells), 4, row[:40])
+            self.assertTrue(cells[1] and cells[1] != "—", "у источника нет «есть»: %s" % cells[0])
 
 
 class KnowledgeLinks(unittest.TestCase):

@@ -1,0 +1,10 @@
+/* Образец: почти чёрный фон и кислотный акцент в одной (тёмной) теме — находка. */
+:root {
+  --color-bg: #FFFFFF;
+  --color-accent: #1F5F8B;
+}
+
+.dark {
+  --color-bg: #0B0B0B;
+  --color-accent: #39FF14;
+}

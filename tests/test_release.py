@@ -90,8 +90,20 @@ class Versions(unittest.TestCase):
         self.assertIn("## 0.2.0", read(os.path.join(REPO, "CHANGELOG.md")))
 
     def test_the_media_iteration_is_version_zero_three_zero(self):
-        self.assertEqual(skill_version(), "0.3.0")
-        self.assertEqual(changelog_top(), "0.3.0")
+        self.assertIn("## 0.3.0", read(os.path.join(REPO, "CHANGELOG.md")))
+
+    def test_the_parity_iteration_is_version_zero_four_zero(self):
+        self.assertEqual(skill_version(), "0.4.0")
+        self.assertEqual(changelog_top(), "0.4.0")
+
+    def test_the_zero_four_zero_entry_tells_what_is_new_in_plain_words(self):
+        text = read(os.path.join(REPO, "CHANGELOG.md"))
+        entry = re.search(r"^## 0\.4\.0[^\n]*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+        self.assertIsNotNone(entry, "нет записи 0.4.0")
+        body = entry.group(1)
+        for word in ("tools/extract.py", "tools/pick.py", "check.py --browser", "tools/film.py",
+                     "tools/browser.py", "логотип", "бюджет", "14 источникам", "по-русски"):
+            self.assertIn(word, body, word)
 
     def test_the_zero_three_zero_entry_tells_what_is_new_in_plain_words(self):
         text = read(os.path.join(REPO, "CHANGELOG.md"))
@@ -214,6 +226,18 @@ class Readmes(unittest.TestCase):
             for word in words[name] + ("http://localhost", "`tools/media.py`", "`tools/shots.py`",
                                        "`tools/rules.py`"):
                 self.assertIn(word, text, "%s: нет «%s»" % (name, word))
+
+    def test_both_readmes_carry_the_news_of_0_4_0_and_the_parity_of_14_sources(self):
+        words = {"README.ru.md": ("Что нового в 0.4.0", "Паритет", "есть", "частично"),
+                 "README.md": ("What is new in 0.4.0", "Parity", "has", "partly")}
+        for name in READMES:
+            text = read(os.path.join(REPO, name))
+            for word in words[name] + ("`tools/extract.py`", "`tools/pick.py`", "`check.py --browser`",
+                                       "`tools/film.py`", "`tools/browser.py`", "https://github.com/google/fonts"):
+                self.assertIn(word, text, "%s: нет «%s»" % (name, word))
+            parity = text.split("### " + words[name][1], 1)[1].split("\n## ", 1)[0].split("\n### ", 1)[0]
+            rows = [l for l in parity.splitlines() if l.startswith("| ") and not l.startswith("|---")]
+            self.assertEqual(len(rows) - 1, 14, "%s: таблица паритета — строка на каждый из 14 источников" % name)
 
     def test_both_readmes_describe_the_two_orders_with_aispa_and_both_entries(self):
         for name in READMES:

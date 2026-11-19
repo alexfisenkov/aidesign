@@ -7,6 +7,7 @@
 """
 
 import importlib.util
+import os
 import json
 import re
 import subprocess
@@ -309,6 +310,323 @@ class CheckCliTest(unittest.TestCase):
             self.assertEqual(data["count"], len(data["findings"]))
             first = data["findings"][0]
             self.assertEqual(set(first), {"path", "line", "rule", "message", "fix", "ref"})
+
+
+FIXTURES = ROOT / "tests" / "fixtures" / "check"
+TOOLS = ROOT / "skills" / "aidesign" / "tools"
+# Новые правила паритета с Impeccable (задача 14): у каждого — образцы <id>-bad.* и <id>-good.*.
+NEW_STATIC = [
+    "border-accent-on-rounded", "flat-type-hierarchy", "nested-cards", "monotonous-spacing",
+    "italic-serif-display", "oversized-h1", "em-dash-overuse", "aphoristic-cadence", "theater-slop-phrase",
+    "gray-on-color", "low-contrast", "undersized-ui-text", "cramped-padding", "repeated-container-text",
+    "clipped-overflow-container", "gpt-thin-border-wide-shadow", "buried-raster", "organic-clip-path",
+    "shape-assembled-illustration", "design-system-radius", "design-system-font-size",
+]
+NEW_BROWSER = [
+    "script-error", "edge-flush-cards", "text-occlusion", "first-viewport-column-overflow",
+    "body-text-viewport-edge", "heading-rhythm", "straggler", "unbalanced-heading", "text-overflow",
+    "content-hidden-at-rest", "line-length",
+]
+# Реестр Impeccable (crates/foundation/src/registry.rs), 62 правила, в порядке источника.
+IMPECCABLE = [
+    "side-tab", "border-accent-on-rounded", "overused-font", "flat-type-hierarchy", "gradient-text",
+    "ai-color-palette", "cream-palette", "nested-cards", "monotonous-spacing", "bounce-easing", "pulsing-dot",
+    "blinking-cursor", "shape-assembled-illustration", "organic-clip-path", "buried-raster", "hard-offset-shadow",
+    "dark-glow", "radial-halo", "radial-spotlight-glow", "marquee", "icon-tile-stack", "italic-serif-display",
+    "hero-eyebrow-chip", "kicker-above-heading", "numbered-section-labels", "em-dash-overuse",
+    "marketing-buzzword", "aphoristic-cadence", "oversized-h1", "extreme-negative-tracking", "broken-image",
+    "script-error", "content-hidden-at-rest", "edge-flush-cards", "text-occlusion",
+    "first-viewport-column-overflow", "gray-on-color", "low-contrast", "line-length", "cramped-padding",
+    "body-text-viewport-edge", "tight-leading", "skipped-heading", "heading-rhythm", "justified-text",
+    "straggler", "unbalanced-heading", "tiny-text", "undersized-ui-text", "all-caps-body", "wide-tracking",
+    "text-overflow", "repeated-container-text", "clipped-overflow-container", "design-system-font",
+    "design-system-color", "design-system-radius", "design-system-font-size", "gpt-thin-border-wide-shadow",
+    "repeating-stripes-gradient", "codex-grid-background", "theater-slop-phrase",
+]
+# Ожидания по образцам Impeccable (tests/oracle/golden источника), id переведены в наши.
+IMPECCABLE_FLAGS = {
+    "jsx-should-flag.jsx": {"ai-violet-gradient", "bounce-easing", "gradient-text", "side-stripe"},
+    "cssinjs-should-flag.tsx": {"bounce-easing", "gradient-text", "overused-font", "side-stripe"},
+    "vue-should-flag.vue": {"ai-violet-gradient", "bounce-easing", "gradient-text", "overused-font", "side-stripe"},
+    "svelte-should-flag.svelte": {"ai-violet-gradient", "bounce-easing", "gradient-text", "overused-font", "side-stripe"},
+    "should-flag.html": {"border-accent-on-rounded", "side-stripe"},
+    "typography-should-flag.html": {"flat-type-hierarchy", "overused-font"},
+    "css-in-prose-should-flag.html": {"ai-violet-gradient", "gradient-text"},
+}
+# Правила, которые есть у Impeccable (в наших id): на образцах should-pass их быть не должно.
+IMPECCABLE_SIDE = {
+    "side-stripe", "border-accent-on-rounded", "overused-font", "flat-type-hierarchy", "gradient-text",
+    "ai-violet-gradient", "dark-neon", "cream-terracotta", "nested-cards", "monotonous-spacing", "bounce-easing",
+    "pulsing-dot", "blinking-cursor", "shape-assembled-illustration", "organic-clip-path", "buried-raster",
+    "hard-offset-shadow", "glow-shadow", "blur-blob", "marquee", "icon-tile-cards", "italic-serif-display",
+    "eyebrow-class", "caps-label", "numbered-markers", "em-dash-overuse", "buzzwords", "aphoristic-cadence",
+    "oversized-h1", "crushed-tracking", "placeholder-image", "hidden-at-rest", "gray-on-color", "low-contrast",
+    "long-measure", "cramped-padding", "tight-leading", "skipped-heading", "justified-text", "tiny-text",
+    "undersized-ui-text", "caps-body", "wide-tracking", "repeated-container-text", "clipped-overflow-container",
+    "gpt-thin-border-wide-shadow", "repeating-stripes", "grid-background", "theater-slop-phrase",
+}
+
+
+def samples(folder):
+    """(путь, id правила, bad|good) для образцов <id>-{bad,good}.* в папке и подпапках."""
+    out = []
+    for f in sorted(folder.rglob("*")):
+        m = re.fullmatch(r"(.+)-(bad|good)", f.stem)
+        if f.is_file() and m and "impeccable" not in f.parts:
+            out.append((f, m.group(1), m.group(2)))
+    return out
+
+
+class ParityStaticTest(unittest.TestCase):
+    """Новые правила статикой: образцы bad ловятся, good — нет; компоненты и Tailwind понимаются."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.check = load_check()
+
+    def test_every_new_rule_has_bad_and_good_samples(self):
+        have = {(rid, kind) for _, rid, kind in samples(FIXTURES) if "browser" not in _.parts}
+        for rid in NEW_STATIC:
+            self.assertIn((rid, "bad"), have, rid)
+            self.assertIn((rid, "good"), have, rid)
+            self.assertIn(rid, {r.id for r in self.check.RULES})
+
+    def test_samples(self):
+        for path, rid, kind in samples(FIXTURES):
+            if "browser" in path.parts:
+                continue
+            with self.subTest(sample=str(path.relative_to(FIXTURES))):
+                found = {f.rule for f in self.check.scan([path])}
+                if kind == "bad":
+                    self.assertIn(rid, found)
+                else:
+                    self.assertNotIn(rid, found)
+
+    def test_light_and_dark_themes_are_checked_apart(self):
+        """tokens.css с двумя темами (potter-clay справочника): цвета разных тем не складываются."""
+        self.assertEqual([], [(f.rule, f.line) for f in self.check.scan([FIXTURES / "cream-terracotta-good.css"])])
+        self.assertIn("cream-terracotta", {f.rule for f in self.check.scan([FIXTURES / "cream-terracotta-bad.css"])})
+        self.assertIn("dark-neon", {f.rule for f in self.check.scan([FIXTURES / "dark-neon-bad.css"])})
+        self.assertNotIn("dark-neon", {f.rule for f in self.check.scan([FIXTURES / "dark-neon-good.css"])})
+        # Тёмная основная тема: pick.py "керамика" --dark --direction 1 --tokens (potter-clay) — светлая лишь переопределение.
+        self.assertEqual([], [(f.rule, f.line) for f in self.check.scan([FIXTURES / "cream-terracotta-good-dark.css"])])
+        self.assertIn("cream-terracotta", {f.rule for f in self.check.scan([FIXTURES / "cream-terracotta-bad-dark.css"])})
+
+    def test_component_samples_exist(self):
+        exts = {p.suffix for p, _, kind in samples(FIXTURES) if kind == "bad"}
+        self.assertTrue({".jsx", ".vue", ".svelte"} <= exts, exts)
+
+    def test_impeccable_flag_samples(self):
+        for name, want in IMPECCABLE_FLAGS.items():
+            with self.subTest(sample=name):
+                found = {f.rule for f in self.check.scan([FIXTURES / "impeccable" / name])}
+                self.assertFalse(want - found, "не пойманы: %s" % sorted(want - found))
+
+    def test_impeccable_pass_samples(self):
+        for path in sorted((FIXTURES / "impeccable").glob("*should-pass*")):
+            with self.subTest(sample=path.name):
+                found = {f.rule for f in self.check.scan([path])} & IMPECCABLE_SIDE
+                self.assertEqual(set(), found)
+
+    def test_gray_on_color_matches_impeccable_rows(self):
+        path = FIXTURES / "impeccable" / "gray-on-color.html"
+        lines = path.read_text(encoding="utf-8").split("\n")
+        flag = {i for i, line in enumerate(lines, 1) if 'id="flag-' in line}
+        found = {f.line for f in self.check.scan([path]) if f.rule == "gray-on-color"}
+        self.assertEqual(flag, found)
+        self.assertEqual(6, len(flag))
+
+    def test_component_files_are_collected_and_template_code_is_not_text(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp)
+            for name in ("a.jsx", "b.tsx", "c.vue", "d.svelte", "e.astro", "f.scss", "g.md"):
+                (d / name).write_text("", encoding="utf-8")
+            self.assertEqual({".jsx", ".tsx", ".vue", ".svelte", ".astro", ".scss"},
+                             {p.suffix for p in self.check.collect_files([d])})
+            vue = d / "card.vue"
+            vue.write_text('<template>\n  <p class="lead">{{ title }}</p>\n</template>\n', encoding="utf-8")
+            jsx = d / "card.jsx"
+            jsx.write_text("const seamless = useState<string>(null);\nexport const C = () => (\n  <p>{seamless}</p>\n);\n",
+                           encoding="utf-8")
+            rules = {f.rule for f in self.check.scan([vue, jsx])}
+            self.assertNotIn("placeholder-text", rules)       # {{ title }} — выражение, не заглушка
+            self.assertNotIn("buzzwords", rules)              # имя переменной — код, не текст
+
+    def test_scss_nesting_and_tailwind_classes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            scss = Path(tmp) / "card.scss"
+            scss.write_text(".card {\n  padding: 24px;\n  .title {\n    background-clip: text;\n  }\n}\n", encoding="utf-8")
+            found = [f for f in self.check.scan([scss]) if f.rule == "gradient-text"]
+            self.assertEqual([4], [f.line for f in found])
+            page = Path(tmp) / "tw.html"
+            page.write_text('<p class="tracking-tighter text-[10px]">Мелко и тесно</p>\n', encoding="utf-8")
+            rules = {f.rule for f in self.check.scan([page])}
+            self.assertTrue({"crushed-tracking", "tiny-text"} <= rules, rules)
+
+
+class ExceptionsAndFastTest(unittest.TestCase):
+    """aidesign-ignore-file, .aidesign-check.json, --fast, --hook."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.check = load_check()
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def cli(self, *args, stdin=None):
+        return subprocess.run([sys.executable, "-B", str(CHECK), *map(str, args)], capture_output=True,
+                              text=True, encoding="utf-8", input=stdin)
+
+    def test_ignore_file_comment(self):
+        css = "/* aidesign-ignore-file: hard-offset-shadow — необрутализм в DESIGN.md */\n.a { box-shadow: 6px 6px 0 #000; }\n.b { box-shadow: 4px 4px 0 #000; }\n"
+        path = self.dir / "brutal.css"
+        path.write_text(css, encoding="utf-8")
+        self.assertNotIn("hard-offset-shadow", {f.rule for f in self.check.scan([path])})
+
+    def test_project_config(self):
+        site = self.dir / "site"
+        (site / "demo").mkdir(parents=True)
+        (site / "a.css").write_text(".a { transition: all 1s; box-shadow: 6px 6px 0 #000; }\n", encoding="utf-8")
+        (site / "demo" / "b.css").write_text(".b { transition: all 1s; }\n", encoding="utf-8")
+        (site / ".aidesign-check.json").write_text(
+            json.dumps({"ignoreRules": ["hard-offset-shadow"], "ignoreFiles": ["demo/*.css"]}), encoding="utf-8")
+        found = {(Path(f.path).name, f.rule) for f in self.check.scan([site])}
+        self.assertIn(("a.css", "transition-all"), found)
+        self.assertNotIn(("a.css", "hard-offset-shadow"), found)
+        self.assertFalse([x for x in found if x[0] == "b.css"])
+        raw = {(Path(f.path).name, f.rule) for f in self.check.scan([site], use_config=False)}
+        self.assertIn(("b.css", "transition-all"), raw)
+        (site / ".aidesign-check.json").write_text("{не json", encoding="utf-8")
+        res = self.cli(site)
+        self.assertEqual(2, res.returncode, res.stdout)
+        self.assertIn(".aidesign-check.json", res.stderr)
+        self.assertEqual(1, self.cli(site, "--no-config").returncode)
+
+    def test_fast_keeps_mechanics_and_drops_taste(self):
+        css = self.dir / "x.css"
+        css.write_text('.a { font-family: "Inter", sans-serif; }\n.b { -webkit-background-clip: text; }\n', encoding="utf-8")
+        full = {f.rule for f in self.check.scan([css])}
+        fast = {f.rule for f in self.check.scan([css], fast=True)}
+        self.assertIn("overused-font", full)
+        self.assertNotIn("overused-font", fast)
+        self.assertIn("gradient-text", fast)
+        self.assertTrue(fast <= self.check.FAST)
+
+    def test_hook(self):
+        css = self.dir / "x.css"
+        css.write_text(".b { -webkit-background-clip: text; }\n", encoding="utf-8")
+        res = self.cli("--hook", stdin=json.dumps({"tool_name": "Edit", "tool_input": {"file_path": str(css)}}))
+        self.assertEqual(2, res.returncode)
+        self.assertIn("[gradient-text]", res.stderr)
+        self.assertEqual("", res.stdout)
+        note = self.dir / "notes.md"
+        note.write_text("text", encoding="utf-8")
+        for payload in (json.dumps({"tool_input": {"file_path": str(note)}}), "не json", ""):
+            self.assertEqual(0, self.cli("--hook", stdin=payload).returncode, payload)
+        clean = self.dir / "ok.css"
+        clean.write_text(".a { color: #1f2933; }\n", encoding="utf-8")
+        self.assertEqual(0, self.cli("--hook", stdin=json.dumps({"tool_input": {"file_path": str(clean)}})).returncode)
+
+    def test_rules_listing_marks_fast_and_browser(self):
+        out = self.cli("--rules").stdout
+        self.assertIn("[быстрое]", out)
+        for rid in NEW_BROWSER + NEW_STATIC:
+            self.assertIn(rid, out)
+
+
+class ParityCatalogTest(unittest.TestCase):
+    """Таблица соответствия в антипаттерны.md: все 62 правила Impeccable и рецепт хука."""
+
+    def test_table_covers_every_impeccable_rule(self):
+        self.assertEqual(62, len(IMPECCABLE))
+        text = CATALOG.read_text(encoding="utf-8")
+        table = text[text.index("{#impeccable-parity}"):]
+        rows = dict(re.findall(r"^\| ([a-z0-9-]+) \| (.+?) \|", table, re.M))
+        self.assertEqual(set(IMPECCABLE), set(rows) - {"Impeccable"})
+        check = load_check()
+        ours = {r.id for r in check.RULES} | set(NEW_BROWSER) | {"ds-hardcoded-font", "ds-hardcoded-color"}
+        for imp, cell in rows.items():
+            for rid in re.findall(r"`([a-z0-9-]+)`", cell):
+                self.assertIn(rid, ours, "%s → %s" % (imp, rid))
+        self.assertNotRegex(table, r"можно, но нет")
+
+    def test_hook_recipe_and_browser_anchors(self):
+        text = CATALOG.read_text(encoding="utf-8")
+        self.assertIn('"PostToolUse"', text)
+        self.assertIn("check.py\\\" --hook", text)
+        self.assertIn("--fast", text)
+        anchors = set(re.findall(r"\{#([a-z0-9-]+)\}", text))
+        sys.path.insert(0, str(TOOLS))
+        import check_browser
+        for _, anchor, _, _ in check_browser.SPECS:
+            self.assertIn(anchor, anchors)
+
+
+class BrowserLayerTest(unittest.TestCase):
+    """check.py --browser: без модуля — отказ с кодом 2; с модулем — образцы раскладки."""
+
+    def run_cli(self, *args, env=None):
+        return subprocess.run([sys.executable, "-B", str(CHECK), *map(str, args)], capture_output=True,
+                              text=True, encoding="utf-8", env=env, timeout=900)
+
+    def test_without_browser_module_refuses_with_code_2(self):
+        with tempfile.TemporaryDirectory() as home:
+            env = dict(os.environ, AIDESIGN_BROWSER_HOME=home)
+            res = self.run_cli("--browser", FIXTURES / "browser" / "text-overflow-bad.html", env=env)
+            self.assertEqual(2, res.returncode, res.stdout + res.stderr)
+            self.assertIn("browser.py", res.stderr)
+            self.assertEqual(2, self.run_cli("--browser", Path(home) / "нет.html", env=env).returncode)
+
+    def test_layout_samples(self):
+        sys.path.insert(0, str(TOOLS))
+        import browser
+        if not browser.ready():
+            self.skipTest("браузерный модуль не поставлен (python3 browser.py ensure --yes или AIDESIGN_BROWSER_HOME)")
+        res = self.run_cli("--browser", FIXTURES / "browser", "--json")
+        self.assertIn(res.returncode, (0, 1), res.stderr)
+        found = {(Path(f["path"]).name, f["rule"]) for f in json.loads(res.stdout)["findings"]}
+        for path, rid, kind in samples(FIXTURES / "browser"):
+            with self.subTest(sample=path.name):
+                if kind == "bad":
+                    self.assertIn((path.name, rid), found)
+                else:
+                    self.assertNotIn((path.name, rid), found)
+        self.assertEqual(set(NEW_BROWSER), {rid for _, rid, _ in samples(FIXTURES / "browser")})
+
+    def test_scroll_scene_text_is_hidden_only_when_it_leaves_the_reading_flow(self):
+        """Сцена по прокрутке: подпись видна на своём месте и гаснет дальше. В потоке чтения — не находка;
+        под inert (не прочесть и не найти) — находка, как обычное «скрыто в покое»."""
+        sys.path.insert(0, str(TOOLS))
+        import browser
+        if not browser.ready():
+            self.skipTest("браузерный модуль не поставлен (python3 browser.py ensure --yes или AIDESIGN_BROWSER_HOME)")
+        body = "Глину замешиваем с вечера, утром она мягкая и послушная, а печь уже набирает жар для первого обжига."
+        caps = "\n".join('<p class="cap" style="opacity:%d">Сцена %d. %s</p>' % (i == 0, i + 1, body) for i in range(3))
+        page = """<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Сцены</title>
+<style>body{margin:0;font:17px/1.55 system-ui,sans-serif;color:#f3ede4;background:#14110f}
+.film{height:400vh;position:relative}.stage{position:sticky;top:0;height:100vh}
+.cap{position:absolute;left:24px;right:24px;bottom:15vh;max-width:36rem;margin:0;text-wrap:pretty}</style></head>
+<body><main><section class="film"><div class="stage">%s</div></section></main>
+<script>const caps=[...document.querySelectorAll('.cap')], film=document.querySelector('.film');
+function read(){const y=-film.getBoundingClientRect().top, seg=innerHeight;
+caps.forEach((c,i)=>{const on=Math.abs(y-i*seg)<seg*0.4?1:0;c.style.opacity=on;if(%s)c.toggleAttribute('inert',!on);});}
+addEventListener('scroll',read,{passive:true});read();</script></body></html>"""
+        with tempfile.TemporaryDirectory() as tmp:
+            pages = {}
+            for name, inert in (("flow", "false"), ("inert", "true")):
+                pages[name] = Path(tmp) / ("%s.html" % name)
+                pages[name].write_text(page % (caps, inert), encoding="utf-8")
+            res = self.run_cli("--browser", tmp, "--json")
+            self.assertIn(res.returncode, (0, 1), res.stderr)
+            found = {(Path(f["path"]).stem, f["rule"]) for f in json.loads(res.stdout)["findings"]}
+        self.assertNotIn(("flow", "content-hidden-at-rest"), found)
+        self.assertIn(("inert", "content-hidden-at-rest"), found)
 
 
 if __name__ == "__main__":

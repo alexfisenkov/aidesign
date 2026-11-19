@@ -20,6 +20,7 @@ AIDESIGN_SETUP_TIMEOUT — предел одного шага установки
 """
 
 import argparse
+import importlib.util
 import json
 import os
 import platform
@@ -197,6 +198,18 @@ def browsers_dir() -> str:
     return os.path.join(home, ".cache", "ms-playwright")
 
 
+def playwright_package() -> Optional[str]:
+    """Версия пакета Playwright в общем кэше скилла (browser.py cache_dir), без запуска npx."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "browser.py")
+    try:
+        spec = importlib.util.spec_from_file_location("aidesign_browser_for_setup", path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.installed_version()
+    except (OSError, ImportError, AttributeError, SyntaxError):
+        return None
+
+
 def probe(tool: Tool):
     """(есть ли, версия). Figma — None: подключение MCP видит только агент."""
     if tool.id == "figma":
@@ -206,7 +219,11 @@ def probe(tool: Tool):
             found = sorted(d for d in os.listdir(browsers_dir()) if re.match(r"chromium-\d+$", d))
         except OSError:
             found = []
-        return (True, found[-1].split("-", 1)[1]) if found else (False, None)
+        if not found:
+            return False, None
+        build = "сборка Chromium %s" % found[-1].split("-", 1)[1]
+        pkg = playwright_package()
+        return True, "%s (%s)" % (pkg, build) if pkg else build
     for cmd in tool.probe:
         out = _output(cmd)
         m = re.search(tool.version_re, out or "")

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "checked": "2026-11-19",
-  "about": "Каталог генераторов медиа для media.py: как распознать подключённый сервис по именам инструментов, какие у него инструменты баланса, цены и ожидания, как подключить. match — регулярные выражения (без учёта регистра) по полному имени инструмента: mcp__<сервер>__<инструмент> или встроенное имя. tools — короткие имена инструментов по ролям. fingerprint — регулярные выражения по короткому имени инструмента (без mcp__<сервер>__): коннекторы claude.ai приходят с именем-UUID вместо имени сервиса, и сервис узнаётся по набору характерных инструментов, не меньше fingerprint_min совпадений (fingerprint_need — без такого инструмента сервис не генератор). kinds_by_tools — виды только по тем инструментам, что подключены. unverified: true — часть сведений (обычно имена инструментов) не сверена с официальной страницей; что именно — в unverified_fields.",
+  "about": "Каталог генераторов медиа для media.py: как распознать подключённый сервис по именам инструментов, какие у него инструменты баланса, цены и ожидания, как подключить. match — регулярные выражения (без учёта регистра) по полному имени инструмента: mcp__<сервер>__<инструмент> или встроенное имя. tools — короткие имена инструментов по ролям. fingerprint — регулярные выражения по короткому имени инструмента (без mcp__<сервер>__): коннекторы claude.ai приходят с именем-UUID вместо имени сервиса, и сервис узнаётся по набору характерных инструментов, не меньше fingerprint_min совпадений (fingerprint_need — без такого инструмента сервис не генератор). kinds_by_tools — виды только по тем инструментам, что подключены. unverified: true — часть сведений (обычно имена инструментов) не сверена с официальной страницей; что именно — в unverified_fields. models — видеомодели сервиса для film.py: frames = start_end (принимает начальный и конечный кадр — годится для связок между сценами), start (только начальный — цепочка без связок), none (ни одного — стыки только перетеканием); checked — когда сведения сняты, unverified — схему модели в сервисе сверить перед генерацией.",
   "services": [
     {
       "id": "higgsfield", "title": "Higgsfield",
@@ -16,7 +16,19 @@
       "connect": {"claude": ["claude mcp add --transport http higgsfield https://mcp.higgsfield.ai/mcp"],
                   "codex": ["codex mcp add higgsfield --url https://mcp.higgsfield.ai/mcp", "codex mcp login higgsfield"]},
       "auth": "oauth", "free": "по тарифу аккаунта; потолок траты — параметр max_credits", "docs": "https://higgsfield.ai",
-      "notes": "SVG и GIF — через output_format у generate_image"
+      "notes": "SVG и GIF — через output_format у generate_image",
+      "models": [
+        {"id": "seedance_2_0", "title": "Seedance 2.0", "kind": "video", "frames": "start_end", "checked": "2026-07",
+         "unverified": true, "about": "конечный кадр — близко, не до пикселя; стык закрывает кроссфейд"},
+        {"id": "seedance_2_0_mini", "title": "Seedance 2.0 mini", "kind": "video", "frames": "start_end", "checked": "2026-07",
+         "unverified": true, "about": "дешёвый черновой проход той же цепочки, 720p"},
+        {"id": "kling3_0", "title": "Kling 3.0", "kind": "video", "frames": "start_end", "checked": "2026-07",
+         "unverified": true, "about": "720p; звук по умолчанию включён — выключать"},
+        {"id": "kling3_0_turbo", "title": "Kling 3.0 Turbo", "kind": "video", "frames": "start", "checked": "2026-07",
+         "unverified": true, "about": "без конечного кадра: только проход и фиксированный ракурс"},
+        {"id": "minimax_hailuo", "title": "Hailuo 2.3", "kind": "video", "frames": "start", "checked": "2026-07",
+         "unverified": true, "about": "без конечного кадра; пропорция видео — по входной картинке"}
+      ]
     },
     {
       "id": "magnific", "title": "Magnific (бывший Freepik)",
@@ -30,7 +42,13 @@
       "connect": {"claude": ["claude mcp add --transport http magnific https://mcp.magnific.com"],
                   "codex": ["codex mcp add magnific --url https://mcp.magnific.com", "codex mcp login magnific"]},
       "auth": "oauth", "free": "по тарифу аккаунта; цену видео и пачки называет simulate_cost", "docs": "https://www.magnific.com",
-      "unverified": true, "unverified_fields": ["tools.generate: audio_generate"]
+      "unverified": true, "unverified_fields": ["tools.generate: audio_generate", "models"],
+      "models": [
+        {"id": "kling", "title": "Kling (начальный и конечный кадр)", "kind": "video", "frames": "start_end", "checked": "2026-11",
+         "unverified": true, "about": "начальный и конечный кадр не сочетаются с визуальными референсами"},
+        {"id": "seedance", "title": "Seedance (начальный и конечный кадр)", "kind": "video", "frames": "start_end", "checked": "2026-11",
+         "unverified": true, "about": "начальный и конечный кадр не сочетаются с визуальными референсами"}
+      ]
     },
     {
       "id": "syntx", "title": "Syntx",
@@ -91,7 +109,11 @@
       "connect": {"claude": ["claude mcp add --transport http runway https://mcp.runwayml.com/mcp"],
                   "codex": ["codex mcp add runway --url https://mcp.runwayml.com/mcp", "codex mcp login runway"]},
       "auth": "oauth", "free": "платно, по кредитам аккаунта", "docs": "https://runwayml.com",
-      "unverified": true, "unverified_fields": ["tools"]
+      "unverified": true, "unverified_fields": ["tools", "models"],
+      "models": [
+        {"id": "gen4_turbo", "title": "Gen-4 Turbo (из картинки)", "kind": "video", "frames": "start", "checked": "2026-11",
+         "unverified": true, "about": "оживляет начальный кадр; конечный кадр — сверь в текущей схеме модели"}
+      ]
     },
     {
       "id": "luma", "title": "Luma",
@@ -101,7 +123,11 @@
       "connect": {"claude": ["claude mcp add --transport http luma https://agents.lumalabs.ai/mcp"],
                   "codex": ["codex mcp add luma --url https://agents.lumalabs.ai/mcp", "codex mcp login luma"]},
       "auth": "oauth", "free": "платно, по кредитам аккаунта", "docs": "https://lumalabs.ai",
-      "unverified": true, "unverified_fields": ["tools"]
+      "unverified": true, "unverified_fields": ["tools", "models"],
+      "models": [
+        {"id": "ray", "title": "Ray (ключевые кадры)", "kind": "video", "frames": "start_end", "checked": "2026-11",
+         "unverified": true, "about": "начальный и конечный ключевой кадр"}
+      ]
     },
     {
       "id": "krea", "title": "Krea",
