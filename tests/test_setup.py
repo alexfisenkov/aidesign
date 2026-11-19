@@ -15,7 +15,7 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SETUP = os.path.join(os.path.dirname(HERE), "skills", "aidesign", "tools", "setup.py")
-IDS = ["python", "git", "node", "playwright", "ffmpeg", "figma"]
+IDS = ["python", "git", "node", "playwright", "ffmpeg", "webp", "figma"]
 UNIX = os.name != "nt"
 
 
@@ -189,6 +189,14 @@ class Plan(Base):
         codex = self.cmds(self.plan("figma", "--os", "mac", "--host", "codex"), "figma")
         self.assertIn(["codex", "mcp", "add", "figma", "--url", "https://mcp.figma.com/mcp"], codex)
         self.assertIn(["codex", "mcp", "login", "figma"], codex)
+
+    def test_webp_tools_come_from_each_package_manager(self):
+        """cwebp — запасной путь WebP для media.py prep, когда в ffmpeg нет libwebp."""
+        self.assertEqual(self.cmds(self.plan("webp", "--os", "mac"), "webp"), [["brew", "install", "webp"]])
+        self.assertIn("Google.Libwebp", self.cmds(self.plan("webp", "--os", "windows"), "webp")[0])
+        for pkg, name in (("apt", "webp"), ("dnf", "libwebp-tools"), ("pacman", "libwebp")):
+            cmd = self.cmds(self.plan("webp", "--os", "linux", "--pkg", pkg), "webp")[0]
+            self.assertEqual((cmd[0], cmd[-1]), ("sudo", name), pkg)
 
     def test_unknown_tool_or_os_is_an_input_error(self):
         self.assertEqual(self.run_setup("plan", "photoshop", "--os", "mac")[0], 2)

@@ -1,0 +1,205 @@
+{
+  "version": 1,
+  "checked": "2026-11-19",
+  "about": "Каталог генераторов медиа для media.py: как распознать подключённый сервис по именам инструментов, какие у него инструменты баланса, цены и ожидания, как подключить. match — регулярные выражения (без учёта регистра) по полному имени инструмента: mcp__<сервер>__<инструмент> или встроенное имя. tools — короткие имена инструментов по ролям. fingerprint — регулярные выражения по короткому имени инструмента (без mcp__<сервер>__): коннекторы claude.ai приходят с именем-UUID вместо имени сервиса, и сервис узнаётся по набору характерных инструментов, не меньше fingerprint_min совпадений (fingerprint_need — без такого инструмента сервис не генератор). kinds_by_tools — виды только по тем инструментам, что подключены. unverified: true — часть сведений (обычно имена инструментов) не сверена с официальной страницей; что именно — в unverified_fields.",
+  "services": [
+    {
+      "id": "higgsfield", "title": "Higgsfield",
+      "kinds": ["image", "video", "audio", "3d", "svg"],
+      "match": ["^mcp__.*higgsfield.*__"],
+      "fingerprint": ["^jobs_wait$", "^ads_studio_", "^get_preset_instructions$", "^models_explore$", "^show_marketing_studio",
+                      "^media_upload_widget$", "^ai_influencer_", "^show_generation_by_ids$", "^execute_preset$",
+                      "^get_workflow_instructions$", "^generate_3d$", "^balance$"],
+      "fingerprint_min": 3,
+      "tools": {"generate": ["generate_image", "generate_video", "generate_audio", "generate_3d"], "balance": ["balance"],
+                "price": ["estimate_image_cost", "estimate_video_cost", "estimate_audio_cost"], "wait": ["jobs_wait"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http higgsfield https://mcp.higgsfield.ai/mcp"],
+                  "codex": ["codex mcp add higgsfield --url https://mcp.higgsfield.ai/mcp", "codex mcp login higgsfield"]},
+      "auth": "oauth", "free": "по тарифу аккаунта; потолок траты — параметр max_credits", "docs": "https://higgsfield.ai",
+      "notes": "SVG и GIF — через output_format у generate_image"
+    },
+    {
+      "id": "magnific", "title": "Magnific (бывший Freepik)",
+      "kinds": ["image", "video", "audio", "3d"],
+      "match": ["^mcp__.*(magnific|freepik).*__"],
+      "fingerprint": ["^magnific_", "^simulate_cost$", "^simulate_flows$", "^creations_(wait|read|list)", "^flows_wait$",
+                      "^folders_list$", "^video_view_frames$", "^images_generate$", "^models3d_generate$"],
+      "fingerprint_min": 2,
+      "tools": {"generate": ["images_generate", "video_generate", "audio_generate", "models3d_generate"], "balance": ["account_balance"],
+                "price": ["simulate_cost"], "wait": ["creations_wait"], "download": ["creations_read"]},
+      "connect": {"claude": ["claude mcp add --transport http magnific https://mcp.magnific.com"],
+                  "codex": ["codex mcp add magnific --url https://mcp.magnific.com", "codex mcp login magnific"]},
+      "auth": "oauth", "free": "по тарифу аккаунта; цену видео и пачки называет simulate_cost", "docs": "https://www.magnific.com",
+      "unverified": true, "unverified_fields": ["tools.generate: audio_generate"]
+    },
+    {
+      "id": "syntx", "title": "Syntx",
+      "kinds": ["image", "video", "audio"],
+      "match": ["^mcp__.*syntx.*__"],
+      "tools": {"generate": [], "balance": [], "price": [], "wait": [], "download": []},
+      "connect": {"claude": [], "codex": []},
+      "auth": "login", "free": "не известно", "docs": null,
+      "unverified": true, "unverified_fields": ["tools", "connect", "kinds"],
+      "notes": "публичной документации MCP нет: распознаётся по имени сервера, роли инструментов — по общим шаблонам"
+    },
+    {
+      "id": "fal", "title": "fal",
+      "kinds": ["image", "video", "audio", "3d"],
+      "match": ["^mcp__(.*[_-])?fal([_-]ai)?__"],
+      "tools": {"generate": ["run_model"], "balance": [], "price": ["get_pricing"], "wait": ["check_job"], "download": ["get_job_result"]},
+      "connect": {"claude": ["claude mcp add --transport http fal https://mcp.fal.ai/mcp-relay"],
+                  "codex": ["codex mcp add fal --url https://mcp.fal.ai/mcp-relay", "codex mcp login fal"]},
+      "auth": "oauth", "free": "платно, по цене модели (get_pricing)", "docs": "https://fal.ai/docs"
+    },
+    {
+      "id": "replicate", "title": "Replicate",
+      "kinds": ["image", "video", "audio", "3d"],
+      "match": ["^mcp__.*replicate.*__"],
+      "tools": {"generate": ["create_predictions", "create_models_predictions"], "balance": [], "price": [],
+                "wait": ["get_predictions"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport sse replicate https://mcp.replicate.com/sse"],
+                  "codex": ["codex mcp add replicate --env REPLICATE_API_TOKEN=<ваш токен> -- npx -y replicate-mcp"]},
+      "auth": "key", "key_env": "REPLICATE_API_TOKEN", "free": "платно, по времени работы модели", "docs": "https://replicate.com/docs",
+      "unverified": true, "unverified_fields": ["tools"]
+    },
+    {
+      "id": "huggingface", "title": "Hugging Face",
+      "kinds": ["image", "video", "audio", "3d"],
+      "match": ["^mcp__.*(hugging_?face|hf[-_]mcp|hf_?server).*__", "^mcp__hf__"],
+      "tools": {"generate": ["gr1_flux1_schnell_infer", "dynamic_space"], "balance": [], "price": [], "wait": [], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http huggingface https://huggingface.co/mcp"],
+                  "codex": ["codex mcp add huggingface --url https://huggingface.co/mcp", "codex mcp login huggingface"]},
+      "auth": "login", "free": "бесплатные квоты Spaces", "docs": "https://huggingface.co",
+      "unverified": true, "unverified_fields": ["tools"]
+    },
+    {
+      "id": "elevenlabs", "title": "ElevenLabs",
+      "kinds": ["audio"],
+      "match": ["^mcp__.*eleven_?labs.*__"],
+      "tools": {"generate": ["text_to_speech", "compose_music", "text_to_sound_effects"], "balance": ["check_subscription"], "price": [],
+                "wait": [], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http elevenlabs https://api.elevenlabs.io/v1/mcp"],
+                  "codex": ["codex mcp add elevenlabs --url https://api.elevenlabs.io/v1/mcp", "codex mcp login elevenlabs"]},
+      "auth": "oauth", "free": "небольшой бесплатный лимит символов в месяц", "docs": "https://elevenlabs.io",
+      "unverified": true, "unverified_fields": ["tools", "free"], "notes": "речь, музыка, звуковые эффекты"
+    },
+    {
+      "id": "runway", "title": "Runway",
+      "kinds": ["video", "image"],
+      "match": ["^mcp__.*runway.*__"],
+      "tools": {"generate": ["generate_video", "generate_image"], "balance": ["get_credits"], "price": [], "wait": ["get_task"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http runway https://mcp.runwayml.com/mcp"],
+                  "codex": ["codex mcp add runway --url https://mcp.runwayml.com/mcp", "codex mcp login runway"]},
+      "auth": "oauth", "free": "платно, по кредитам аккаунта", "docs": "https://runwayml.com",
+      "unverified": true, "unverified_fields": ["tools"]
+    },
+    {
+      "id": "luma", "title": "Luma",
+      "kinds": ["video", "image"],
+      "match": ["^mcp__.*luma.*__"],
+      "tools": {"generate": ["generate_video", "generate_image"], "balance": ["get_credits"], "price": [], "wait": ["get_generation"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http luma https://agents.lumalabs.ai/mcp"],
+                  "codex": ["codex mcp add luma --url https://agents.lumalabs.ai/mcp", "codex mcp login luma"]},
+      "auth": "oauth", "free": "платно, по кредитам аккаунта", "docs": "https://lumalabs.ai",
+      "unverified": true, "unverified_fields": ["tools"]
+    },
+    {
+      "id": "krea", "title": "Krea",
+      "kinds": ["image", "video", "3d"],
+      "match": ["^mcp__.*krea.*__"],
+      "tools": {"generate": ["generate_image", "generate_video"], "balance": [], "price": ["preflight"], "wait": ["get_job"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http krea-ai https://api.krea.ai/mcp"],
+                  "codex": ["codex mcp add krea-ai --url https://api.krea.ai/mcp", "codex mcp login krea-ai"]},
+      "auth": "oauth", "free": "небольшой бесплатный дневной лимит", "docs": "https://krea.ai",
+      "unverified": true, "unverified_fields": ["tools.generate", "tools.wait", "free"]
+    },
+    {
+      "id": "bfl", "title": "Black Forest Labs (FLUX)",
+      "kinds": ["image"],
+      "match": ["^mcp__.*(bfl|black_?forest|flux).*__"],
+      "tools": {"generate": ["generate_image", "edit_image"], "balance": ["get_credits"], "price": [], "wait": ["get_result"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http bfl https://mcp.bfl.ai"],
+                  "codex": ["codex mcp add bfl --url https://mcp.bfl.ai", "codex mcp login bfl"]},
+      "auth": "oauth", "free": "платно, по кредитам", "docs": "https://bfl.ai",
+      "unverified": true, "unverified_fields": ["tools.generate", "tools.wait"]
+    },
+    {
+      "id": "leonardo", "title": "Leonardo",
+      "kinds": ["image", "video"],
+      "match": ["^mcp__.*leonardo.*__"],
+      "tools": {"generate": ["generate_image", "generate_video"], "balance": ["get_user_info"], "price": [], "wait": ["get_generation"], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http leonardo https://mcp.leonardo.ai/v2/mcp"],
+                  "codex": ["codex mcp add leonardo --url https://mcp.leonardo.ai/v2/mcp", "codex mcp login leonardo"]},
+      "auth": "oauth", "free": "ежедневные бесплатные токены на бесплатном тарифе", "docs": "https://leonardo.ai",
+      "unverified": true, "unverified_fields": ["tools", "free"]
+    },
+    {
+      "id": "recraft", "title": "Recraft",
+      "kinds": ["image", "vector", "svg"],
+      "match": ["^mcp__.*recraft.*__"],
+      "tools": {"generate": ["generate_image", "vectorize_image", "create_style"], "balance": ["get_user"], "price": [], "wait": [], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http recraft https://mcp.recraft.ai/mcp"],
+                  "codex": ["codex mcp add recraft --url https://mcp.recraft.ai/mcp", "codex mcp login recraft"]},
+      "auth": "oauth", "free": "бесплатные кредиты", "docs": "https://recraft.ai",
+      "unverified": true, "unverified_fields": ["tools"], "notes": "вектор и SVG — сильная сторона"
+    },
+    {
+      "id": "meshy", "title": "Meshy",
+      "kinds": ["3d"],
+      "match": ["^mcp__.*meshy.*__"],
+      "tools": {"generate": ["meshy_text_to_3d", "meshy_image_to_3d"], "balance": ["meshy_check_balance"], "price": [],
+                "wait": ["meshy_get_task"], "download": []},
+      "connect": {"claude": ["claude mcp add meshy -e MESHY_API_KEY=<ваш ключ> -- npx -y @meshy-ai/meshy-mcp-server"],
+                  "codex": ["codex mcp add meshy --env MESHY_API_KEY=<ваш ключ> -- npx -y @meshy-ai/meshy-mcp-server"]},
+      "auth": "key", "key_env": "MESHY_API_KEY", "free": "небольшой бесплатный лимит в месяц", "docs": "https://meshy.ai",
+      "unverified": true, "unverified_fields": ["tools.generate", "tools.wait", "free"], "notes": "3D-модели GLB для three.js"
+    },
+    {
+      "id": "pika", "title": "Pika",
+      "kinds": ["video"],
+      "match": ["^mcp__.*pika.*__"],
+      "tools": {"generate": [], "balance": [], "price": [], "wait": [], "download": []},
+      "connect": {"claude": [], "codex": []},
+      "auth": "login", "free": "не известно", "docs": "https://pika.art",
+      "unverified": true, "unverified_fields": ["tools", "connect"], "notes": "официального MCP не нашли — подключение по общему шаблону, если сервис даст адрес"
+    },
+    {
+      "id": "codex-image-gen", "title": "Генерация картинок Codex",
+      "kinds": ["image"],
+      "match": ["^(functions\\.)?image_gen(\\..*)?$"],
+      "tools": {"generate": ["image_gen"], "balance": [], "price": [], "wait": [], "download": []},
+      "connect": {"claude": [], "codex": []},
+      "builtin": true, "auth": "login", "free": "входит в подписку, с которой запущен Codex", "docs": "https://developers.openai.com/codex",
+      "notes": "встроена в Codex, подключать не нужно; в Claude Code её нет"
+    },
+    {
+      "id": "figma-shaders", "title": "Figma",
+      "kinds": ["image", "shader"],
+      "match": ["^mcp__.*figma.*__(create_shader|generate_image)$"],
+      "fingerprint": ["^(create_shader|generate_image)$", "^use_figma$", "^get_design_context$", "^get_metadata$",
+                      "^get_screenshot$", "^generate_figma_design$", "^get_figjam$", "^create_new_file$", "^search_design_system$"],
+      "fingerprint_min": 2,
+      "fingerprint_need": "^(create_shader|generate_image)$",
+      "kinds_by_tools": {"image": "^generate_image$", "shader": "^create_shader$"},
+      "tools": {"generate": ["generate_image", "create_shader"], "balance": [], "price": [], "wait": [], "download": []},
+      "connect": {"claude": ["claude mcp add --transport http figma https://mcp.figma.com/mcp"],
+                  "codex": ["codex mcp add figma --url https://mcp.figma.com/mcp", "codex mcp login figma"]},
+      "auth": "oauth", "free": "в тарифе Figma", "docs": "https://help.figma.com",
+      "notes": "картинки (generate_image) и шейдеры (create_shader); дизайн в Figma — phases/figma.md"
+    }
+  ],
+  "generic": {
+    "match": ["^mcp__[^_].*__(generate|gen|create|make|run|text|image)_?(to_)?(image|images|img|video|videos|audio|speech|music|sound|sfx|3d|model3d|mesh|svg|vector)s?\\b",
+              "^mcp__[^_].*__(images|image|video|videos|audio|models3d|model3d|music|speech)_(generate|create)",
+              "^mcp__[^_].*__(txt2img|img2img|img2vid|txt2vid|text2image|text2video)"],
+    "kinds": {"image": "image|img|txt2img|picture|photo", "video": "video|vid|animate", "audio": "audio|speech|music|sound|sfx|voice",
+              "3d": "3d|mesh|glb", "vector": "vector", "svg": "svg"},
+    "roles": {"generate": "generat|create_(image|video|audio|3d|mesh|svg)|text_to_|image_to_|txt2|img2|run_model|_generate$",
+              "balance": "balance|credit|quota|subscription|usage",
+              "price": "price|pricing|cost|estimate|preflight|simulate",
+              "wait": "wait|status|poll|check_job|get_job|get_task|get_generation|result",
+              "download": "download|get_job_result|read$"},
+    "connect": {"claude": ["claude mcp add --transport http <имя> <URL>"],
+                "codex": ["codex mcp add <имя> --url <URL>", "codex mcp login <имя>"]}
+  }
+}

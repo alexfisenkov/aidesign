@@ -5,7 +5,7 @@
     python3 setup.py plan <программы…> [--os mac|windows|linux] [--pkg brew|winget|apt|dnf|pacman] [--host claude|codex] [--json]
     python3 setup.py install <программы…> --yes
 
-Программы: python, git, node, playwright, ffmpeg, figma.
+Программы: python, git, node, playwright, ffmpeg, webp, figma.
 doctor только смотрит; plan только печатает; install ставит официальными командами
 по одной и только с --yes, у каждой — ограничение по времени. Команда, которой нужен
 пароль администратора (sudo, установка Homebrew, установщик Windows с запросом прав),
@@ -128,6 +128,16 @@ TOOLS = [
          {"apt": True, "dnf": True, "pacman": True},
          {"mac": "ffmpeg.org/download.html", "windows": "ffmpeg.org/download.html — сборки gyan.dev",
           "linux": "пакет ffmpeg (в Fedora — ffmpeg-free или RPM Fusion)"}),
+    # cwebp — запасной путь WebP для media.py prep, когда ffmpeg собран без libwebp (так у Homebrew).
+    Tool("webp", "WebP (cwebp)", "optional", "картинки WebP, если в ffmpeg нет libwebp",
+         [["cwebp", "-version"]], r"(\d+\.\d+(?:\.\d+)?)",
+         {"brew": [["brew", "install", "webp"]],
+          "winget": [_winget("Google.Libwebp")],
+          "apt": [_sudo("apt-get", "install", "-y", "webp")], "dnf": [_sudo("dnf", "install", "-y", "libwebp-tools")],
+          "pacman": [_sudo("pacman", "-S", "--needed", "--noconfirm", "libwebp")]},
+         {"apt": True, "dnf": True, "pacman": True},
+         {"mac": "developers.google.com/speed/webp/download", "windows": "developers.google.com/speed/webp/download",
+          "linux": "пакет webp (Fedora — libwebp-tools, Arch — libwebp)"}),
     Tool("figma", "Figma MCP", "optional", "проект в Figma, только по желанию", [], "", {}, {},
          {"mac": "подключение видит агент, не этот скрипт", "windows": "подключение видит агент, не этот скрипт",
           "linux": "подключение видит агент, не этот скрипт"}),

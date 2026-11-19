@@ -5,7 +5,7 @@
 scaffold.py (какой файл памяти и чем его начать). Лежит рядом с ними в .aidesign-work/.
 
 Делит блок на две части. Подраздел «Сейчас» между метками aidesign:now — факты прогона
-(направление, дизайн-система, последние копии и команда отката, Figma, оснащение, прогон);
+(направление, дизайн-система, последние копии и команда отката, Figma, оснащение, медиа, прогон);
 его переписывает только ad.py. Остальное в блоке пишет агент по phases/6-handoff.md, и
 отсюда оно не меняется. Всё вне меток aidesign — тоже.
 
@@ -18,6 +18,7 @@ CLAUDE.md, где только «@AGENTS.md»); один свой CLAUDE.md — 
 """
 
 import datetime as dt
+import json
 import os
 from typing import List, Optional, Tuple
 
@@ -145,10 +146,43 @@ def now_lines(root: str, state: Optional[dict], event: str, work: str = ".aidesi
     if isinstance(t, dict):
         miss = ", ".join(t.get("missing") or []) or "ничего"
         out.append("- Оснащение (проверено %s): не хватает — %s." % (_when(t.get("checkedAt")), miss))
+    out.append(media_line(root, s.get("media"), work))
     if s.get("dir"):
         how = "сдан %s" % _when(s["finishedAt"]) if s.get("finishedAt") else "идёт"
         out.append("- Прогон: `%s/%s/` — %s; панель — `python3 %s/ad.py`." % (work, s["dir"], how, work))
     return out
+
+
+def _num(x) -> str:
+    return ("%.4f" % x).rstrip("0").rstrip(".") if isinstance(x, float) else str(x)
+
+
+def media_line(root: str, media: Optional[dict], work: str) -> str:
+    """Бюджет медиа, траты по сервисам и опись assets/media.json — для перегенерации и учёта."""
+    m = media if isinstance(media, dict) else {}
+    b = m.get("budget") if isinstance(m.get("budget"), dict) else None
+    spent = [x for x in m.get("spent") or [] if isinstance(x, dict)]
+    unit = (b or {}).get("unit")
+    by = {}
+    for x in spent:
+        if not unit or not x.get("unit") or x.get("unit") == unit:      # то же правило, что ad.py media_spent
+            by[x.get("service") or "?"] = by.get(x.get("service") or "?", 0) + (x.get("amount") or 0)
+    total = sum(by.values())
+    parts = "".join([" (", ", ".join("%s %s" % (k, _num(v)) for k, v in by.items()), ")"]) if by else ""
+    if b:
+        money = "бюджет %s %s, потрачено %s%s; перед платной генерацией — `python3 %s/ad.py media check --amount N`" % (
+            _num(b.get("limit")), unit, _num(total), parts, work)
+    else:
+        money = "бюджета нет — платная генерация только с разрешения человека и суммой (`python3 %s/ad.py media budget`)" % work
+    try:
+        with open(os.path.join(root, "assets", "media.json"), encoding="utf-8") as f:
+            items = json.load(f).get("items") or []
+        inv = "опись `assets/media.json`, мест в описи: %d (источник, промпт, модель — для перегенерации)" % len(items)
+    except (OSError, ValueError, AttributeError):
+        inv = "опись `assets/media.json` появится с первым файлом (`python3 %s/media.py record`)" % work
+    src = {"own": "свои", "generate": "генерация", "mixed": "вперемешку", "code": "кодом", "placeholder": "плашки"}
+    how = "; источник — %s" % src.get(m.get("sources"), m.get("sources")) if m.get("sources") else ""
+    return "- Медиа: %s; %s%s." % (money, inv, how)
 
 
 def now_block(lines: List[str], nl: str = "\n") -> str:

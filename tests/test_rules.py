@@ -4,6 +4,7 @@
 rules.py — так их кладёт init. Проверяется только то, что видно на диске.
 """
 
+import json
 import os
 import re
 import shutil
@@ -188,6 +189,39 @@ class Rules(Project):
         write(self.path("design-system", "tokens.css"), ":root{--color-ink:#111}")
         self.ok("stage", "build", "done")
         self.assertIn("design-system/tokens.css", now_of(read(self.path("AGENTS.md"))))
+
+    def test_now_names_media_budget_spent_and_inventory(self):
+        self.init()
+        self.ok("media", "budget", "--limit", "100", "--unit", "кредитов")
+        now = now_of(read(self.path("AGENTS.md")))
+        self.assertRegex(now, r"Медиа:.*бюджет 100 кредитов, потрачено 0")
+        self.assertIn("assets/media.json", now)
+        self.ok("media", "spend", "--service", "higgsfield", "--amount", "30", "--item", "фон")
+        self.ok("media", "spend", "--service", "magnific", "--amount", "12.5", "--item", "фото")
+        now = now_of(read(self.path("AGENTS.md")))
+        self.assertRegex(now, r"потрачено 42\.5 \(higgsfield 30, magnific 12\.5\)")
+        write(self.path("assets", "media.json"), '{"items":[{"slot":"hero"},{"slot":"bg"}]}')
+        self.ok("media", "sources", "--set", "generate")
+        now = now_of(read(self.path("AGENTS.md")))
+        self.assertIn("мест в описи: 2", now)
+        self.assertIn("ad.py media check", now)
+
+    def test_now_and_check_count_old_spends_without_unit_the_same_way(self):
+        self.init()
+        self.ok("media", "budget", "--limit", "100", "--unit", "кредиты")
+        path = os.path.join(self.a, "state.js")
+        s = json.loads(read(path).split("=", 1)[1])
+        s["media"]["spent"] = [{"service": "higgsfield", "amount": 40, "item": "старая запись без единицы"}]
+        write(path, "window.STATE =\n" + json.dumps(s, ensure_ascii=False) + "\n")
+        code, out = self.ad("media", "check", "--amount", "61")
+        self.assertEqual(code, 1, out)                                       # 40 + 61 > 100: старая трата считается
+        self.ok("media", "sources", "--set", "own")
+        self.assertRegex(now_of(read(self.path("AGENTS.md"))), r"потрачено 40 \(higgsfield 40\)")
+
+    def test_now_says_no_budget_means_paid_only_with_permission(self):
+        self.init()
+        self.ok("direction", "set", "--name", "А", "--summary", "б", "--file", "DESIGN.md")
+        self.assertRegex(now_of(read(self.path("AGENTS.md"))), r"Медиа: бюджета нет")
 
     def test_init_copies_rules_py(self):
         write(os.path.join(self.skill, "tools", "rules.py"), "# rules\n")

@@ -123,7 +123,7 @@ Questions that really change the look are marked ⚑ with options а/б/в — t
 
 ### The panel
 
-At the start the agent opens a panel — a page you never have to find or launch. It shows the stage, working time, your references, the interview topics, the **current round** with three live miniatures (click one: full screen, a switch between desktop and phone, arrows between variants), the history of rounds with your feedback, the chosen direction, the check result and a feed of events. A tab **Examples** shows seven finished demo pages. Light and dark theme, Russian and English. Works offline; the previews open through a local server (a plain `file://` shows a hint to open the `http://` address instead).
+At the start the agent opens a panel — a page you never have to find or launch. It shows the stage, working time, your references, the interview topics, the **current round** with three live miniatures (click one: full screen, a switch between desktop and phone, arrows between variants), the history of rounds with your feedback, the chosen direction, the check result and a feed of events. A tab **Examples** shows seven finished demo pages. Light and dark theme, Russian and English. Works offline; live previews open through a local server (a plain `file://` shows snapshots of the variants and a hint to open the `http://` address instead).
 
 <p align="center">
   <img src="assets/example-editorial.png" width="380" alt="Example: editorial style">
@@ -133,6 +133,18 @@ At the start the agent opens a panel — a page you never have to find or launch
 </p>
 
 <p align="center"><sub>Four of the seven demo pages that ship with the skill. They are made by the skill itself and pass its own checker.</sub></p>
+
+### Photos, video and budget
+
+You decide where pictures and video come from: your own, generated, a mix, or for now captioned placeholders like «hall photo 4:5». Your own — put them in a folder; the agent checks size and quality and prepares them for the site. Particles, shaders, gradients and icons the agent makes in code, for free.
+
+If an image or video generator is connected, the agent finds it and asks for an amount **once**: «we spend up to N on pictures and video». Within that amount it generates without asking, and the panel shows a counter «spent of N». A generation that would go over is a new question. If the service won't tell the price in advance and won't take a cap, the agent does not generate blindly: it estimates by the most expensive known price or asks you first.
+
+### Previews are real
+
+Every preview is a working first screen with the real main technique: the video plays with the scroll, the shader draws, the effect answers the mouse. The material is your texts and pictures; generated material only if you allowed generation in previews, asked «show it with real pictures», or the main technique can't be shown without it (scroll video, the main first-screen photo) — that is material for the main technique, and it too stays within the budget. After the choice the agent does not rebuild the site from scratch — it polishes the chosen variant: adds the sections, writes the texts with you, revises round after round until you say «done».
+
+Open previews at the `http://localhost:…` address the agent gives you, not as a file: a preview opened as a file won't load video and effects. A panel opened as a file still shows snapshots of the variants.
 
 ---
 
@@ -183,10 +195,10 @@ One thing to know: AISpa treats an existing `AGENTS.md` as the user's file — i
 
 ## What's built in
 
-- `knowledge/` — the knowledge base the agent reads by route (an index points from your answers to the files): visual language (anti-patterns, type, colour, grid and rhythm, 17 style families, how to combine, how to settle disputes between sources, about 130 audit rules, the DESIGN.md format, extracting a style from a site) and motion and media (motion, scroll scenes, morphing, cursor, WebGL, photo, video, an existing site, previews, surfaces).
+- `knowledge/` — the knowledge base the agent reads by route (an index points from your answers to the files): visual language (anti-patterns, type, colour, grid and rhythm, 17 style families, how to combine, how to settle disputes between sources, about 130 audit rules, the DESIGN.md format, extracting a style from a site) and motion and media (motion, scroll scenes, morphing, cursor, WebGL, photo, video, an existing site, previews, surfaces) and website media (generators and budget, image and video prompts, camera and light language, photo checks, references, vector, 3D and sound, particles, shaders and icons in code, where to find AIMaster).
 - `phases/` and `prompts/` — the rules of each stage and the briefs for the sub-agents that make previews, build and criticise.
 - `knowledge/инструменты.md` and `knowledge/структура-проекта.md` — ready commands for screenshots, video, photos and Lighthouse, and the folder layout of a project; `knowledge/sources.json` — the registry of knowledge sources.
-- `tools/ad.py` — run bookkeeping, the panel and its local server; `tools/check.py` — the template-design checker: `python3 .aidesign-work/check.py <site folder>`; `tools/setup.py` — what is installed on the computer and how to add what's missing; `tools/backup.py` — copies and undo; `tools/scaffold.py` — the project layout; `tools/designsystem.py` — tokens, the «bypassing the tokens» check, the design-system archive.
+- `tools/ad.py` — run bookkeeping, the panel and its local server; `tools/check.py` — the template-design checker: `python3 .aidesign-work/check.py <site folder>`; `tools/setup.py` — what is installed on the computer and how to add what's missing; `tools/backup.py` — copies and undo; `tools/scaffold.py` — the project layout; `tools/designsystem.py` — tokens, the «bypassing the tokens» check, the design-system archive; `tools/media.py` — generators: what is connected, how to connect one, download and prepare photos and video for the site, the media inventory; `tools/shots.py` — 1280 and 390 snapshots of previews for the panel; `tools/rules.py` — the `aidesign` rules block in the project memory.
 - `examples/` — seven demo pages.
 
 It's all plain markdown, HTML and Python standard library: [skills/aidesign/SKILL.md](skills/aidesign/SKILL.md).
@@ -219,6 +231,7 @@ AI Design is a gathering of what open design skills already know, checked agains
 | [Dembrandt](https://github.com/dembrandt/dembrandt) | The description of commands for extracting tokens from a site | Text, retold; no code | MIT |
 | [Dembrandt skills](https://github.com/dembrandt/dembrandt-skills) | Modular type scale, algorithmic palette, extracting and reproducing a site | Text, retold | MIT |
 | [scroll-world](https://github.com/oso95/scroll-world) | Ideas: art-direction interview, cost estimate before generation, seamless scene joins, a separate vertical chain for phones | Idea | MIT |
+| [AIMaster](https://github.com/alexfisenkov/aimaster) (ours, the family) | The author's prompt guides for images and video — Nano Banana, Midjourney, GPT Image, Seedream, Seedance, Kling, Veo, camera and light language, checking photos for an artificial look, references — condensed for website media | Text, retold in our own words | MIT for the retelling, by the author's permission; AIMaster itself — the author's terms |
 
 The process itself — the interview with ⚑ and «ок», the panel, run bookkeeping — comes from our own [AISpa](https://github.com/alexfisenkov/aispa). Names of companies and brands in the knowledge files are used only to name a style or a source; AI Design is not affiliated with them.
 

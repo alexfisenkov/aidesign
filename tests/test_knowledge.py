@@ -6,12 +6,17 @@
   и каждый файл знаний назван в одном из индексов;
 - каждый файл знаний начинается с шапки атрибуции; перенесённый — с пометкой «Изменено»;
 - каждый источник из шапок скилла назван в THIRD_PARTY_NOTICES.md;
-- реестр knowledge/sources.json сходится с THIRD_PARTY_NOTICES.md, обоими README и шапками атрибуции.
+- реестр knowledge/sources.json сходится с THIRD_PARTY_NOTICES.md, обоими README и шапками атрибуции;
+- knowledge/медиа/: файлы модуля 16, шапка пересказа инструкций aimaster, датированные факты о моделях,
+  рецепты «кодом» и видео по прокрутке самодостаточны, с reduced-motion и без находок check.scan().
 """
 
+import importlib.util
 import json
 import os
 import re
+import sys
+import tempfile
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -19,10 +24,21 @@ REPO = os.path.dirname(HERE)
 SKILL = os.path.join(REPO, "skills", "aidesign")
 KNOWLEDGE = os.path.join(SKILL, "knowledge")
 STYLES = os.path.join(KNOWLEDGE, "язык", "стили")
+MEDIA = os.path.join(KNOWLEDGE, "медиа")
+INDEXES = (os.path.join(KNOWLEDGE, "INDEX.md"), os.path.join(STYLES, "INDEX.md"), os.path.join(MEDIA, "INDEX.md"))
 NOTICES = os.path.join(REPO, "THIRD_PARTY_NOTICES.md")
 
 REGISTRY = os.path.join(KNOWLEDGE, "sources.json")
 READMES = [os.path.join(REPO, n) for n in ("README.md", "README.ru.md")]
+
+MEDIA_FILES = ("генераторы.md", "промпты-картинки.md", "промпты-видео.md", "кино-язык.md", "качество-фото.md",
+               "вектор-3d-звук.md", "по-референсам.md", "кодом-вместо-генерации.md", "aimaster.md")
+OWNER_RETELLING = ("промпты-картинки.md", "промпты-видео.md", "кино-язык.md", "качество-фото.md",
+                   "по-референсам.md", "aimaster.md")
+OWNER_HEADER = re.compile(r"^<!-- По мотивам: alexfisenkov/aimaster \S.*, © Alexander Fisenkov, "
+                          r"перенесено в AI Design под MIT с разрешения автора 19\.11\.2026 -->$")
+CHECK = os.path.join(SKILL, "tools", "check.py")
+HTML_BLOCK = re.compile(r"```html\n(.*?)```", re.S)
 
 HEADER = re.compile(r"^<!-- (Источник|По мотивам): (\S+?)[,\s(]")
 LINK = re.compile(r"\]\(([^)#\s]+\.md)(?:#[^)]*)?\)")
@@ -71,17 +87,26 @@ class IndexMatchesFiles(unittest.TestCase):
         return {os.path.normpath(os.path.join(base, m)) for m in LINK.findall(read(index))}
 
     def test_every_link_in_the_indexes_points_at_an_existing_file(self):
-        for index in (os.path.join(KNOWLEDGE, "INDEX.md"), os.path.join(STYLES, "INDEX.md")):
+        for index in INDEXES:
             for target in self.links(index):
                 self.assertTrue(os.path.isfile(target), "%s ссылается на %s" % (index, target))
 
     def test_every_knowledge_file_is_named_in_an_index(self):
-        named = self.links(os.path.join(KNOWLEDGE, "INDEX.md")) | self.links(os.path.join(STYLES, "INDEX.md"))
-        indexes = {os.path.join(KNOWLEDGE, "INDEX.md"), os.path.join(STYLES, "INDEX.md")}
+        named = set().union(*(self.links(i) for i in INDEXES))
         for path in md_files(KNOWLEDGE):
-            if path in indexes:
+            if path in INDEXES:
                 continue
             self.assertIn(path, named, "файл знаний не назван в индексе: %s" % os.path.relpath(path, KNOWLEDGE))
+
+    def test_the_media_index_is_reachable_from_the_main_index(self):
+        self.assertIn(os.path.join(MEDIA, "INDEX.md"), self.links(os.path.join(KNOWLEDGE, "INDEX.md")))
+
+    def test_the_media_folder_has_the_files_of_module_16(self):
+        for name in MEDIA_FILES:
+            self.assertTrue(os.path.isfile(os.path.join(MEDIA, name)), name)
+        named = self.links(os.path.join(MEDIA, "INDEX.md"))
+        for name in MEDIA_FILES:
+            self.assertIn(os.path.join(MEDIA, name), named, "медиа/INDEX.md не ведёт на %s" % name)
 
     def test_the_project_files_of_iteration_19_are_in_the_main_index(self):
         links = self.links(os.path.join(KNOWLEDGE, "INDEX.md"))
@@ -122,6 +147,74 @@ class AttributionHeaders(unittest.TestCase):
         for path in md_files(KNOWLEDGE):
             for line in header_lines(path):
                 self.assertTrue(line.rstrip().endswith("-->"), os.path.relpath(path, KNOWLEDGE))
+
+
+def load_check():
+    spec = importlib.util.spec_from_file_location("aidesign_check_for_knowledge", CHECK)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+class MediaKnowledge(unittest.TestCase):
+    """knowledge/медиа/: разделы, шапка пересказа инструкций владельца, рабочие рецепты «кодом»."""
+
+    def test_every_media_file_says_when_to_read_and_what_not_to_do(self):
+        for name in MEDIA_FILES + ("INDEX.md",):
+            text = read(os.path.join(MEDIA, name))
+            self.assertIn("## Когда читать", text, name)
+            self.assertIn("## Не делать", text, name)
+
+    def test_the_retelling_of_the_owner_guides_carries_the_permission_header(self):
+        for name in OWNER_RETELLING:
+            first = read(os.path.join(MEDIA, name)).splitlines()[0]
+            self.assertRegex(first, OWNER_HEADER, name)
+
+    def test_model_facts_are_dated(self):
+        for name in ("промпты-картинки.md", "промпты-видео.md", "вектор-3d-звук.md"):
+            text = read(os.path.join(MEDIA, name))
+            self.assertRegex(text, r"[Сс]верено \d\d\.\d\d\.2026", name)
+            self.assertIn("https://", text, name)
+
+    def recipes(self, name):
+        return HTML_BLOCK.findall(read(os.path.join(MEDIA, name)))
+
+    def test_code_recipes_cover_particles_shader_gradient_noise_and_icons(self):
+        blocks = self.recipes("кодом-вместо-генерации.md")
+        self.assertGreaterEqual(len(blocks), 6)
+        joined = "\n".join(blocks)
+        for marker in ("getContext('2d')", "getContext('webgl'", "gl.POINTS", "feTurbulence", "<symbol", "<use href"):
+            self.assertIn(marker, joined, marker)
+
+    def test_every_recipe_is_self_contained_and_respects_reduced_motion(self):
+        for name in ("кодом-вместо-генерации.md", "промпты-видео.md"):
+            for i, block in enumerate(self.recipes(name), 1):
+                where = "%s, рецепт %d" % (name, i)
+                self.assertTrue(block.lstrip().startswith("<!doctype html>"), where)
+                self.assertNotRegex(block, r"<script[^>]+src=|<link[^>]+href=\"?https?:", where)
+                if "requestAnimationFrame" in block or "@keyframes" in block:
+                    self.assertIn("prefers-reduced-motion", block, where)
+
+    def test_every_recipe_passes_the_template_check(self):
+        check = load_check()
+        with tempfile.TemporaryDirectory() as tmp:
+            paths = []
+            for name in ("кодом-вместо-генерации.md", "промпты-видео.md"):
+                for i, block in enumerate(self.recipes(name), 1):
+                    path = os.path.join(tmp, "%s-%d.html" % (name[:-3], i))
+                    with open(path, "w", encoding="utf-8") as f:
+                        f.write(block)
+                    paths.append(path)
+            self.assertGreaterEqual(len(paths), 7)
+            self.assertEqual([(os.path.basename(str(f.path)), f.line, f.rule) for f in check.scan(paths)], [])
+
+    def test_scroll_video_is_shown_by_src_not_by_fetch(self):
+        block = self.recipes("промпты-видео.md")[0]
+        self.assertRegex(block, r"<video src=\"[^\"]+\.mp4\"")
+        self.assertNotIn("fetch(", block)
+        self.assertIn("'seeked'", block)
+        self.assertRegex(read(os.path.join(MEDIA, "промпты-видео.md")), r"-g 4 -keyint_min 4")
 
 
 class SourcesAreCredited(unittest.TestCase):

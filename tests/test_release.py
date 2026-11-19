@@ -87,8 +87,20 @@ class Versions(unittest.TestCase):
         self.assertIn("## 0.1.0", read(os.path.join(REPO, "CHANGELOG.md")))
 
     def test_the_iteration_of_19_11_is_version_zero_two_zero(self):
-        self.assertEqual(skill_version(), "0.2.0")
-        self.assertEqual(changelog_top(), "0.2.0")
+        self.assertIn("## 0.2.0", read(os.path.join(REPO, "CHANGELOG.md")))
+
+    def test_the_media_iteration_is_version_zero_three_zero(self):
+        self.assertEqual(skill_version(), "0.3.0")
+        self.assertEqual(changelog_top(), "0.3.0")
+
+    def test_the_zero_three_zero_entry_tells_what_is_new_in_plain_words(self):
+        text = read(os.path.join(REPO, "CHANGELOG.md"))
+        entry = re.search(r"^## 0\.3\.0[^\n]*\n(.*?)(?=^## |\Z)", text, re.M | re.S)
+        self.assertIsNotNone(entry, "нет записи 0.3.0")
+        body = entry.group(1)
+        for word in ("генератор", "бюджет", "media.py", "assets/media.json", "настоящ", "file://",
+                     "снимк", "Открыть в новой вкладке", "доводит"):
+            self.assertIn(word, body, word)
 
 
 class CleanTree(unittest.TestCase):
@@ -191,6 +203,17 @@ class Readmes(unittest.TestCase):
             for word in must:
                 self.assertIn(word, text, "%s: нет «%s»" % (name, word))
             self.assertNotRegex(text, r"\$\s?\d|\d\s?(?:\$|USD|₽|руб)", "%s: цены в README не пишутся" % name)
+
+    def test_both_readmes_explain_media_budget_real_previews_and_http(self):
+        words = {
+            "README.ru.md": ("бюджет", "потрачено", "настоящ", "довод", "не как файл", "свои"),
+            "README.md": ("budget", "spent", "real", "polish", "not as a file", "your own"),
+        }
+        for name in READMES:
+            text = read(os.path.join(REPO, name))
+            for word in words[name] + ("http://localhost", "`tools/media.py`", "`tools/shots.py`",
+                                       "`tools/rules.py`"):
+                self.assertIn(word, text, "%s: нет «%s»" % (name, word))
 
     def test_both_readmes_describe_the_two_orders_with_aispa_and_both_entries(self):
         for name in READMES:

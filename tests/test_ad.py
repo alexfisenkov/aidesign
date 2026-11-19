@@ -12,8 +12,10 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import socket
 import time
 import unittest
+import urllib.error
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -25,8 +27,8 @@ TEMPLATE = os.path.join(SKILL, "phases", "dashboard-template.html")
 STATE_KEYS = {"version", "slug", "dir", "title", "mode", "questions", "entry", "skillDir", "skillVersion",
               "startedAt", "updatedAt", "finishedAt", "stages", "waiting", "waits", "beats", "log",
               "refs", "themes", "rounds", "direction", "check", "report", "assumptions", "result", "rev",
-              "backups", "figma", "toolkit"}
-NEW_TOOLS = ("setup.py", "backup.py", "scaffold.py", "designsystem.py")
+              "backups", "figma", "toolkit", "media"}
+NEW_TOOLS = ("setup.py", "backup.py", "scaffold.py", "designsystem.py", "shots.py", "media.py")
 STAGES = ["preflight", "refs", "interview", "previews", "build", "check", "handoff"]
 
 
@@ -113,6 +115,7 @@ class Init(Project):
         self.assertEqual(s["skillVersion"], "0.1.0")
         self.assertTrue(os.path.isdir(os.path.join(self.dir, "rounds")))
         self.assertEqual((s["backups"], s["figma"], s["toolkit"]), ([], None, None))
+        self.assertEqual(s["media"], {"budget": None, "spent": [], "connected": [], "sources": None})
 
     def test_init_copies_the_new_tools(self):
         for name in NEW_TOOLS + ("check.py",):
@@ -281,6 +284,31 @@ class Rounds(Project):
         self.three()
         self.fails("round", "choose", "--id", "x")
 
+    def test_option_records_shot_paths_given_or_found_next_to_the_preview(self):
+        self.init()
+        self.ok("round", "new")
+        write(os.path.join(self.dir, "rounds/01/a-wide.png"), "png")
+        write(os.path.join(self.dir, "rounds/01/a-phone.png"), "png")
+        self.ok("round", "option", "--id", "a", "--title", "A", "--src", self.preview(1, "a"),
+                "--shot1280", "rounds/01/a-wide.png", "--shot390", os.path.join(self.dir, "rounds/01/a-phone.png"))
+        o = self.state()["rounds"][0]["options"][0]
+        self.assertEqual((o["shot1280"], o["shot390"]), ("rounds/01/a-wide.png", "rounds/01/a-phone.png"))
+        # shots.py кладёт b-1280.png и b-390.png рядом с b.html — round option находит их сам.
+        write(os.path.join(self.dir, "rounds/01/b-1280.png"), "png")
+        write(os.path.join(self.dir, "rounds/01/b-390.png"), "png")
+        self.ok("round", "option", "--id", "b", "--title", "B", "--src", self.preview(1, "b"))
+        o = self.state()["rounds"][0]["options"][1]
+        self.assertEqual((o["shot1280"], o["shot390"]), ("rounds/01/b-1280.png", "rounds/01/b-390.png"))
+        self.fails("round", "option", "--id", "c", "--title", "C", "--src", self.preview(1, "c"),
+                   "--shot1280", "../../x.png")
+
+    def test_option_without_shots_says_how_to_take_them(self):
+        self.init()
+        self.ok("round", "new")
+        out = self.ok("round", "option", "--id", "a", "--title", "A", "--src", self.preview(1, "a"))
+        self.assertNotIn("shot1280", self.state()["rounds"][0]["options"][0])
+        self.assertIn("shots.py", out)
+
 
 class Records(Project):
     def test_refs_are_added_copied_and_described(self):
@@ -357,6 +385,111 @@ class Records(Project):
         self.assertIn(s["updatedAt"], s["beats"])
 
 
+class Media(Project):
+    """Бюджет медиа («1б»): одна сумма на прогон, траты по сервисам, проверка перед платной генерацией."""
+
+    def test_budget_spend_and_check(self):
+        self.init()
+        code, out = self.ad("media", "check", "--amount", "5")
+        self.assertEqual(code, 1, out)                       # бюджета нет — платное только с разрешения
+        self.ok("media", "budget", "--limit", "100", "--unit", "кредитов")
+        b = self.state()["media"]["budget"]
+        self.assertEqual((b["limit"], b["unit"]), (100, "кредитов"))
+        self.assertTrue(b["at"])
+        self.ok("media", "spend", "--service", "higgsfield", "--amount", "30", "--item", "фон героя")
+        self.ok("media", "spend", "--service", "magnific", "--amount", "12.5", "--item", "фото зала")
+        spent = self.state()["media"]["spent"]
+        self.assertEqual([(x["service"], x["amount"], x["unit"], x["item"]) for x in spent],
+                         [("higgsfield", 30, "кредитов", "фон героя"), ("magnific", 12.5, "кредитов", "фото зала")])
+        self.assertTrue(all(x["at"] for x in spent))
+        rev = self.state()["rev"]
+        self.assertEqual(self.ad("media", "check", "--amount", "57.5")[0], 0)    # 42.5 + 57.5 = 100 — ровно в сумме
+        code, out = self.ad("media", "check", "--amount", "58")
+        self.assertEqual(code, 1, out)
+        self.assertIn("100", out)
+        self.assertEqual(self.state()["rev"], rev)                               # проверка состояние не меняет
+        self.fails("media", "budget", "--limit", "много", "--unit", "кредитов")
+        self.fails("media", "spend", "--service", "higgsfield", "--amount", "-3", "--item", "x")
+        self.fails("media", "check", "--amount", "x")
+
+    def test_spend_over_budget_is_recorded_and_said(self):
+        self.init()
+        self.ok("media", "budget", "--limit", "10", "--unit", "₽")
+        out = self.ok("media", "spend", "--service", "fal", "--amount", "15", "--item", "видео")
+        self.assertIn("!", out)
+        self.assertEqual(len(self.state()["media"]["spent"]), 1)
+
+    def test_spend_in_another_unit_is_refused_and_check_stays_honest(self):
+        self.init()
+        self.ok("media", "budget", "--limit", "100", "--unit", "кредиты")
+        code, out = self.ad("media", "spend", "--service", "fal", "--amount", "500", "--unit", "$", "--item", "видео")
+        self.assertEqual(code, 1, out)
+        self.assertIn("спроси человека", out)
+        self.assertEqual(self.state()["media"]["spent"], [])
+        self.ok("media", "spend", "--service", "fal", "--amount", "60", "--item", "видео")
+        self.assertEqual(self.ad("media", "check", "--amount", "41")[0], 1)
+        code, out = self.ad("media", "budget", "--limit", "100", "--unit", "$")
+        self.assertEqual(code, 1, out)                                       # смена единицы при тратах — отказ
+        self.assertEqual(self.state()["media"]["budget"]["unit"], "кредиты")
+        self.assertEqual(len(self.state()["media"]["spent"]), 1)
+        self.ok("media", "budget", "--limit", "200", "--unit", "кредиты")     # поднять лимит — можно
+        self.assertEqual(self.ad("media", "check", "--amount", "41")[0], 0)
+        code, out = self.ad("media", "check", "--amount", "50", "--unit", "$")
+        self.assertEqual(code, 1, out)                                       # чужая единица — не «в бюджете»
+        self.assertNotIn("в бюджете:", out)
+        self.assertEqual(self.ad("media", "check", "--amount", "50", "--unit", "кредиты")[0], 0)
+
+    def test_spend_before_budget_names_its_unit_and_binds_the_budget(self):
+        self.init()
+        self.fails("media", "spend", "--service", "fal", "--amount", "5", "--item", "x")
+        self.ok("media", "spend", "--service", "fal", "--amount", "5", "--unit", "$", "--item", "x")
+        self.fails("media", "budget", "--limit", "100", "--unit", "кредиты")
+        self.ok("media", "budget", "--limit", "10", "--unit", "$")
+        self.assertEqual(self.ad("media", "check", "--amount", "6")[0], 1)
+
+    def test_connected_and_sources(self):
+        cat = os.path.join(SKILL, "knowledge", "медиа", "генераторы.json")
+        os.makedirs(os.path.join(self.skill, "knowledge", "медиа"))
+        shutil.copy(cat, os.path.join(self.skill, "knowledge", "медиа", "генераторы.json"))
+        self.init()
+        self.ok("media", "connected", "--ids", "higgsfield,newgen")
+        c = self.state()["media"]["connected"]
+        self.assertEqual([x["id"] for x in c], ["higgsfield", "newgen"])
+        self.assertEqual(c[0]["title"], "Higgsfield")
+        self.assertIn("video", c[0]["kinds"])
+        self.assertEqual((c[1]["title"], c[1]["kinds"]), ("newgen", []))
+        self.ok("media", "sources", "--set", "mixed")
+        self.assertEqual(self.state()["media"]["sources"], "mixed")
+        self.fails("media", "sources", "--set", "всё сразу")
+        self.assertTrue({"media"} <= {e["k"] for e in self.state()["log"]})
+
+    def test_old_state_without_media_gets_it_on_first_media_command(self):
+        self.init()
+        path = os.path.join(self.a, "state.js")
+        s = self.state()
+        s.pop("media")
+        write(path, "window.STATE =\n" + json.dumps(s, ensure_ascii=False) + "\n")
+        self.ok("media", "budget", "--limit", "5", "--unit", "кредитов")
+        self.assertEqual(self.state()["media"]["budget"]["limit"], 5)
+
+
+class PanelMedia(unittest.TestCase):
+    def test_template_reads_media(self):
+        page = read(TEMPLATE)
+        self.assertIn("S.media", page)
+        self.assertIn("mediaSums(S.media)", page)
+
+    @unittest.skipUnless(shutil.which("node"), "node не установлен")
+    def test_spent_of_budget_by_service(self):
+        got = node_eval(["mediaSums"], "[mediaSums({budget:{limit:100,unit:'кр'},spent:[{service:'higgsfield',amount:30},"
+                                       "{service:'magnific',amount:12.5},{service:'higgsfield',amount:5}]}),"
+                                       "mediaSums({budget:null,spent:[]}), mediaSums(null)]")
+        self.assertEqual(got[0], {"limit": 100, "unit": "кр", "total": 47.5, "over": False,
+                                  "by": [["higgsfield", 35], ["magnific", 12.5]]})
+        self.assertEqual(got[1], {"limit": None, "unit": "", "total": 0, "over": False, "by": []})
+        self.assertIsNone(got[2])
+
+
 @unittest.skipUnless(shutil.which("node"), "node не установлен")
 class PanelClock(unittest.TestCase):
     """Часы панели: функции времени из шаблона, как есть, в node."""
@@ -417,6 +550,42 @@ def node_eval(names, expr):
     return json.loads(r.stdout)
 
 
+class PanelAsFile(unittest.TestCase):
+    """Панель открыта как файл: снимок на диске виден в карточке, без снимка — строка про сервер."""
+
+    def card(self, served, item):
+        page = read(TEMPLATE)
+        m = re.search(r"^function pvButton\(.*?^}$", page, re.M | re.S)
+        self.assertIsNotNone(m, "нет функции pvButton")
+        stubs = ("const SERVED = %s; const FRAMES = {}; const absUrl = s => s;"
+                 "const esc = s => String(s); const CUR = {noFile:'NOFILE', optWait:'WAIT', pvLoading:'LOAD',"
+                 "lbMissing:'MISS', pvBlocked:'BLOCK', zoom:'Z'};" % ("true" if served else "false"))
+        r = subprocess.run(["node", "-e", stubs + "\n" + m.group(0) + "\nconsole.log(pvButton(%s, 'k', 0, 'A'));"
+                            % json.dumps(item)], capture_output=True, text=True, timeout=30)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        return r.stdout
+
+    @unittest.skipUnless(shutil.which("node"), "node не установлен")
+    def test_file_mode_card_shows_the_snapshot_when_there_is_one(self):
+        out = self.card(False, {"src": "run/rounds/01/a.html", "shot": "run/rounds/01/a-1280.png", "title": "T"})
+        self.assertIn('src="run/rounds/01/a-1280.png"', out)
+        self.assertIn("data-shot", out)
+        self.assertNotIn("<iframe", out)
+
+    @unittest.skipUnless(shutil.which("node"), "node не установлен")
+    def test_file_mode_card_without_snapshot_says_to_open_the_server(self):
+        out = self.card(False, {"src": "run/rounds/01/a.html", "title": "T"})
+        self.assertIn("NOFILE", out)
+        self.assertNotIn("<img", out)
+        self.assertNotIn("<iframe", out)
+
+    def test_failed_snapshot_in_file_mode_falls_back_to_the_server_line(self):
+        page = read(TEMPLATE)
+        handler = page[page.index("// Снимок не загрузился"):]
+        handler = handler[:handler.index("}, true);")]
+        self.assertIn("SERVED ? CUR.pvBlocked : CUR.noFile", handler)
+
+
 class PanelIsolation(unittest.TestCase):
     """Превью — чужая страница: она не должна читать панель (без allow-same-origin)."""
 
@@ -442,6 +611,31 @@ class LightboxLoading(unittest.TestCase):
         for key in ("lbLoading:", "lbMissing:", "lbDown:"):
             self.assertEqual(page.count(key), 2, key)                     # ru и en
         self.assertIn(".lb-box.loaded iframe{opacity:1}", page)
+
+
+class PanelBlockedFrames(unittest.TestCase):
+    """Встроенный браузер приложения не пускает превью в рамку (ERR_BLOCKED_BY_CLIENT):
+    панель показывает снимок или текст и ссылку «Открыть в новой вкладке», а не белую рамку."""
+
+    def test_panel_reads_shots_and_offers_a_new_tab(self):
+        page = read(TEMPLATE)
+        for field in ("o.shot1280", "o.shot390"):
+            self.assertIn(field, page)
+        for key in ("openTab:", "pvBlocked:", "lbShotOnly:"):
+            self.assertEqual(page.count(key), 2, key)                     # ru и en
+        self.assertIn('target="_blank" rel="noopener"', page)
+        show = page[page.index("function lbShow()"):page.index("function lbFit()")]
+        self.assertIn("frameVerdict(", show)
+        self.assertIn("openLink(", show)
+
+    @unittest.skipUnless(shutil.which("node"), "node не установлен")
+    def test_frame_verdict_tells_blocked_from_loaded(self):
+        got = node_eval(["frameVerdict"], "[frameVerdict({responseStatus:0, transferSize:0, encodedBodySize:0}),"
+                                          "frameVerdict({responseStatus:200, transferSize:300}),"
+                                          "frameVerdict({responseStatus:200, transferSize:0}),"
+                                          "frameVerdict({responseStatus:404}),"
+                                          "frameVerdict({transferSize:0}), frameVerdict(null)]")
+        self.assertEqual(got, ["blocked", "ok", "ok", "missing", "unknown", "unknown"])
 
 
 class PanelNewBlocks(unittest.TestCase):
@@ -522,8 +716,8 @@ class RefLinks(unittest.TestCase):
         self.assertEqual(got[3:], [""] * (len(cases) - 3))
 
 
-class Server(Project):
-    """Сервер поднимается при init и заново — голым вызовом ad.py, на том же порту."""
+class Served(Project):
+    """Помощники для тестов с настоящим сервером; сами тесты — в Server и StopServer."""
 
     def get(self, port, path):
         with urllib.request.urlopen("http://127.0.0.1:%d/%s" % (port, path), timeout=3) as r:
@@ -535,15 +729,65 @@ class Server(Project):
 
     def tearDown(self):
         # До удаления папки: cleanup-функции идут после tearDown, когда serve.pid уже нет.
-        ps = subprocess.run(["ps", "-Ao", "pid=,command="], capture_output=True, text=True).stdout
+        ps = subprocess.run(["ps", "-Ao", "pid=,command="], capture_output=True, text=True,
+                            env=dict(os.environ, LC_ALL="", LC_CTYPE="UTF-8")).stdout
         for line in ps.splitlines():
             pid, _, cmd = line.strip().partition(" ")
-            if "http.server" in cmd and self.a in cmd and pid.isdigit():
+            if ("http.server" in cmd or "--serve-http" in cmd) and self.a in cmd and pid.isdigit():
                 try:
                     os.kill(int(pid), 15)
                 except OSError:
                     pass
+        try:                                     # запасной путь: ps мог показать путь не как есть
+            pid = self.pid()[1]
+            if pid:
+                os.kill(pid, 15)
+        except (OSError, ValueError):
+            pass
         super().tearDown()
+
+    def alive(self, port):
+        try:
+            return self.get(port, "dashboard.html")[0] == 200
+        except OSError:
+            return False
+
+    def raw(self, port, path, rng=None):
+        """(статус, заголовки, тело) — с Range или без; ошибки HTTP тоже ответ."""
+        req = urllib.request.Request("http://127.0.0.1:%d/%s" % (port, path), headers={"Range": rng} if rng else {})
+        try:
+            with urllib.request.urlopen(req, timeout=3) as r:
+                return r.status, r.headers, r.read()
+        except urllib.error.HTTPError as e:
+            with e:
+                return e.code, e.headers, e.read()
+
+
+class Server(Served):
+    """Сервер поднимается при init и заново — голым вызовом ad.py, на том же порту."""
+
+    def test_server_gives_files_in_pieces_for_video_seek(self):
+        """Без Range видео по прокрутке не перематывается: seekable пуст, currentTime стоит на 0."""
+        self.init()
+        self.assertEqual(self.ad(serve=True)[0], 0)
+        port = self.pid()[0]
+        data = bytes(range(256)) * 4                                  # 1024 байта, каждый байт известен
+        with open(os.path.join(self.dir, "clip.mp4"), "wb") as f:
+            f.write(data)
+        rel = "%s/clip.mp4" % self.state()["dir"]
+        status, h, body = self.raw(port, rel)
+        self.assertEqual((status, len(body), h.get("Accept-Ranges")), (200, 1024, "bytes"))
+        status, h, body = self.raw(port, rel, "bytes=10-19")
+        self.assertEqual((status, body, h.get("Content-Range"), h.get("Content-Length")),
+                         (206, data[10:20], "bytes 10-19/1024", "10"))
+        self.assertEqual(self.raw(port, rel, "bytes=1000-")[2], data[1000:])
+        self.assertEqual(self.raw(port, rel, "bytes=-4")[2], data[-4:])
+        self.assertEqual(self.raw(port, rel, "bytes=0-99999")[1].get("Content-Range"), "bytes 0-1023/1024")
+        for bad in ("bytes=2000-", "bytes=5-2", "bytes=abc"):
+            status, h, _ = self.raw(port, rel, bad)
+            self.assertEqual((status, h.get("Content-Range")), (416, "bytes */1024"), bad)
+        self.assertEqual(self.raw(port, "dashboard.html", "bytes=0-4")[0], 206)
+
 
     def test_server_serves_panel_and_previews_and_comes_back(self):
         self.init()
@@ -562,12 +806,6 @@ class Server(Project):
         self.assertEqual(code, 0, out)
         self.assertEqual(self.pid()[0], port)
         self.assertEqual(self.get(port, "dashboard.html")[0], 200)
-
-    def alive(self, port):
-        try:
-            return self.get(port, "dashboard.html")[0] == 200
-        except OSError:
-            return False
 
     def test_bare_call_after_finish_comes_back_on_the_same_port(self):
         """Открытая вкладка опрашивает прежний адрес: после finish сервер должен вернуться на него."""
@@ -649,6 +887,56 @@ class Server(Project):
         self.assertEqual(code, 0, out)
         time.sleep(0.3)
         self.assertTrue(self.alive(self.pid()[0]), out)
+
+
+class StopServer(Served):
+    """Папка проекта с кириллицей и пробелом, локаль C: ps показывает такой путь не как есть."""
+
+    def setUp(self):
+        super().setUp()
+        self.base, self.root = self.root, os.path.join(self.root, "мой проект")
+        os.makedirs(self.root)
+        self.a = os.path.join(self.root, ".aidesign-work")
+        shutil.move(os.path.join(self.base, ".aidesign-work"), self.a)
+
+    def tearDown(self):
+        super().tearDown()
+        shutil.rmtree(self.base, ignore_errors=True)
+
+    def ad(self, *args, serve=False):
+        os.environ["LC_ALL"] = "C"
+        try:
+            return super().ad(*args, serve=serve)
+        finally:
+            os.environ.pop("LC_ALL", None)
+
+    def test_stop_ends_the_process_and_frees_the_port(self):
+        self.init()
+        self.assertEqual(self.ad(serve=True)[0], 0)
+        port, pid = self.pid()
+        self.assertTrue(self.alive(port))
+        code, out = self.ad("--stop")
+        self.assertEqual(code, 0, out)
+        gone = False
+        for _ in range(30):
+            try:
+                os.kill(pid, 0)
+            except OSError:
+                gone = True
+                break
+            time.sleep(0.1)
+        self.assertTrue(gone, "процесс сервера жив после --stop: " + out)
+        s = socket.socket()
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)        # TIME_WAIT — не «занят», как в ad.py
+        try:
+            s.bind(("127.0.0.1", port))
+            s.listen(1)
+        finally:
+            s.close()
+        self.assertIn("погашен", out)
+        code, out = self.ad(serve=True)                          # голый вызов после --stop поднимает снова
+        self.assertEqual(code, 0, out)
+        self.assertTrue(self.alive(self.pid()[0]))
 
 
 if __name__ == "__main__":

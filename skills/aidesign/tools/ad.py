@@ -17,6 +17,7 @@
     python3 .aidesign-work/ad.py theme set --id tone --status decided
     python3 .aidesign-work/ad.py round new                     # новый круг превью
     python3 .aidesign-work/ad.py round option --id a --title "Редакционный" --src rounds/01/a.html
+                                 # снимки a-1280.png и a-390.png рядом (shots.py) подхватит сам
     python3 .aidesign-work/ad.py round feedback --text "в A нравится шрифт, в C цвет"
     python3 .aidesign-work/ad.py round choose --id b           # или none — ничего не подошло
     python3 .aidesign-work/ad.py round refine --id a           # новый круг: доработать вариант A
@@ -26,17 +27,26 @@
     python3 .aidesign-work/ad.py backup add --id ID --reason "до" --bytes 2048   # после backup.py create
     python3 .aidesign-work/ad.py figma set --url https://www.figma.com/design/… --mode free|paid
     python3 .aidesign-work/ad.py toolkit set --missing ffmpeg --installed node,playwright --skipped figma
+    python3 .aidesign-work/ad.py media budget --limit 100 --unit кредитов      # одна сумма на прогон
+    python3 .aidesign-work/ad.py media check --amount 12      # код 0 — в бюджете, 1 — выйдет за сумму или бюджета нет
+    python3 .aidesign-work/ad.py media spend --service higgsfield --amount 12 --item "фон героя"
+    python3 .aidesign-work/ad.py media connected --ids higgsfield,magnific   # что подключено (media.py detect)
+    python3 .aidesign-work/ad.py media sources --set own|generate|mixed|code|placeholder
+    python3 .aidesign-work/ad.py media recorded --slot hero    # зовёт media.py record сам: опись изменилась
     python3 .aidesign-work/ad.py finish --result "Лендинг собран в стиле «тёплая редакция»"
     python3 .aidesign-work/ad.py                               # поднять сервер и синхронизировать
 
 После каждой команды: updatedAt = сейчас (и метка в журнале beats), строка в ленте log,
 пройденные этапы закрыты, снимок вписан в dashboard.html, сервер жив. После событий, которые
-меняют проект (direction, backup, figma, toolkit, stage build|check|handoff done, finish),
+меняют проект (direction, backup, figma, toolkit, media, stage build|check|handoff done, finish),
 подраздел «Сейчас» блока aidesign в AGENTS.md / CLAUDE.md переписывается сам (rules.py). Время ставит сам
 скрипт, с секундами и поясом, — агент его не пишет никогда.
 Значение, которое начинается с «--», передаётся через знак равенства: --note=--срочно.
 
-Флаги: --check-update (сверить версию навыка с GitHub), --no-serve, --stop.
+Флаги: --check-update (сверить версию навыка с GitHub), --no-serve, --stop (погасить сервер сейчас).
+Сервер панели отдаёт файлы кусками (HTTP Range) — без этого видео по прокрутке не перематывается.
+Тот же сервер для собранного сайта, из его папки (на переднем плане, Ctrl+C — стоп):
+    python3 .aidesign-work/ad.py --serve-http 8000 --directory .
 Работает на macOS, Linux и Windows (в том числе из Git Bash).
 """
 
@@ -100,8 +110,12 @@ REF_KINDS = ("image", "screenshot", "url", "text")
 THEME_STATUSES = ("wait", "asked", "answered", "decided")
 OPTION_IDS = ("a", "b", "c")
 FULL_ROUND = len(OPTION_IDS)
-TOOLS = ("check.py", "setup.py", "backup.py", "scaffold.py", "designsystem.py", "rules.py")   # копии рядом с ad.py
+TOOLS = ("check.py", "setup.py", "backup.py", "scaffold.py", "designsystem.py", "rules.py",
+         "shots.py", "media.py")                         # копии рядом с ad.py
+MEDIA_CATALOG = os.path.join("knowledge", "медиа", "генераторы.json")   # каталог генераторов для media.py
+SHOT_KEYS = (("shot1280", 1280), ("shot390", 390))       # снимки превью: компьютер и телефон
 FIGMA_MODES = ("free", "paid")
+MEDIA_SOURCES = ("own", "generate", "mixed", "code", "placeholder")
 
 
 def now():
@@ -208,8 +222,12 @@ def fresh_state(a):
         "refs": [], "themes": [], "rounds": [],
         "direction": None, "check": None, "report": [], "assumptions": [],
         "result": None, "rev": 0,
-        "backups": [], "figma": None, "toolkit": None,
+        "backups": [], "figma": None, "toolkit": None, "media": fresh_media(),
     }
+
+
+def fresh_media():
+    return {"budget": None, "spent": [], "connected": [], "sources": None}
 
 
 # ── этапы ───────────────────────────────────────────────────────────────────
@@ -315,14 +333,21 @@ def install_page(skill):
     copied = [t for t in TOOLS if tools and os.path.isfile(os.path.join(tools, t))]
     for t in copied:
         shutil.copyfile(os.path.join(tools, t), os.path.join(A, t))
+    cat = os.path.join(skill, MEDIA_CATALOG) if skill else ""
+    if cat and os.path.isfile(cat):
+        shutil.copyfile(cat, os.path.join(A, os.path.basename(cat)))
+        copied.append(os.path.basename(cat))
     if copied:
         notes.append("инструменты: %s" % ", ".join("%s/%s" % (WORK, t) for t in copied))
     return notes
 
 
 def _run(args):
+    # ps в локали C показывает кириллицу в пути «M-PM-…» — и сервер не узнаётся: просим UTF-8.
+    env = dict(os.environ, LC_CTYPE="UTF-8" if sys.platform == "darwin" else "C.UTF-8")
+    env.pop("LC_ALL", None)
     try:
-        return subprocess.run(args, capture_output=True, text=True, timeout=10,
+        return subprocess.run(args, capture_output=True, text=True, timeout=10, env=env,
                               encoding="utf-8", errors="replace").stdout
     except (OSError, subprocess.SubprocessError):
         return ""
@@ -363,11 +388,27 @@ _OURS = re.compile(r"--directory\s+\"?" + re.escape(_norm(A)) + r"\"?(?=\s|$)")
 
 
 def is_ours(cmd):
-    """Сервер этого проекта — и только он: `-m http.server` и ровно наш --directory.
-    Узко намеренно: широкая проверка уже убивала чужие серверы."""
+    """Сервер этого проекта — и только он: наш `--serve-http` (или прежний `-m http.server`)
+    и ровно наш --directory. Узко намеренно: широкая проверка уже убивала чужие серверы."""
     c = cmd.replace("\\", "/")
     c = c.lower() if WIN else c
-    return bool(re.search(r"-m\s+http\.server\b", c)) and bool(_OURS.search(c))
+    return bool(re.search(r"(-m\s+http\.server|--serve-http)\b", c)) and bool(_OURS.search(c))
+
+
+def server_id(directory, pid):
+    """Метка сервера в заголовке ответа: его pid и отпечаток папки. По ней остановка узнаёт
+    свой сервер, даже когда ps показывает путь с кириллицей не как есть (локаль C, Windows)."""
+    import hashlib
+    path = _norm(os.path.realpath(directory)).encode("utf-8", "surrogateescape")
+    return "%d %s" % (int(pid), hashlib.sha1(path).hexdigest()[:16])
+
+
+def answers_as_ours(port, pid):
+    try:
+        with urllib.request.urlopen("http://127.0.0.1:%d/dashboard.html" % port, timeout=2) as r:
+            return r.headers.get("X-AIDesign-Server") == server_id(A, pid)
+    except (urllib.error.URLError, OSError, ValueError):
+        return False
 
 
 def kill(pid):
@@ -446,8 +487,8 @@ def serve(state):
         return "порт не нашёлся — панель открывается файлом: %s" % PAGE
     try:
         with open(LOG, "a", encoding="utf-8") as lf:
-            srv = subprocess.Popen([sys.executable, "-m", "http.server", str(port),
-                                    "--bind", "127.0.0.1", "--directory", A],
+            srv = subprocess.Popen([sys.executable, os.path.abspath(__file__), "--serve-http", str(port),
+                                    "--directory", A],
                                    stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                                    stderr=lf, **_detached())
     except OSError as e:
@@ -504,10 +545,55 @@ def stop_now(token=None):
             pass
 
 
+def stop_explicit():
+    """`ad.py --stop`: человек просит погасить сейчас, а не через STOP_DELAY. Отложенная остановка
+    от finish снимается; метка serve.stopping держит голый вызов, пока сервер гаснет."""
+    try:
+        os.remove(STOPF)
+    except OSError:
+        pass
+    port = recorded()[0]
+    with open(STOPPING, "w", encoding="utf-8") as f:
+        f.write("ad.py --stop\n")
+    try:
+        _stop_server()
+    finally:
+        try:
+            os.remove(STOPPING)
+        except OSError:
+            pass
+    if port and http_ok(port):
+        return "сервер не погас: порт %d ещё отвечает — закрой его процесс вручную" % port
+    return "сервер погашен"
+
+
+def gone(pid, port, limit=3.0):
+    """Процесс завершился и порт не отвечает — ждём до limit секунд."""
+    end = time.time() + limit
+    while time.time() < end:
+        alive = False
+        if pid and not WIN:
+            try:
+                os.kill(int(pid), 0)
+                alive = True
+            except OSError:
+                pass
+        if not alive and not (port and http_ok(port)):
+            return True
+        time.sleep(0.1)
+    return False
+
+
 def _stop_server():
     port, pid = recorded()
-    if pid and is_ours(cmdline(pid)):
+    if pid and (is_ours(cmdline(pid)) or (port and answers_as_ours(port, pid))):
         kill(pid)
+        if not gone(pid, port) and not WIN:
+            try:
+                os.kill(int(pid), 9)                 # SIGTERM не дошёл — добиваем свой же процесс
+            except OSError:
+                pass
+            gone(pid, port, 1.0)
     kill_orphans()
     try:
         os.remove(LOG)
@@ -536,6 +622,131 @@ def stop_later():
                      stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                      stderr=subprocess.DEVNULL, **_detached())
     return "сервер погаснет через %d с" % STOP_DELAY
+
+
+# ── http-сервер с Range: панель и показ собранного сайта ────────────────────
+
+def byte_span(header, size):
+    """Один диапазон из Range: (начало, конец включительно); "all" — отдать файл целиком
+    (несколько диапазонов, другая единица); None — диапазон неверный или за концом файла (416)."""
+    unit, _, spec = (header or "").strip().partition("=")
+    if unit.strip().lower() != "bytes":
+        return "all"
+    if "," in spec:
+        return "all"
+    m = re.match(r"^\s*(\d*)\s*-\s*(\d*)\s*$", spec)
+    if not m or not (m.group(1) or m.group(2)) or size <= 0:
+        return None
+    if not m.group(1):
+        n = int(m.group(2))
+        return (max(0, size - n), size - 1) if n else None
+    start = int(m.group(1))
+    end = int(m.group(2)) if m.group(2) else size - 1
+    if start >= size or end < start:
+        return None
+    return start, min(end, size - 1)
+
+
+def range_handler():
+    """Обработчик на основе SimpleHTTPRequestHandler: файлы кусками (206, Accept-Ranges,
+    Content-Range). Без этого браузер не перематывает видео — seekable пуст, currentTime стоит."""
+    import http.server
+
+    class RangeHandler(http.server.SimpleHTTPRequestHandler):
+        extensions_map = dict(http.server.SimpleHTTPRequestHandler.extensions_map, **{
+            ".mp4": "video/mp4", ".m4v": "video/mp4", ".webm": "video/webm", ".mov": "video/quicktime",
+            ".avif": "image/avif", ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary",
+            ".js": "text/javascript", ".mjs": "text/javascript", ".json": "application/json",
+            ".wasm": "application/wasm", ".mp3": "audio/mpeg", ".wav": "audio/wav"})
+        span = None
+        ident = ""
+
+        def end_headers(self):
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("X-AIDesign-Server", self.ident)
+            super().end_headers()
+
+        def send_head(self):
+            self.span = None
+            rng = self.headers.get("Range")
+            path = self.translate_path(self.path)
+            if not rng or not os.path.isfile(path) or self.path.split("?")[0].endswith("/"):
+                return super().send_head()
+            try:
+                f = open(path, "rb")
+            except OSError:
+                return super().send_head()
+            st = os.fstat(f.fileno())
+            span = byte_span(rng, st.st_size)
+            if span == "all":
+                f.close()
+                return super().send_head()
+            if span is None:
+                f.close()
+                self.send_response(416)
+                self.send_header("Content-Range", "bytes */%d" % st.st_size)
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+                return None
+            start, end = span
+            self.send_response(206)
+            self.send_header("Content-Type", self.guess_type(path))
+            self.send_header("Content-Range", "bytes %d-%d/%d" % (start, end, st.st_size))
+            self.send_header("Content-Length", str(end - start + 1))
+            self.send_header("Last-Modified", self.date_time_string(st.st_mtime))
+            self.end_headers()
+            f.seek(start)
+            self.span = end - start + 1
+            return f
+
+        def copyfile(self, source, outputfile):
+            try:
+                if self.span is None:
+                    return super().copyfile(source, outputfile)
+                left = self.span
+                while left > 0:
+                    chunk = source.read(min(1 << 16, left))
+                    if not chunk:
+                        break
+                    outputfile.write(chunk)
+                    left -= len(chunk)
+            except (BrokenPipeError, ConnectionResetError):
+                pass                             # браузер сам обрывает лишние куски при перемотке
+
+    return RangeHandler
+
+
+def serve_http_cli(argv):
+    """`ad.py --serve-http PORT [--directory DIR]` — сервер с Range на 127.0.0.1, на переднем плане.
+    Им же ad.py поднимает панель; собранный сайт показывают так же, из папки сайта."""
+    import functools
+    import http.server
+    _, opt = parse_args(argv[1:])
+    try:
+        port = int(argv[0]) if argv else 8000
+    except ValueError:
+        print("порт — число: ad.py --serve-http 8000 [--directory папка-сайта]", file=sys.stderr)
+        return 2
+    folder = os.path.abspath(text_opt(opt, "directory") or os.getcwd())
+    if not os.path.isdir(folder):
+        print("папки %s нет" % folder, file=sys.stderr)
+        return 2
+    handler = range_handler()
+    handler.ident = server_id(folder, os.getpid())
+    try:
+        httpd = http.server.ThreadingHTTPServer(("127.0.0.1", port), functools.partial(handler, directory=folder))
+    except OSError as e:
+        print("порт %d занят или недоступен (%s) — возьми другой" % (port, e), file=sys.stderr)
+        return 1
+    print("Сервер с Range: http://localhost:%d/ — папка %s; остановить: Ctrl+C" % (httpd.server_address[1], folder),
+          flush=True)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        httpd.server_close()
+    return 0
 
 
 # ── версия навыка ───────────────────────────────────────────────────────────
@@ -881,6 +1092,26 @@ def option_src(state, src):
     return s
 
 
+def option_shots(state, src, opt, notes):
+    """Снимки превью 1280 и 390: из --shot1280/--shot390 или файлы <имя>-1280.png рядом с превью
+    (их кладёт shots.py). Панель показывает снимок там, где живое превью в рамку не пускают."""
+    found = {}
+    stem = os.path.splitext(src)[0]
+    for key, w in SHOT_KEYS:
+        given = text_opt(opt, key)
+        if given:
+            path = option_src(state, given)
+            if not os.path.isfile(os.path.join(run_dir(state), path)):
+                notes.append("! снимка %s/%s нет — на панели будет живое превью и ссылка" % (state["dir"], path))
+            found[key] = path
+        elif os.path.isfile(os.path.join(run_dir(state), "%s-%d.png" % (stem, w))):
+            found[key] = "%s-%d.png" % (stem, w)
+    if not found:
+        notes.append("снимков %s нет — python3 %s/shots.py %s/%s/%s, затем этот round option ещё раз"
+                     % (os.path.basename(src), WORK, WORK, state["dir"], src))
+    return found
+
+
 def new_round(state, refined=None):
     rounds = state.setdefault("rounds", [])
     n = len(rounds) + 1
@@ -907,6 +1138,7 @@ def cmd_round(state, pos, opt):
             notes.append("! файла %s/%s пока нет — на панели будет пусто, пока его не положат" % (state["dir"], src))
         o = {"id": oid, "title": need(opt, "title", "название варианта"), "src": src,
              "note": text_opt(opt, "note") or ""}
+        o.update(option_shots(state, src, opt, notes))
         r["options"] = [x for x in r["options"] if x.get("id") != oid] + [o]
         r["options"].sort(key=lambda x: x["id"])
         log(state, "round", act="option", n=r["n"], id=oid)
@@ -932,7 +1164,8 @@ def cmd_round(state, pos, opt):
                      % (nr["n"], oid.upper(), r["n"], state["dir"], nr["n"]))
         log(state, "round", act="refine", n=nr["n"], id=oid, src=r["n"])
     else:
-        die("round new | option --id a|b|c --title \"…\" --src rounds/NN/a.html [--note …] | "
+        die("round new | option --id a|b|c --title \"…\" --src rounds/NN/a.html [--note …] "
+            "[--shot1280 rounds/NN/a-1280.png --shot390 rounds/NN/a-390.png] | "
             "feedback --text \"…\" | choose --id a|b|c|none | refine --id a")
     return notes
 
@@ -1022,6 +1255,126 @@ def cmd_toolkit(state, pos, opt):
     log(state, "toolkit", n=len(state["toolkit"]["missing"]))
 
 
+# ── медиа: бюджет «1б», траты, подключённые генераторы, источник ────────────
+
+def amount_of(v, what):
+    """Неотрицательное число: целое остаётся целым (100, а не 100.0)."""
+    try:
+        x = float(str(v).replace(",", "."))
+    except ValueError:
+        x = -1
+    if not str(v or "").strip() or x != x or x < 0 or x == float("inf"):
+        die("%s — неотрицательное число, а не «%s»" % (what, v))
+    return int(x) if x == int(x) else round(x, 4)
+
+
+def media_of(state):
+    m = state.get("media")
+    if not isinstance(m, dict):
+        m = state["media"] = fresh_media()
+    for k, v in fresh_media().items():
+        m.setdefault(k, v)
+    return m
+
+
+def media_spent(m):
+    """Сколько потрачено. Правило одно для ad.py, rules.py («Сейчас») и панели (mediaSums): в сумму идут
+    траты в единице бюджета и старые записи без единицы. Чужую единицу spend и budget не принимают."""
+    unit = (m.get("budget") or {}).get("unit")
+    total = sum(x.get("amount") or 0 for x in m.get("spent") or []
+                if not unit or not x.get("unit") or x.get("unit") == unit)
+    return int(total) if total == int(total) else round(total, 4)
+
+
+def media_units(m):
+    """Единицы, в которых уже записаны траты (у старых записей без единицы — пусто, не считается)."""
+    return {x.get("unit") for x in m.get("spent") or [] if x.get("unit")}
+
+
+def media_check(state, opt):
+    """Хватит ли бюджета на следующую платную генерацию. Состояние не меняет: только код и строка."""
+    m = media_of(state)
+    amount = amount_of(opt.get("amount"), "media check --amount")
+    b = m.get("budget")
+    asked = text_opt(opt, "unit")
+    if b and asked and asked != b["unit"]:
+        print("бюджет в %s, а цена в %s — сравнить нельзя: спроси человека, как пересчитать" % (b["unit"], asked))
+        return 1
+    if not b:
+        print("бюджета на медиа нет — платная генерация только после вопроса человеку о сумме "
+              "(ad.py media budget --limit N --unit …)")
+        return 1
+    spent = media_spent(m)
+    left = b["limit"] - spent
+    if amount > left + 1e-9:
+        print("выйдет за бюджет: потрачено %s из %s %s, осталось %s, нужно %s — спроси человека"
+              % (spent, b["limit"], b["unit"], round(left, 4), amount))
+        return 1
+    print("в бюджете: потрачено %s из %s %s, после этой — %s" % (spent, b["limit"], b["unit"], round(spent + amount, 4)))
+    return 0
+
+
+def media_catalog(state):
+    """Каталог генераторов: копия рядом с ad.py (её кладёт init), иначе из папки навыка."""
+    for path in (os.path.join(A, os.path.basename(MEDIA_CATALOG)),
+                 os.path.join(state.get("skillDir") or "", MEDIA_CATALOG)):
+        try:
+            with open(path, encoding="utf-8") as f:
+                return {s["id"]: s for s in json.load(f).get("services") or [] if isinstance(s, dict) and s.get("id")}
+        except (OSError, ValueError, KeyError, AttributeError):
+            continue
+    return {}
+
+
+def cmd_media(state, pos, opt):
+    act, notes = (pos[0] if pos else ""), []
+    m = media_of(state)
+    if act == "budget":
+        unit = need(opt, "unit", "кредитов | ₽ | $ — в чём считает сервис")
+        other = media_units(m) - {unit}
+        if other:
+            die("траты уже записаны в %s, а бюджет — в %s: единицу при записанных тратах не меняем, спроси "
+                "человека, как пересчитать (поднять лимит в той же единице можно)" % (", ".join(sorted(other)), unit))
+        m["budget"] = {"limit": amount_of(opt.get("limit"), "media budget --limit"), "unit": unit, "at": state["updatedAt"]}
+        log(state, "media", act="budget", limit=m["budget"]["limit"], unit=unit)
+    elif act == "spend":
+        b = m.get("budget") or {}
+        x = {"service": need(opt, "service", "id сервиса, например higgsfield"),
+             "amount": amount_of(opt.get("amount"), "media spend --amount"),
+             "unit": text_opt(opt, "unit") or b.get("unit") or "", "item": need(opt, "item", "что сгенерировано"),
+             "at": state["updatedAt"]}
+        if b and x["unit"] != b["unit"]:
+            die("в бюджете %s, а трата в %s — спроси человека, как пересчитать, и запиши в %s"
+                % (b["unit"], x["unit"], b["unit"]))
+        if not b and not x["unit"]:
+            die("бюджета нет — у траты нужна единица: --unit кредитов | ₽ | $")
+        if not b and media_units(m) - {x["unit"]}:
+            die("траты уже записаны в %s, а эта — в %s: спроси человека, как пересчитать"
+                % (", ".join(sorted(media_units(m))), x["unit"]))
+        m["spent"].append(x)
+        if not b:
+            notes.append("! трата без бюджета — спроси человека о сумме: ad.py media budget --limit N --unit …")
+        elif media_spent(m) > b["limit"]:
+            notes.append("! бюджет превышен: потрачено %s из %s %s — следующая платная генерация только с "
+                         "разрешения человека" % (media_spent(m), b["limit"], b["unit"]))
+        log(state, "media", act="spend", service=x["service"], amount=x["amount"], unit=x["unit"])
+    elif act == "connected":
+        cat = media_catalog(state)
+        ids = [x.strip() for x in (text_opt(opt, "ids") or "").split(",") if x.strip()]
+        m["connected"] = [{"id": i, "title": (cat.get(i) or {}).get("title") or i,
+                           "kinds": list((cat.get(i) or {}).get("kinds") or [])} for i in dict.fromkeys(ids)]
+        log(state, "media", act="connected", n=len(m["connected"]))
+    elif act == "sources":
+        m["sources"] = choice_of(opt.get("set"), MEDIA_SOURCES, "источник медиа")
+        log(state, "media", act="sources", set=m["sources"])
+    elif act == "recorded":                      # зовёт media.py record: опись assets/media.json изменилась
+        log(state, "media", act="recorded", slot=need(opt, "slot", "место в описи, например hero"))
+    else:
+        die("media budget --limit N --unit U | spend --service S --amount A --item \"…\" | check --amount A | "
+            "connected --ids a,b | sources --set %s | recorded --slot S" % "|".join(MEDIA_SOURCES))
+    return notes
+
+
 # События, которые меняют проект: после них «Сейчас» в блоке aidesign переписывается сам.
 RULE_STAGES = {"build": "сборка готова", "check": "проверка пройдена", "handoff": "передача готова"}
 
@@ -1037,6 +1390,9 @@ def rules_event(state, cmd, pos):
         return "копия «%s» — %s" % (b.get("reason"), b.get("id"))
     if cmd == "figma":
         return "Figma подключена или обновлена"
+    if cmd == "media" and pos and pos[0] in ("budget", "spend", "sources", "recorded"):
+        return {"budget": "бюджет медиа назван", "spend": "трата на медиа записана",
+                "sources": "источник медиа выбран", "recorded": "опись медиа обновлена"}[pos[0]]
     return {"toolkit": "оснащение проверено", "finish": "прогон сдан"}.get(cmd)
 
 
@@ -1063,6 +1419,7 @@ HANDLERS = {
     "backup": lambda s, p, o: cmd_backup(s, p, o),
     "figma": lambda s, p, o: cmd_figma(s, p, o),
     "toolkit": lambda s, p, o: cmd_toolkit(s, p, o),
+    "media": lambda s, p, o: cmd_media(s, p, o),
     "ref": lambda s, p, o: cmd_ref(s, p, o),
     "theme": lambda s, p, o: cmd_theme(s, p, o),
     "round": lambda s, p, o: cmd_round(s, p, o),
@@ -1079,6 +1436,8 @@ HANDLERS = {
 
 def main():
     argv = sys.argv[1:]
+    if argv[:1] == ["--serve-http"]:
+        sys.exit(serve_http_cli(argv[1:]))
     if "--stop-now" in argv:
         i = argv.index("--stop-now")
         stop_now(argv[i + 1] if i + 1 < len(argv) else None)
@@ -1094,6 +1453,8 @@ def main():
             die("state.js ещё нет — начни с `ad.py init`")
         if cmd not in ("", "sync") and cmd not in HANDLERS:
             die("неизвестная команда %s — список в начале ad.py" % cmd)
+        if pos[:2] == ["media", "check"]:                  # вопрос, а не событие: без записи и сервера
+            sys.exit(media_check(state, opt))
         if cmd not in ("", "sync"):
             # Время события ставится до команды: ей самой и ленте нужна одна метка.
             state["updatedAt"] = now()
@@ -1108,7 +1469,9 @@ def main():
     notes = close_passed(state) + notes
     save(state)
     snap = write_snapshot(state)
-    if cmd == "finish" or opt.get("stop"):
+    if opt.get("stop"):
+        srv = stop_explicit()
+    elif cmd == "finish":
         srv = stop_later()
     elif opt.get("no-serve"):
         srv = "сервер не проверялся"

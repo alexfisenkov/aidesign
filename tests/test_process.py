@@ -30,7 +30,7 @@ PROMPT_FILES = ["preview.md", "build.md", "critic.md"]
 STAGE_WORDS = ["Подготовка", "Референсы", "Интервью", "Превью", "Сборка", "Проверка", "Передача"]
 # Темы, которые интервью обязано закрыть (спецификация, история 14).
 REQUIRED_THEMES = ["Поверхность", "Цель и аудитория", "Характер", "Тон", "Плотность", "Цвет",
-                   "Типографика", "Движение", "Фото и видео", "Антипримеры"]
+                   "Типографика", "Движение", "Фото и видео", "Медиа", "Антипримеры"]
 JARGON = re.compile(r"\b(CTA|hero|UX|UI|вайб\w*|фрейм\w*|лендос\w*|юзер\w*|кейс\w*)\b", re.I)
 OPTION = re.compile(r"^\s*[-*]?\s*([абвг])\)\s+\S")
 
@@ -91,7 +91,7 @@ class SkillFile(unittest.TestCase):
         self.assertRegex(self.front, r"(?m)^name: aidesign$")
         self.assertRegex(self.front, r"(?m)^description: \S")
         self.assertRegex(self.front, r"(?m)^argument-hint: \S")
-        self.assertRegex(self.front, r"(?m)^metadata:\n  version: \"0\.2\.0\"$")
+        self.assertRegex(self.front, r"(?m)^metadata:\n  version: \"0\.3\.0\"$")
         self.assertNotIn("disable-model-invocation", self.text)
 
     def test_title_and_stage_words(self):
@@ -409,6 +409,190 @@ class CheckTool(unittest.TestCase):
         self.assertIn("По мотивам: pbakaus/impeccable antipatterns (Apache-2.0)", head)
         for rule_id in ("overused-font", "gradient-text", "bounce-easing", "marquee", "skipped-heading"):
             self.assertIn(rule_id, head, rule_id)
+
+
+def skill_texts_with_knowledge():
+    """Все тексты, по которым работает скилл: процесс и база знаний (без examples/)."""
+    out = dict(process_texts())
+    for base, _, files in os.walk(KNOWLEDGE):
+        for name in files:
+            if name.endswith(".md"):
+                path = os.path.join(base, name)
+                out[os.path.relpath(path, SKILL)] = read(path)
+    return out
+
+
+# Старое правило «тяжёлое в превью заменяй намёком» (задача 11, истории 73–74): нигде в скилле.
+OLD_HINT_RULE = re.compile(r"(?i)(заменя\w*|заменить)\s+коротким\s+CSS-намёком|Тяжёлое \(WebGL")
+
+
+class MediaProcess(unittest.TestCase):
+    """Итерация 19.11 (2): медиа по всему прогону и настоящие превью (истории 61–76)."""
+
+    def setUp(self):
+        self.texts = process_texts()
+
+    def order(self, name, *words):
+        t = self.texts[name]
+        places = []
+        for word in words:
+            self.assertIn(word, t, "%s: нет «%s»" % (name, word))
+            places.append(t.index(word))
+        self.assertEqual(places, sorted(places), "%s: порядок %s" % (name, words))
+
+    def test_start_detects_generators_and_skills_and_tells_the_person(self):
+        t = self.texts["phases/0-start.md"]
+        for word in ("media.py detect", "media.py skills", "ad.py media connected", "media.py connect",
+                     "--host claude", "Подключено"):
+            self.assertIn(word, t, word)
+        self.order("phases/0-start.md", "setup.py doctor", "media.py detect", "ad.py media connected")
+
+    def test_interview_has_the_media_theme_closing_the_media_section(self):
+        bank = question_bank()
+        media = [q for q in bank if q["theme"] == "Медиа"]
+        self.assertGreaterEqual(len(media), 3, "тема «Медиа»: источник, чем пользуетесь, что нужно")
+        joined = " ".join(" ".join([q["text"]] + q["options"]) for q in media)
+        for word in ("свои", "сгенерир", "вперемешку", "плашк", "пользуетесь"):
+            self.assertIn(word, joined, word)
+        t = self.texts["phases/2-interview.md"]
+        template = t[t.index("# Профиль вкуса —"):t.index("## Путь по базе знаний")]
+        self.assertIn("\n## Медиа\n", template, "шаблон vkus.md: раздел «Медиа»")
+        for word in ("ad.py media sources", "ad.py media budget", "перед первой платной"):
+            self.assertIn(word, t, word)
+
+    def test_previews_make_the_material_first_and_show_real_techniques(self):
+        t = self.texts["phases/3-previews.md"]
+        self.order("phases/3-previews.md", "Материал главного приёма", "prompts/preview.md")
+        for word in ("настоящ", "свои картинки", "плашк", "по одной", "ad.py media check", "file://",
+                     "readyState", "currentTime", "канвас", "в превью нет"):
+            self.assertIn(word, t, word)
+
+    def test_round_message_names_the_http_addresses(self):
+        t = self.texts["phases/3-previews.md"]
+        message = t[t.index("Сообщение человеку"):]
+        self.assertIn("http://localhost", message[:1500])
+        self.assertIn("открылось как файл", message[:1500].lower())
+
+    def test_preview_prompt_asks_for_real_techniques_and_a_file_guard(self):
+        t = self.texts["prompts/preview.md"]
+        for word in ("настоящ", "file://", "<video src", "http://localhost", "общий", "свои картинки"):
+            self.assertIn(word, t, word)
+
+    def test_critic_blocks_a_fake_preview(self):
+        t = self.texts["prompts/critic.md"]
+        self.assertTrue(any("ненастоящ" in l.lower() and "блокир" in l.lower() for l in t.splitlines()),
+                        "critic.md: ненастоящее превью — блокирующая находка")
+        self.assertIn("file://", t)
+
+    def test_the_old_hint_rule_is_gone_everywhere(self):
+        for name, text in skill_texts_with_knowledge().items():
+            self.assertNotRegex(text, OLD_HINT_RULE, name)
+
+    def test_preview_knowledge_says_previews_are_real(self):
+        t = read(os.path.join(KNOWLEDGE, "движение-и-медиа", "превью.md"))
+        for word in ("настоящ", "общий лёгкий файл", "file://", "в превью нет", "доводит"):
+            self.assertIn(word, t, word)
+
+    def test_video_to_site_takes_the_direct_video_src_as_the_main_path(self):
+        t = read(os.path.join(KNOWLEDGE, "движение-и-медиа", "видео-в-сайт.md"))
+        self.assertIn("<video src", t)
+        self.assertIn("file://", t)
+        self.assertNotIn("Надёжно: скачать ролик целиком через `fetch`", t)
+
+    def test_the_chosen_option_is_brought_to_the_end(self):
+        for name in ("phases/3-previews.md", "phases/4-build.md"):
+            t = self.texts[name]
+            for word in ("доводк", "тот же код", "все разделы", "тексты", "готово"):
+                self.assertIn(word, t, "%s: нет «%s»" % (name, word))
+        self.assertIn("круги правок", self.texts["phases/4-build.md"])
+        self.assertIn("stage build --note", self.texts["phases/3-previews.md"])
+
+    def test_build_runs_the_media_cycle_by_the_lead_agent(self):
+        t = self.texts["phases/4-build.md"]
+        self.order("phases/4-build.md", "media-plan.md", "ad.py media check", "ad.py media spend",
+                   "media.py fetch", "глазами", "media.py prep", "media.py record")
+        for word in ("ведущий агент", "media.py skills", "двух перегенераций", "ad.py media budget"):
+            self.assertIn(word, t, word)
+
+    def test_build_prompt_keeps_the_chosen_preview_code(self):
+        t = self.texts["prompts/build.md"]
+        for word in ("тот же код", "assets/media.json", "file://"):
+            self.assertIn(word, t, word)
+
+    def test_check_and_handoff_cover_media(self):
+        c = self.texts["phases/5-check.md"]
+        for word in ("assets/media.json", "media.py list", "постер", "alt", "reduced-motion", "file://"):
+            self.assertIn(word, c, word)
+        h = self.texts["phases/6-handoff.md"]
+        for word in ("assets/media.json", "## Медиа", "потрачено", "media-plan.md"):
+            self.assertIn(word, h, word)
+
+    def test_skill_rule_two_and_run_files_know_the_media(self):
+        s = self.texts["SKILL.md"]
+        rules = section(s, "Неснимаемые правила")
+        self.assertIn("в пределах названного человеком бюджета", rules)
+        self.assertIn("отдельного разрешения с суммой", rules)
+        for word in ("media-plan.md", "assets/media.json", "media.py", "shots.py", "phases/3-previews.md"):
+            self.assertIn(word, s, word)
+        self.assertRegex(s, r"(?i)превью[^\n]*настоящ")
+
+    def test_named_media_knowledge_files_exist(self):
+        named = set()
+        for text in self.texts.values():
+            named |= set(re.findall(r"knowledge/(медиа/[\w./-]+?\.md)", text))
+        self.assertGreaterEqual(len(named), 3)
+        for path in sorted(named):
+            self.assertTrue(os.path.isfile(os.path.join(KNOWLEDGE, path)), path)
+
+    def test_preview_generation_only_when_allowed_asked_or_for_the_main_technique(self):
+        t = self.texts["phases/3-previews.md"]
+        material = t[t.index("## 3. Материал главного приёма"):t.index("## 4.")]
+        for word in ("генерация в превью разрешена", "«покажи с настоящими картинками»",
+                     "главного приёма", "история 73", "свои картинки", "плашк"):
+            self.assertIn(word, material, word)
+        self.assertNotIn("только если человек выбрал «генерация» или «вперемешку» и назвал бюджет", material)
+
+    def test_photo_preview_line_agrees_with_the_preview_rules(self):
+        t = read(os.path.join(KNOWLEDGE, "движение-и-медиа", "фото.md"))
+        line = next(l for l in t.splitlines() if l.startswith("**В превью**"))
+        for word in ("картинки человека", "сгенерированные для него", "в пределах бюджета",
+                     "генерация в превью разрешена", "плашк", "Чужие фото"):
+            self.assertIn(word, line, word)
+
+    def test_the_three_cases_of_preview_generation_agree_everywhere(self):
+        previews = self.texts["phases/3-previews.md"]
+        material = previews[previews.index("## 3. Материал главного приёма"):previews.index("## 4.")]
+        photo = read(os.path.join(KNOWLEDGE, "движение-и-медиа", "фото.md"))
+        knowledge = read(os.path.join(KNOWLEDGE, "движение-и-медиа", "превью.md"))
+        lines = {
+            "3-previews.md §3": material,
+            "фото.md «В превью»": next(l for l in photo.splitlines() if l.startswith("**В превью**")),
+            "превью.md «Материал»": next(l for l in knowledge.splitlines() if "**Материал — настоящий:**" in l),
+            "превью.md «Сначала материал»": next(l for l in knowledge.splitlines()
+                                                 if "**Сначала материал главного приёма" in l),
+            "превью.md «Картинки»": next(l for l in knowledge.splitlines() if l.startswith("- Картинки —")),
+        }
+        for name, text in lines.items():
+            for word in ("генерация в превью разрешена", "«покажи с настоящими картинками»",
+                         "материал главного приёма", "плашк"):
+                self.assertIn(word, text, "%s: нет «%s»" % (name, word))
+        for name, text in (("3-previews.md §3", material), ("превью.md", knowledge)):
+            self.assertIn("главное фото, на котором держится приём", text, name)
+        readmes = {"README.ru.md": ("разрешили генерацию в превью", "«покажи с настоящими картинками»",
+                                    "материал главного приёма"),
+                   "README.md": ("allowed generation in previews", "«show it with real pictures»",
+                                 "material for the main technique")}
+        for name, words in readmes.items():
+            text = read(os.path.join(REPO, name))
+            for word in words:
+                self.assertIn(word, text, "%s: нет «%s»" % (name, word))
+
+    def test_unknown_price_is_never_generated_blind(self):
+        for path in (os.path.join(KNOWLEDGE, "медиа", "генераторы.md"), os.path.join(PHASES, "4-build.md")):
+            t = read(path).lower()
+            for word in ("вслепую", "оценкой сверху", "самой дорогой известной цене", "остатку бюджета",
+                         "сначала спроси"):
+                self.assertIn(word, t, "%s: нет «%s»" % (os.path.basename(path), word))
 
 
 class KnowledgeLinks(unittest.TestCase):

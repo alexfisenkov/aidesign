@@ -174,8 +174,14 @@
   .pvbtn:hover{transform:translateY(-3px);box-shadow:var(--sh)}
   .pv.chosen .pvbtn{border:2px solid var(--done)}
   .frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#fff}
-  .frame iframe{position:absolute;left:0;top:0;width:1280px;height:800px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+  .frame iframe{position:absolute;left:0;top:0;width:1280px;height:800px;border:0;transform-origin:0 0;pointer-events:none;background:#fff;opacity:0}
+  .frame.live iframe{opacity:1}
   .frame .ph{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;font-size:13px;color:var(--mut);background:var(--inset)}
+  .frame.fail .ph{color:var(--tx2);font-weight:600;line-height:1.45}
+  /* Снимок превью (shots.py): виден в любом браузере, даже там, где живую страницу в рамку не пускают. */
+  .frame img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+  .pvopen{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:32px;font-size:13.5px;font-weight:600;color:var(--now-tx);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+  .mini .pvopen{font-size:12px;min-height:24px}
   .pvid{position:absolute;left:10px;top:10px;z-index:2;width:30px;height:30px;border-radius:999px;background:var(--chrome);color:#171717;display:grid;place-items:center;
     font-family:'Unbounded','Onest',sans-serif;font-weight:700;font-size:13px;box-shadow:0 4px 10px rgba(20,20,22,.18)}
   .zoom{position:absolute;right:10px;top:10px;z-index:2;padding:4px 10px;border-radius:999px;background:rgba(23,23,23,.78);color:#fff;font-size:12px;font-weight:600}
@@ -256,8 +262,16 @@
   .lb-box.loaded iframe{opacity:1}
   .lb-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#4a4a4a;font-size:14px;line-height:1.5}
   .lb-box.loaded .lb-wait{display:none}
-  .lb-wait.fail{color:#8a1c1c;font-weight:600}
+  .lb-wait.fail{color:#8a1c1c;font-weight:600;flex-direction:column;gap:12px}
   .lb-box img{display:block;max-width:100%;max-height:100%}
+  .lb-box img.lb-shot{position:absolute;left:0;top:0;width:100%;max-height:none;height:auto}
+  .lb-box.has-shot{background:transparent}
+  .lb-box.has-shot .lb-wait{display:none}
+  .lb-box.has-shot.fail .lb-wait{display:block;inset:auto 0 0 0;padding:10px 14px;background:rgba(23,23,23,.9);color:#fff;font-size:13px;text-align:left}
+  .lb-wait a{color:inherit;text-decoration:underline;text-underline-offset:3px;margin-left:4px;white-space:nowrap}
+  .lb a.open{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid rgba(255,255,255,.3);border-radius:12px;
+    color:#fff;font-size:13.5px;font-weight:600;text-decoration:none}
+  .lb a.open:focus-visible,.lb-wait a:focus-visible{outline:2px solid #fff;outline-offset:2px}
   .lb-note{padding:0 16px 14px;font-size:13.5px;color:rgba(255,255,255,.8);text-align:center}
 
   .boot .w{animation:rise .8s cubic-bezier(.16,1,.3,1) both}
@@ -340,9 +354,19 @@ const themeDone = t => !!t && (t.status === 'answered' || t.status === 'decided'
 const restoreCmd = id => `python3 .aidesign-work/backup.py restore --id ${id} --yes`;
 // Строка «Оснащение»: что не хватает, что поставлено, от чего отказались (null — проверки не было).
 const toolkitParts = T => T && typeof T === 'object' ? {missing: T.missing || [], installed: T.installed || [], skipped: T.skipped || []} : null;
+// Медиа: «потрачено X из N» по сервисам в единицах бюджета (траты в других единицах не складываются); null — поля нет.
+const mediaSums = M => { if (!M || typeof M !== 'object') return null; const B = M.budget && typeof M.budget === 'object' ? M.budget : null, by = new Map(), r = x => Math.round(x * 1e4) / 1e4; (Array.isArray(M.spent) ? M.spent : []).filter(x => x && (!B || !x.unit || x.unit === B.unit)).forEach(x => { const k = String(x.service || '?'); by.set(k, r((by.get(k) || 0) + (+x.amount || 0))); }); const total = r([...by.values()].reduce((a, b) => a + b, 0)); return {limit: B ? +B.limit : null, unit: B ? String(B.unit || '') : '', total, over: !!B && total > +B.limit, by: [...by.entries()]}; };
 const fmtBytes = n => { n = +n || 0; return n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : n >= 1024 ? Math.round(n / 1024) + ' KB' : n + ' B'; };
 const httpHref = s => { try { const u = new URL(String(s == null ? '' : s).trim()); return /^https?:$/.test(u.protocol) && /^https?:\/\//i.test(String(s).trim()) ? u.href : ''; } catch (e) { return ''; } };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// Дошло ли превью до рамки — по записи Resource Timing её загрузки (содержимое песочницы панель не читает).
+// Статус 0 без байтов — запрос не дошёл: браузер не пустил (ERR_BLOCKED_BY_CLIENT) или сеть; 4xx/5xx — файла нет.
+// Нет числового статуса (старый браузер) или нет записи — неизвестно: тогда верим событию load.
+const frameVerdict = e => !e || typeof e.responseStatus !== 'number' ? 'unknown' : e.responseStatus === 0 ? (!e.transferSize && !e.encodedBodySize ? 'blocked' : 'unknown') : e.responseStatus >= 400 ? 'missing' : 'ok';
+// Ссылка на сам HTML превью — верхним окном вкладка его показывает, даже когда рамку не пускают.
+// Адрес — полный, от сервера панели, и через тот же фильтр http/https, что и ссылки-референсы.
+const absUrl = s => { try { return new URL(s, location.href).href; } catch (e) { return String(s); } };
+const openLink = (href, html, cls) => `<a class="${cls}" href="${esc(httpHref(absUrl(href)))}" target="_blank" rel="noopener">${html}</a>`;
 
 const I18N = {
   ru:{lang:"ru",of:"из",
@@ -355,7 +379,7 @@ const I18N = {
     themeSystem:"Система",themeLight:"Светлая",themeDark:"Тёмная",langLabel:"Язык",themeLabel:"Тема",refresh:"Обновить",workshopLink:" — Telegram-канал, новая вкладка",
     fUpdated:"Последняя запись агента",fStage:"Этап",fMode:"Режим",fEntry:"Вход",fQuestions:"Вопросы",
     runData:"Данные прогона",rStarted:"Начат",rFinished:"Сдан",rDir:"Папка прогона",rSkill:"Версия AI Design",
-    fileMode:"Панель открыта файлом. Откройте адрес http://localhost:…/dashboard.html, который назвал агент: превью видны только через сервер. Нет адреса — скажите агенту «подними панель».",
+    fileMode:"Панель открыта файлом. Откройте адрес http://localhost:…/dashboard.html, который назвал агент: живые превью с движением видны только через сервер, как файл — только снимки. Нет адреса — скажите агенту «подними панель».",
     lost:"Связь с панелью пропала — на экране последнее, что она успела получить. Скажи агенту «подними панель»: страница подхватит сервер сама.",
     stageHead:"Этап",stepOf:(n,m)=>`Шаг ${n} из ${m}`,
     runTime:"Время работы · без пауз на ожидании",stageTime:n=>`На этапе «${n}»`,finishedAt:"Сдано",paused:"пауза — часы стоят",
@@ -390,6 +414,9 @@ const I18N = {
     bkHead:"Бэкапы",bkEmpty:"Копий проекта пока нет. Перед первой правкой файлов будет копия «до».",bkRestore:"Вернуть как было",
     bkNote:"Копии лежат в .aidesign-work/backups/ и не удаляются без твоего слова.",
     figmaHead:"Figma",figmaModes:{free:"кадры страниц",paid:"файл раскладывает AI Design"},
+    mdHead:"Медиа",mdSource:"Источник",mdSourceNone:"ещё не выбран",mdSources:{own:"свои фото и видео",generate:"генерация",mixed:"вперемешку",code:"кодом",placeholder:"плашки"},
+    mdConnected:"Генераторы",mdNone:"не подключены",mdKinds:{image:"картинки",video:"видео",audio:"звук","3d":"3D",vector:"вектор",svg:"SVG",shader:"шейдеры"},
+    mdSpent:(x,n,u)=>`потрачено ${x} из ${n} ${u}`,mdNoBudget:"Бюджета нет — платная генерация только после твоего «да» с суммой.",mdOver:"Бюджет исчерпан — дальше платное только с твоего разрешения.",
     tkHead:"Оснащение",tkOk:"всё нужное на месте",tkMissing:"не хватает",tkInstalled:"поставлено",tkSkipped:"без этого",
     feed:"Лента",footer:"Панель только показывает ход работы. Решения — в чате.",updated:"Обновлено",frozen:"Прогон сдан — панель больше не обновляется",
     ago:{s:s=>`${s} сек назад`,m:m=>`${m} мин назад`,h:(h,m)=>`${h} ч ${m} мин назад`},
@@ -397,6 +424,10 @@ const I18N = {
     lbDesktop:"Компьютер · 1280",lbPhone:"Телефон · 390",lbPrev:"Предыдущий вариант",lbNext:"Следующий вариант",lbClose:"Закрыть",lbOf:(i,n)=>`${i} из ${n}`,
     lbLoading:"Превью загружается…",lbMissing:"Файла этого превью нет на сервере — его ещё не положили или переложили",
     lbDown:"Превью не открылось: сервер панели не отвечает. Подними его командой python3 .aidesign-work/ad.py и открой окно снова",
+    openTab:"Открыть в новой вкладке",pvLoading:"Превью загружается…",
+    pvBlocked:"Этот браузер не показывает превью внутри панели. Нажми «Открыть в новой вкладке» — там оно видно целиком.",
+    lbShotOnly:"Это снимок страницы: живое превью этот браузер внутри панели не показывает.",
+    lbFileShot:"Это снимок страницы. Живое превью с движением — по адресу http://localhost:…/dashboard.html, который назвал агент.",
     exHead:"Примеры работ",exSub:"Демо-страницы, собранные AI Design: разные стили и приёмы. Кликни, чтобы рассмотреть.",
     exEmpty:"Примеров пока нет: папки examples/ рядом с панелью нет или в ней пустой INDEX.json. Они копируются при запуске AI Design.",
     exFile:"Примеры видны только через сервер панели — откройте адрес http://localhost:…/dashboard.html.",
@@ -412,6 +443,8 @@ const I18N = {
       direction:e=>`Направление: «${e.name}»`,check:e=>`Проверка: находок ${e.findings}, исправлено ${e.fixed}`,
       add:e=>e.key === 'assumptions' ? `Решено за тебя: +${e.n}` : `В отчёт: +${e.n}`,set:e=>`Изменено: ${e.key}`,
       backup:e=>`Бэкап «${e.reason || ''}»: ${e.id || ''}`,figma:"Figma подключена к проекту",toolkit:e=>e.n ? `Оснащение: не хватает ${e.n}` : "Оснащение проверено",
+      media:e=>({budget:`Бюджет медиа: ${e.limit} ${e.unit || ''}`,spend:`Медиа: ${e.service} — ${e.amount} ${e.unit || ''}`,connected:`Генераторы: подключено ${e.n || 0}`,
+        sources:`Источник медиа: ${I18N.ru.mdSources[e.set] || e.set}`})[e.act] || "Медиа",
       finish:"Прогон сдан"},
     boot:"Панель ещё не прочитала состояние",
     bootWhy:"Состояния нет ни внутри страницы, ни в файле <code>.aidesign-work/state.js</code>: прогон только начался, либо файл помялся.",
@@ -427,7 +460,7 @@ const I18N = {
     themeSystem:"System",themeLight:"Light",themeDark:"Dark",langLabel:"Language",themeLabel:"Theme",refresh:"Refresh",workshopLink:" — Telegram channel, new tab",
     fUpdated:"Last agent record",fStage:"Stage",fMode:"Mode",fEntry:"Entry",fQuestions:"Questions",
     runData:"Run data",rStarted:"Started",rFinished:"Done",rDir:"Run folder",rSkill:"AI Design version",
-    fileMode:"The panel is opened as a file. Open the http://localhost:…/dashboard.html address the agent gave you: previews are only visible through the server. No address — ask the agent to bring the panel up.",
+    fileMode:"The panel is opened as a file. Open the http://localhost:…/dashboard.html address the agent gave you: live previews with motion are only visible through the server; as a file you see snapshots only. No address — ask the agent to bring the panel up.",
     lost:"The panel lost its connection — the screen shows the last state it received. Ask the agent to bring the panel up: the page will pick it up by itself.",
     stageHead:"Stage",stepOf:(n,m)=>`Step ${n} of ${m}`,
     runTime:"Working time · without waiting pauses",stageTime:n=>`In “${n}”`,finishedAt:"Done",paused:"paused — the clock is stopped",
@@ -462,6 +495,9 @@ const I18N = {
     bkHead:"Backups",bkEmpty:"No project copies yet. A “before” copy comes before the first file edit.",bkRestore:"Bring it back",
     bkNote:"Copies live in .aidesign-work/backups/ and are never deleted without your word.",
     figmaHead:"Figma",figmaModes:{free:"page frames",paid:"file laid out by AI Design"},
+    mdHead:"Media",mdSource:"Source",mdSourceNone:"not chosen yet",mdSources:{own:"your photos and video",generate:"generation",mixed:"mixed",code:"code",placeholder:"placeholders"},
+    mdConnected:"Generators",mdNone:"none connected",mdKinds:{image:"images",video:"video",audio:"audio","3d":"3D",vector:"vector",svg:"SVG",shader:"shaders"},
+    mdSpent:(x,n,u)=>`spent ${x} of ${n} ${u}`,mdNoBudget:"No budget — paid generation only after your “yes” with a sum.",mdOver:"The budget is used up — further paid generation only with your permission.",
     tkHead:"Toolkit",tkOk:"everything needed is in place",tkMissing:"missing",tkInstalled:"installed",tkSkipped:"going without",
     feed:"Feed",footer:"The panel only shows progress. Decisions happen in the chat.",updated:"Updated",frozen:"The run is done — the panel no longer updates",
     ago:{s:s=>`${s}s ago`,m:m=>`${m} min ago`,h:(h,m)=>`${h}h ${m}m ago`},
@@ -469,6 +505,10 @@ const I18N = {
     lbDesktop:"Desktop · 1280",lbPhone:"Phone · 390",lbPrev:"Previous option",lbNext:"Next option",lbClose:"Close",lbOf:(i,n)=>`${i} of ${n}`,
     lbLoading:"Loading the preview…",lbMissing:"This preview file is not on the server — it has not been added yet or was moved",
     lbDown:"The preview did not open: the panel server is not answering. Start it with python3 .aidesign-work/ad.py and open the window again",
+    openTab:"Open in a new tab",pvLoading:"Loading the preview…",
+    pvBlocked:"This browser does not show the preview inside the panel. Press “Open in a new tab” to see it in full.",
+    lbShotOnly:"This is a snapshot of the page: this browser does not show the live preview inside the panel.",
+    lbFileShot:"This is a snapshot of the page. The live preview with motion is at the http://localhost:…/dashboard.html address the agent gave you.",
     exHead:"Examples",exSub:"Demo pages built with AI Design: different styles and techniques. Click to look closer.",
     exEmpty:"No examples yet: there is no examples/ folder next to the panel, or its INDEX.json is empty. They are copied when AI Design starts.",
     exFile:"Examples are visible only through the panel server — open http://localhost:…/dashboard.html.",
@@ -484,6 +524,8 @@ const I18N = {
       direction:e=>`Direction: “${e.name}”`,check:e=>`Check: ${e.findings} findings, ${e.fixed} fixed`,
       add:e=>e.key === 'assumptions' ? `Decided for you: +${e.n}` : `For the report: +${e.n}`,set:e=>`Changed: ${e.key}`,
       backup:e=>`Backup “${e.reason || ''}”: ${e.id || ''}`,figma:"Figma linked to the project",toolkit:e=>e.n ? `Toolkit: ${e.n} missing` : "Toolkit checked",
+      media:e=>({budget:`Media budget: ${e.limit} ${e.unit || ''}`,spend:`Media: ${e.service} — ${e.amount} ${e.unit || ''}`,connected:`Generators: ${e.n || 0} connected`,
+        sources:`Media source: ${I18N.en.mdSources[e.set] || e.set}`})[e.act] || "Media",
       finish:"Run done"},
     boot:"The panel has no state yet",
     bootWhy:"No state either inside the page or in <code>.aidesign-work/state.js</code>: the run has just started, or the file got mangled.",
@@ -685,14 +727,21 @@ const runUrl = (S, p) => {
   if (/^(https?:)?\/\//i.test(s) || s.startsWith('/')) return s;
   return (S.dir ? S.dir.split('/').map(encodeURIComponent).join('/') + '/' : '') + s.split('/').map(encodeURIComponent).join('/');
 };
-// Карточка-превью: кнопка увеличения, внутри iframe 1280×800, уменьшенный под ширину карточки.
+// Карточка-превью: кнопка увеличения. Есть снимок (shots.py) — внутри он: его покажет любой браузер.
+// Нет — живой iframe 1280×800, уменьшенный под ширину карточки; он проявляется, только когда точно
+// загрузился, а не пустил браузер — на его месте строка, что делать. Под карточкой — ссылка на сам HTML.
+// У рамки нет loading="lazy": отложенная рамка пишет в Resource Timing статус 0 и при удачной загрузке.
 function pvButton(item, key, idx, label){
+  const failed = item.src && SERVED && !item.shot ? FRAMES[absUrl(item.src)] : null;
   const inner = !item.src ? `<div class="ph">${esc(CUR.optWait)}</div>`
-    : !SERVED ? `<div class="ph">${esc(CUR.noFile)}</div>`
-    : `<iframe src="${esc(item.src)}" title="${esc(item.title || '')}" loading="lazy" tabindex="-1" aria-hidden="true" sandbox="allow-scripts"></iframe>`;
+    : !SERVED ? `<div class="ph">${esc(CUR.noFile)}</div>${item.shot ? `<img class="shot" src="${esc(item.shot)}" alt="" data-shot>` : ''}`
+    : item.shot ? `<div class="ph">${esc(CUR.pvLoading)}</div><img class="shot" src="${esc(item.shot)}" alt="" loading="lazy" data-shot>`
+    : failed ? `<div class="ph">${esc(failed === 'missing' ? CUR.lbMissing : CUR.pvBlocked)}</div>`
+    : `<div class="ph">${esc(CUR.pvLoading)}</div><iframe src="${esc(item.src)}" title="${esc(item.title || '')}" tabindex="-1" aria-hidden="true" sandbox="allow-scripts" data-watch></iframe>`;
   return `<button type="button" class="pvbtn" data-lb="${esc(key)}" data-i="${idx}" aria-label="${esc(CUR.zoom + ': ' + (label ? label + ' — ' : '') + (item.title || ''))}">
-    <div class="frame" data-fit>${inner}</div>${label ? `<span class="pvid" aria-hidden="true">${esc(label)}</span>` : ''}<span class="zoom" aria-hidden="true">${esc(CUR.zoom)}</span></button>`;
+    <div class="frame${failed ? ' fail' : ''}" data-fit>${inner}</div>${label ? `<span class="pvid" aria-hidden="true">${esc(label)}</span>` : ''}<span class="zoom" aria-hidden="true">${esc(CUR.zoom)}</span></button>`;
 }
+const pvOpen = item => item.src && SERVED ? openLink(item.src, `${esc(CUR.openTab)} <span aria-hidden="true">↗</span>`, 'pvopen') : '';
 function fitFrames(){
   document.querySelectorAll('#app [data-fit]').forEach(box => {
     const f = box.querySelector('iframe');
@@ -799,6 +848,7 @@ function render(lang){
   // ——— круги превью ———
   const rounds = Array.isArray(S.rounds) ? S.rounds : [];
   const optItems = r => (r.options || []).map(o => ({src: o.src ? runUrl(S, o.src) : '', title: o.title, note: o.note,
+    shot: o.shot1280 ? runUrl(S, o.shot1280) : '', shotPhone: o.shot390 ? runUrl(S, o.shot390) : '',
     label: String(o.id || '').toUpperCase(), sub: L.round(r.n)}));
   const choicePill = r => r.chosen === 'none' ? `<span class="pill p-fix">${L.none}</span>`
     : r.chosen ? `<span class="pill p-done">${ic('check','xs')}${L.chosen}: ${esc(String(r.chosen).toUpperCase())}</span>` : '';
@@ -812,7 +862,7 @@ function render(lang){
     roundCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.roundHead}</h3>${choicePill(cr)}</div>
       <h3 class="bh">${L.round(cr.n)}</h3><p class="bsub">${cr.refinedFrom ? esc(L.refineOf(cr.refinedFrom.round, String(cr.refinedFrom.id || ''))) + '. ' : ''}${L.roundSub}</p>
       <div class="pvgrid">${(cr.options || []).map((o, i) => `<div class="pv${cr.chosen === o.id ? ' chosen' : ''}">${pvButton(items[i], key, i, items[i].label)}
-        <h4>${esc(o.title || '')}</h4>${o.note ? `<p>${esc(o.note)}</p>` : ''}</div>`).join('')}${
+        <h4>${esc(o.title || '')}</h4>${o.note ? `<p>${esc(o.note)}</p>` : ''}${pvOpen(items[i])}</div>`).join('')}${
         slots.map(id => `<div class="pv"><div class="pvbtn" style="cursor:default"><div class="frame"><div class="ph">${esc(id.toUpperCase())} · ${L.optWait}</div></div></div></div>`).join('')}</div>
       ${cr.feedback ? `<p class="quote"><small>${L.feedback}</small>${esc(cr.feedback)}</p>` : ''}</section>`;
   } else {
@@ -824,7 +874,7 @@ function render(lang){
     ${past.map(r => { const items = optItems(r), key = 'r' + r.n; SETS[key] = items;
       return `<div class="rnd"><div class="rnd-h"><b>${L.round(r.n)}${r.refinedFrom ? ` · <span class="muted">${esc(L.refineOf(r.refinedFrom.round, String(r.refinedFrom.id || '')))}</span>` : ''}</b>${
         choicePill(r) || `<span class="pill p-mut">${L.noChoice}</span>`}</div>
-        <div class="mini">${(r.options || []).map((o, i) => `<div class="pv${r.chosen === o.id ? ' chosen' : ''}">${pvButton(items[i], key, i, items[i].label)}</div>`).join('')}</div>
+        <div class="mini">${(r.options || []).map((o, i) => `<div class="pv${r.chosen === o.id ? ' chosen' : ''}">${pvButton(items[i], key, i, items[i].label)}${pvOpen(items[i])}</div>`).join('')}</div>
         ${r.feedback ? `<p class="quote"><small>${L.feedback}</small>${esc(r.feedback)}</p>` : ''}</div>`; }).join('')}</section>` : '';
 
   // ——— референсы ———
@@ -873,6 +923,16 @@ function render(lang){
     backups.length ? `<ol class="nl">${backups.slice().reverse().map(b => `<li><b>${esc(b.reason || '')}</b> · ${esc(fmtBytes(b.bytes))}${
       b.at ? ' · ' + esc(stamp(b.at)) : ''}<br><span class="muted">${L.bkRestore}:</span> <code>${esc(restoreCmd(b.id))}</code></li>`).join('')}</ol>
     <p class="muted" style="margin-top:10px">${L.bkNote}</p>` : `<p class="muted">${L.bkEmpty}</p>`}</section>`;
+  // ——— медиа: источник, подключённые генераторы, «потрачено X из N» по сервисам ———
+  const MS = mediaSums(S.media), MD = S.media || {};
+  const conn = Array.isArray(MD.connected) ? MD.connected.filter(Boolean) : [];
+  const mediaCard = MS ? `<section class="card w"><div class="whead"><h3 class="wt">${L.mdHead}</h3>${MS.limit != null
+      ? `<span class="pill ${MS.over ? 'p-fix' : 'p-done'}">${esc(L.mdSpent(MS.total, MS.limit, MS.unit))}</span>` : ''}</div>
+    <p class="muted">${L.mdSource}: <b>${esc(MD.sources ? (L.mdSources[MD.sources] || MD.sources) : L.mdSourceNone)}</b></p>
+    <p class="muted" style="margin-top:8px">${L.mdConnected}: ${conn.length ? conn.map(c => `<b>${esc(c.title || c.id)}</b>${
+      Array.isArray(c.kinds) && c.kinds.length ? ' · ' + esc(c.kinds.map(k => L.mdKinds[k] || k).join(', ')) : ''}`).join('; ') : esc(L.mdNone)}</p>
+    ${MS.by.length ? `<ol class="nl">${MS.by.map(([s, a]) => `<li><b>${esc(s)}</b> · ${esc(a)} ${esc(MS.unit)}</li>`).join('')}</ol>` : ''}
+    ${MS.limit == null ? `<p class="muted" style="margin-top:10px">${L.mdNoBudget}</p>` : MS.over ? `<p class="muted" style="margin-top:10px">${L.mdOver}</p>` : ''}</section>` : '';
   const report = S.report || [], asm = S.assumptions || [];
   const notesCard = (report.length || asm.length) ? `<section class="card w">
     ${asm.length ? `<div class="whead"><h3 class="wt">${L.assumptionsHead}</h3><span>${asm.length}</span></div><ol class="nl">${asm.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : ''}
@@ -909,9 +969,10 @@ function render(lang){
     <button type="button" class="chip" data-tab="examples" aria-pressed="${UI.tab === 'examples'}">${L.tabExamples}</button></div>`;
   const fileNote = SERVED ? '' : `<div class="notice" role="status">${L.fileMode}</div>`;
   const runBody = [hero, stageCard, timeCard, roundCard, historyCard,
-    `<div class="pair">${refCard}${themesCard}</div>`, `<div class="pair">${dirCard}${checkCard}</div>`, backupsCard, notesCard, histCard];
+    `<div class="pair">${refCard}${themesCard}</div>`, `<div class="pair">${dirCard}${checkCard}</div>`, mediaCard, backupsCard, notesCard, histCard];
   const app = document.getElementById('app');
   document.documentElement.lang = L.lang;
+  const t0 = nowMs();
   app.innerHTML = `
   <header class="top">
     <div class="brand-row">${BRAND(L.workshopLink)}${S.skillVersion ? `<span class="vpill">${esc(S.skillVersion)}</span>` : ''}</div>
@@ -937,6 +998,7 @@ function render(lang){
     setTimeout(() => app.classList.remove('boot'), 1400);
   }
   fitFrames();
+  app.querySelectorAll('iframe[data-watch]').forEach(f => watchFrame(f, t0));
   tick();
   showLink();
   // Открытый лайтбокс не перезагружаем на каждом событии: превью внутри живое.
@@ -972,7 +1034,7 @@ function examplesCard(L){
   SETS.ex = items;
   return `<section class="card w">${head}<div class="pvgrid">${EXAMPLES.map((x, i) => `<div class="pv">${pvButton(items[i], 'ex', i, '')}
     <h4>${esc(x.title || x.id || '')}</h4>${x.style ? `<p>${esc(x.style)}</p>` : ''}${(x.techniques || []).length
-      ? `<div class="tags">${x.techniques.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}</div>`).join('')}</div></section>`;
+      ? `<div class="tags">${x.techniques.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}${pvOpen(items[i])}</div>`).join('')}</div></section>`;
 }
 
 // ——— лайтбокс: клик по превью → весь экран, 1280/390, Esc, ← → ———
@@ -1007,10 +1069,16 @@ function lbShow(){
   LB.i = Math.min(LB.i, items.length - 1);
   const it = items[LB.i], many = items.length > 1;
   const keepFocus = el.contains(document.activeElement) ? document.activeElement.dataset.lbAct : null;
+  // Снимок своей ширины лежит под живой страницей: виден, пока она грузится и если её не пустили.
+  // Панель открыта файлом: живую страницу не показать, но снимок с диска браузер покажет и так.
+  const shot = it.img ? '' : LB.w === PHONE_W ? it.shotPhone : it.shot;
+  const live = it.src && !it.img && SERVED;
   const body = !it.src ? `<div class="lb-note">${esc(L.optWait)}</div>`
     : it.img ? `<img src="${esc(it.src)}" alt="${esc(it.title || '')}">`
+    : !SERVED && shot ? `<img src="${esc(shot)}" alt="${esc(it.title || '')}" data-shot>`
     : !SERVED ? `<div class="lb-note">${esc(L.noFile)}</div>`
-    : `<div class="lb-wait" role="status">${esc(L.lbLoading)}</div><iframe src="${esc(it.src)}" title="${esc(it.title || '')}" sandbox="allow-scripts"></iframe>`;
+    : `${shot ? `<img class="lb-shot" src="${esc(shot)}" alt="${esc(it.title || '')}" data-shot>` : ''}<div class="lb-wait" role="status">${esc(L.lbLoading)}</div><iframe src="${esc(it.src)}" title="${esc(it.title || '')}" sandbox="allow-scripts" data-watch></iframe>`;
+  const t0 = nowMs();
   el.innerHTML = `<div class="lb-bar">
       <p class="lb-title" id="lb-title"><small>${esc(it.sub || '')}${many ? ' · ' + L.lbOf(LB.i + 1, items.length) : ''}</small>${it.label ? esc(it.label) + ' — ' : ''}${esc(it.title || '')}</p>
       ${it.img ? '' : `<div class="seg" role="group" aria-label="${L.lbDesktop} / ${L.lbPhone}">
@@ -1018,14 +1086,16 @@ function lbShow(){
         <button type="button" data-lb-act="w390" aria-pressed="${LB.w === PHONE_W}">${L.lbPhone}</button></div>`}
       <button type="button" class="nav" data-lb-act="prev" aria-label="${L.lbPrev}"${many ? '' : ' disabled'}>${ic('left')}</button>
       <button type="button" class="nav" data-lb-act="next" aria-label="${L.lbNext}"${many ? '' : ' disabled'}>${ic('chev')}</button>
+      ${live ? openLink(it.src, `${ic('eye')}<span>${esc(L.openTab)}</span>`, 'open') : ''}
       <button type="button" class="close" data-lb-act="close" aria-label="${L.lbClose}">${ic('x')}<span>${L.lbClose}</span></button>
     </div>
-    <div class="lb-stage"><div class="lb-box">${body}</div></div>
+    <div class="lb-stage"><div class="lb-box${shot ? ' has-shot' : ''}">${body}</div></div>
+    ${!SERVED && shot ? `<div class="lb-note">${esc(L.lbFileShot)}</div>` : ''}
     ${it.note ? `<div class="lb-note">${esc(it.note)}</div>` : ''}`;
   el.hidden = false;
   document.body.style.overflow = 'hidden';
   lbFit();
-  lbWatch(el, it.src);
+  lbWatch(el, it.src, t0);
   // Превью в песочнице без allow-same-origin: его скрипты не дотянутся до панели,
   // а панель — до его окна. Esc и стрелки работают, пока фокус не внутри превью.
   if (keepFocus) { const b = el.querySelector(`[data-lb-act="${keepFocus}"]`); if (b) b.focus(); }
@@ -1035,17 +1105,81 @@ function lbShow(){
 // проверяется тем же сервером: не ответил или 404 — в рамке сказано, что делать.
 // Содержимое превью панель не читает: песочница без allow-same-origin остаётся.
 let lbSeq = 0;
-function lbWatch(el, src){
+function lbWatch(el, src, t0){
   const box = el.querySelector('.lb-box'), f = box && box.querySelector('iframe'), w = box && box.querySelector('.lb-wait');
   if (!f || !w) return;
   const seq = ++lbSeq, L = CUR;
-  const fail = text => { if (seq !== lbSeq) return; box.classList.remove('loaded'); f.hidden = true; w.textContent = text; w.classList.add('fail'); };
-  f.addEventListener('load', () => { if (seq === lbSeq && !w.classList.contains('fail')) box.classList.add('loaded'); });
+  // Отказ — всегда со ссылкой на сам HTML: верхним окном вкладка покажет превью, даже если рамку не пустили.
+  const fail = text => {
+    if (seq !== lbSeq) return;
+    box.classList.remove('loaded'); box.classList.add('fail'); f.hidden = true; w.classList.add('fail');
+    w.innerHTML = `${esc(text)} ${openLink(src, `${esc(L.openTab)} <span aria-hidden="true">↗</span>`, 'lb-open-in')}`;
+  };
+  f.onLive = () => { if (seq === lbSeq && !w.classList.contains('fail')) box.classList.add('loaded'); };
+  f.onFail = v => fail(box.classList.contains('has-shot') ? L.lbShotOnly : v === 'missing' ? L.lbMissing : L.pvBlocked);
+  watchFrame(f, t0, true);
   if (typeof fetch !== 'function') return;
   fetch(src, {method: 'HEAD', cache: 'no-store'})
     .then(r => { if (!r.ok) fail(r.status === 404 ? L.lbMissing : L.lbDown); })
     .catch(() => fail(L.lbDown));
 }
+
+// ——— дошло ли превью до рамки ———
+// Встроенный браузер приложения может не пускать страницу в iframe панели (ERR_BLOCKED_BY_CLIENT):
+// событие load всё равно приходит, а внутри — пусто. Песочница без allow-same-origin не даёт
+// заглянуть внутрь, поэтому панель смотрит запись Resource Timing загрузки рамки: наблюдатель
+// получает её, даже когда общий буфер записей уже полон от опроса state.js.
+const nowMs = () => (typeof performance !== 'undefined' && performance.now) ? performance.now() : 0;
+const NAV = {};                // адрес превью → последняя запись загрузки рамки
+const FRAMES = {};             // адрес превью → 'blocked' | 'missing': карточка сразу рисует отказ, без мигания
+try {
+  new PerformanceObserver(list => list.getEntries().forEach(e => {
+    if (e.initiatorType !== 'iframe') return;
+    NAV[e.name] = e;
+    document.querySelectorAll('iframe[data-watch]').forEach(f => { if (f.src === e.name) settleFrame(f); });
+  })).observe({type: 'resource', buffered: true});
+} catch (err) {}
+function watchFrame(f, t0, fresh){
+  f.dataset.t0 = String((t0 || 0) - 1);
+  const known = FRAMES[f.src];
+  if (!fresh && (known === 'blocked' || known === 'missing')) { frameFailed(f, known); return; }
+  f.addEventListener('load', () => { f.dataset.loaded = '1'; setTimeout(() => settleFrame(f), 150); });
+}
+function settleFrame(f){
+  if (!f.isConnected || f.dataset.failed) return;
+  const e = NAV[f.src];
+  const v = frameVerdict(e && e.startTime >= +f.dataset.t0 ? e : null);
+  if (v === 'blocked' || v === 'missing') { FRAMES[f.src] = v; frameFailed(f, v); }
+  else if (f.dataset.loaded) { delete FRAMES[f.src]; frameLive(f); }
+}
+function frameLive(f){
+  if (f.onLive) { f.onLive(); return; }
+  const box = f.closest('.frame');
+  if (box) box.classList.add('live');
+}
+function frameFailed(f, v){
+  if (f.dataset.failed) return;
+  f.dataset.failed = v;
+  if (f.onFail) { f.onFail(v); return; }
+  const box = f.closest('.frame'), ph = box && box.querySelector('.ph');
+  f.remove();
+  if (box) box.classList.add('fail');
+  if (ph) ph.textContent = v === 'missing' ? CUR.lbMissing : CUR.pvBlocked;
+}
+// Снимок не загрузился — в карточке строка и ссылка под ней; в окне — живая страница или отказ.
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (!img || !img.matches || !img.matches('img[data-shot]')) return;
+  const card = img.closest('.frame'), box = img.closest('.lb-box');
+  img.remove();
+  if (card) { card.classList.add('fail'); const ph = card.querySelector('.ph'); if (ph) ph.textContent = SERVED ? CUR.pvBlocked : CUR.noFile; }
+  if (box && !SERVED) { box.innerHTML = `<div class="lb-wait">${esc(CUR.noFile)}</div>`; return; }
+  if (box) {
+    box.classList.remove('has-shot');
+    const f = box.querySelector('iframe');
+    if (f && f.dataset.failed) { const v = f.dataset.failed; delete f.dataset.failed; frameFailed(f, v); }
+  }
+}, true);
 // 1280 — ширина компьютера: если экран уже, страница уменьшается целиком; 390 — телефон как есть.
 function lbFit(){
   const el = document.getElementById('lb');
@@ -1067,7 +1201,7 @@ function lbKey(e){
   else if (e.key === 'ArrowLeft') { e.preventDefault(); lbGo(-1); }
   else if (e.key === 'ArrowRight') { e.preventDefault(); lbGo(1); }
   else if (e.key === 'Tab') {
-    const f = Array.from(document.querySelectorAll('#lb button:not([disabled])'));
+    const f = Array.from(document.querySelectorAll('#lb button:not([disabled]), #lb a[href]'));
     if (!f.length) return;
     const i = f.indexOf(document.activeElement);
     if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }

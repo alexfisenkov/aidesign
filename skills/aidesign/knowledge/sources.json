@@ -332,6 +332,26 @@
         "knowledge/движение-и-медиа/видео-в-сайт.md",
         "knowledge/движение-и-медиа/морфинг.md"
       ]
+    },
+    {
+      "id": "aimaster-guides",
+      "title": "AIMaster — авторские инструкции по промптам картинок и видео",
+      "repo": "alexfisenkov/aimaster",
+      "url": "https://github.com/alexfisenkov/aimaster",
+      "license": "пересказ в AI Design — MIT с разрешения автора от 19.11.2026; сам aimaster — авторские условия использования",
+      "copyright": "Copyright (c) 2026 Alexander Fisenkov",
+      "commit": "пакет 2026.11.19",
+      "form": "текст",
+      "taken": "пересказ своими словами под медиа сайта: структура промптов картинок (Nano Banana, Midjourney, GPT Image, Seedream, агрегаторы) и видео (Seedance, Kling, Veo), язык камеры и света, проверка фото на искусственность, роли референсов, выбор модели и цикл генерации; где найти установленный aimaster и какой файл читать по модели; текст инструкций не копировался",
+      "files": [
+        "knowledge/медиа/aimaster.md",
+        "knowledge/медиа/генераторы.md",
+        "knowledge/медиа/кино-язык.md",
+        "knowledge/медиа/качество-фото.md",
+        "knowledge/медиа/по-референсам.md",
+        "knowledge/медиа/промпты-видео.md",
+        "knowledge/медиа/промпты-картинки.md"
+      ]
     }
   ]
 }
