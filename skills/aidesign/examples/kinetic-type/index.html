@@ -1,0 +1,159 @@
+<!doctype html>
+<!-- Демо-страница AI Design: экстремальный минимализм с кинетической типографикой. Словолитня и гарнитура «Ветер» вымышлены; образцы набраны открытым шрифтом Raleway. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f3f3f0">
+<title>Литера — гарнитура «Ветер»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f3f3f0;
+  --ink: #121212;
+  --soft: #5a5a57;
+  --line: #d4d4cf;
+  --font: "Raleway", "Avenir Next", "Segoe UI", sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --pad: clamp(20px, 5vw, 80px);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); }
+body { margin: 0; font-family: var(--font); font-size: 1.0625rem; line-height: 1.6; font-weight: 450; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+.top { display: flex; justify-content: space-between; padding: 24px var(--pad); font-weight: 600; }
+.top a { text-decoration: none; }
+.top nav { display: flex; gap: 28px; font-weight: 500; }
+.top nav a { color: var(--soft); transition: color 150ms var(--ease); }
+.top nav a:hover { color: var(--ink); }
+
+.hero { min-height: 82vh; min-height: 82svh; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--pad); }
+.hero h1 { margin: 0; font-weight: 800; font-size: clamp(5rem, 22vw, 20rem); line-height: 0.86; letter-spacing: -0.03em; }
+.hero h1 .ch { display: inline-block; }
+.hero p { margin: 28px 0 0; max-width: 34ch; font-size: 1.25rem; color: var(--soft); }
+
+.weights { padding: clamp(64px, 10vw, 140px) var(--pad); border-top: 1px solid var(--line); }
+.weights h2, .glyphs h2, .get h2 { margin: 0 0 8px; font-size: 1.125rem; font-weight: 700; }
+.weights p.note { margin: 0; color: var(--soft); max-width: 46ch; }
+.sweep { margin: 40px 0 24px; font-size: clamp(4rem, 15vw, 13rem); line-height: 0.95; letter-spacing: -0.02em; font-weight: var(--w, 500); }
+.slider label { display: block; font-weight: 600; margin-bottom: 8px; }
+.slider input { width: min(100%, 420px); accent-color: var(--ink); }
+.slider output { margin-left: 12px; font-variant-numeric: tabular-nums; color: var(--soft); }
+
+.glyphs { padding: clamp(64px, 8vw, 120px) var(--pad); border-top: 1px solid var(--line); }
+.grid { display: grid; grid-template-columns: repeat(11, 1fr); margin-top: 32px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.grid span { aspect-ratio: 1; display: grid; place-items: center; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: clamp(1.4rem, 3vw, 2.6rem); font-weight: 300; transition: font-weight 250ms var(--ease); }
+.grid span:hover { font-weight: 900; }
+.pangram { margin: 48px 0 0; font-size: clamp(1.6rem, 3.4vw, 2.8rem); line-height: 1.25; font-weight: 300; max-width: 24ch; }
+
+.get { padding: clamp(64px, 8vw, 120px) var(--pad); border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; }
+.get p { margin: 0; color: var(--soft); max-width: 40ch; }
+.btn { display: inline-block; padding: 16px 26px; border: 1px solid var(--ink); text-decoration: none; font-weight: 600; transition: background-color 150ms var(--ease), color 150ms var(--ease); }
+.btn:hover { background: var(--ink); color: var(--bg); }
+
+footer { padding: 24px var(--pad) 36px; border-top: 1px solid var(--line); color: var(--soft); font-size: 0.9375rem; }
+
+/* Вес слова идёт за прокруткой — без скрипта и только там, где браузер это умеет. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sweep.is-scroll { animation: sweep linear both; animation-timeline: view(); animation-range: entry 20% cover 60%; }
+  }
+}
+@keyframes sweep { from { font-weight: 100; } to { font-weight: 900; } }
+
+@media (max-width: 700px) {
+  .top nav { gap: 16px; }
+  .grid { grid-template-columns: repeat(6, 1fr); }
+  .hero p { font-size: 1.125rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grid span, .btn, .top nav a { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="#top">Литера</a>
+  <nav aria-label="Разделы">
+    <a href="#weights">Веса</a>
+    <a href="#glyphs">Знаки</a>
+    <a href="#get">Получить</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <h1 id="title">Ветер</h1>
+    <p>Гарнитура словолитни «Литера» для заголовков и вывесок: один файл, все веса от волосяного до сверхжирного.</p>
+  </section>
+
+  <section class="weights" id="weights" aria-labelledby="weights-title">
+    <h2 id="weights-title">От волосяного до сверхжирного</h2>
+    <p class="note">Прокрутите страницу или двигайте ползунок: вес меняется плавно, без отдельных файлов на каждое начертание.</p>
+    <p class="sweep" id="sweep" aria-hidden="true">Ветер</p>
+    <div class="slider">
+      <label for="weight">Вес</label>
+      <input id="weight" type="range" min="100" max="900" step="10" value="500"><output for="weight" id="weight-out">500</output>
+    </div>
+  </section>
+
+  <section class="glyphs" id="glyphs" aria-labelledby="glyphs-title">
+    <h2 id="glyphs-title">Кириллица целиком</h2>
+    <div class="grid" aria-label="Строчные буквы русского алфавита">
+      <span>а</span><span>б</span><span>в</span><span>г</span><span>д</span><span>е</span><span>ё</span><span>ж</span><span>з</span><span>и</span><span>й</span>
+      <span>к</span><span>л</span><span>м</span><span>н</span><span>о</span><span>п</span><span>р</span><span>с</span><span>т</span><span>у</span><span>ф</span>
+      <span>х</span><span>ц</span><span>ч</span><span>ш</span><span>щ</span><span>ъ</span><span>ы</span><span>ь</span><span>э</span><span>ю</span><span>я</span>
+    </div>
+    <p class="pangram">Съешь же ещё этих мягких французских булок, да выпей чаю.</p>
+  </section>
+
+  <section class="get" id="get" aria-labelledby="get-title">
+    <div>
+      <h2 id="get-title">Попробовать в макете</h2>
+      <p>Пробные файлы подходят для эскизов и презентаций клиенту. Для публикации нужна лицензия.</p>
+    </div>
+    <a class="btn" href="#top">Запросить пробные файлы</a>
+  </section>
+</main>
+
+<footer>Демо-страница AI Design. Словолитня «Литера» и гарнитура «Ветер» вымышлены; образцы набраны открытым шрифтом Raleway.</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sweep = document.getElementById('sweep');
+  var range = document.getElementById('weight');
+  var out = document.getElementById('weight-out');
+
+  range.addEventListener('input', function () {
+    sweep.classList.remove('is-scroll');
+    sweep.style.setProperty('--w', range.value);
+    out.textContent = range.value;
+  });
+  if (!reduce && CSS.supports && CSS.supports('animation-timeline: view()')) sweep.classList.add('is-scroll');
+
+  // Заголовок: буквы входят одна за другой один раз; фраза целиком остаётся для диктора.
+  var title = document.getElementById('title');
+  if (reduce || !title.animate) return;
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () {
+    var text = title.textContent;
+    title.setAttribute('aria-label', text);
+    title.textContent = '';
+    text.split('').forEach(function (ch, i) {
+      var s = document.createElement('span');
+      s.className = 'ch'; s.setAttribute('aria-hidden', 'true'); s.textContent = ch;
+      title.appendChild(s);
+      s.animate([
+        { transform: 'translateY(0.35em)', fontWeight: 100, opacity: 0.2 },
+        { transform: 'none', fontWeight: 800, opacity: 1 }
+      ], { duration: 700, delay: i * 60, easing: 'cubic-bezier(0.16, 1, 0.3, 1)', fill: 'backwards' });
+    });
+  });
+})();
+</script>
+</body>
+</html>

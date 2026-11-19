@@ -1,0 +1,158 @@
+<!doctype html>
+<!-- Демо-страница AI Design: редакционный стиль. Мастерская, журнал и тексты вымышлены; картинки — только SVG-схемы в коде. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f5f1">
+<title>Корешок — журнал переплётной мастерской</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f6f5f1;
+  --ink: #1b1a17;
+  --ink-soft: #4a4740;
+  --rule: #cfccc3;
+  --accent: #1e4d57;
+  --display: "Playfair Display", "Georgia", "Times New Roman", serif;
+  --text: "Literata", "Georgia", "Times New Roman", serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); color: var(--ink); }
+body { margin: 0; font-family: var(--text); font-size: 1.125rem; line-height: 1.65; }
+a { color: var(--accent); text-decoration: none; background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size 180ms var(--ease); }
+a:hover { background-size: 100% 1px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.masthead { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 22px clamp(20px, 5vw, 72px); border-bottom: 1px solid var(--ink); }
+.masthead-title { font-family: var(--display); font-weight: 800; font-size: 1.75rem; color: var(--ink); background: none; }
+.masthead nav { display: flex; gap: 22px; font-size: 0.95rem; }
+.masthead nav a { color: var(--ink-soft); }
+
+.opening { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 32px; padding: clamp(40px, 7vw, 96px) clamp(20px, 5vw, 72px) 48px; }
+.opening h1 { grid-column: 1 / span 8; margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6vw, 5.4rem); line-height: 1.02; letter-spacing: -0.02em; }
+.standfirst { grid-column: 9 / span 4; align-self: end; margin: 0; font-size: 1.2rem; line-height: 1.55; color: var(--ink-soft); }
+.byline { grid-column: 1 / -1; margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 0.95rem; color: var(--ink-soft); }
+
+.spread { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 32px; padding: 0 clamp(20px, 5vw, 72px) 72px; }
+.figure-wide { grid-column: 1 / -1; margin: 0 0 56px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); padding: 28px 0 18px; }
+.figure-wide svg { display: block; width: 100%; height: auto; }
+.figure-wide figcaption { margin-top: 12px; font-size: 0.95rem; color: var(--ink-soft); max-width: 60ch; }
+.stitch { stroke-dasharray: 1200; stroke-dashoffset: 0; animation: sew 1.6s var(--ease) 0.2s both; }
+@keyframes sew { from { stroke-dashoffset: 1200; } to { stroke-dashoffset: 0; } }
+
+.article { grid-column: 3 / span 7; }
+.article p { margin: 0 0 1.1em; max-width: 64ch; }
+.dropcap::first-letter { float: left; font-family: var(--display); font-weight: 800; font-size: 4.6rem; line-height: 0.82; padding: 6px 10px 0 0; color: var(--accent); }
+.article h2 { font-family: var(--display); font-weight: 700; font-size: 1.9rem; line-height: 1.15; margin: 1.8em 0 0.6em; }
+.sidenotes { grid-column: 10 / span 3; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
+.sidenotes p { margin: 0 0 28px; padding-top: 10px; border-top: 1px solid var(--rule); }
+.sidenotes strong { color: var(--ink); font-weight: 600; }
+
+.pull { margin: 2em 0; padding: 22px 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.2; }
+
+.issue { padding: 56px clamp(20px, 5vw, 72px) 72px; border-top: 1px solid var(--ink); display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 32px; }
+.issue h2 { grid-column: 1 / span 3; margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.9rem; line-height: 1.15; }
+.issue ul { grid-column: 4 / -1; list-style: none; margin: 0; padding: 0; }
+.issue li { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+.issue li a { font-family: var(--display); font-weight: 700; font-size: 1.35rem; line-height: 1.3; color: var(--ink); }
+.issue li span { color: var(--ink-soft); font-size: 1rem; }
+
+footer { padding: 28px clamp(20px, 5vw, 72px) 40px; border-top: 1px solid var(--rule); font-size: 0.95rem; color: var(--ink-soft); }
+
+@media (max-width: 900px) {
+  .opening h1, .standfirst, .article, .sidenotes, .issue h2, .issue ul { grid-column: 1 / -1; }
+  .standfirst { margin-top: 24px; }
+  .sidenotes { margin-top: 24px; }
+  .issue ul { margin-top: 24px; }
+}
+@media (max-width: 560px) {
+  body { font-size: 1.0625rem; }
+  .masthead { flex-direction: column; gap: 8px; }
+  .masthead nav { gap: 16px; flex-wrap: wrap; }
+  .dropcap::first-letter { float: none; font-size: inherit; padding: 0; color: inherit; font-family: inherit; }
+  .issue li { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stitch { animation: none; }
+  a { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <a class="masthead-title" href="#top">Корешок</a>
+  <nav aria-label="Разделы журнала">
+    <a href="#article">Ремесло</a>
+    <a href="#issue">Этот выпуск</a>
+    <a href="#footer">О журнале</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="opening">
+    <h1>Книга, которая лежит открытой</h1>
+    <p class="standfirst">Почему одни книги приходится держать двумя руками, а другие спокойно лежат на столе, пока вы переписываете рецепт. Ответ — в бумаге и в нитке.</p>
+    <p class="byline">Осенний выпуск · рубрика «Ремесло» · читать двенадцать минут</p>
+  </section>
+
+  <div class="spread">
+    <figure class="figure-wide">
+      <svg viewBox="0 0 1200 260" role="img" aria-labelledby="fig-title">
+        <title id="fig-title">Схема: шесть тетрадей книжного блока, сшитых одной ниткой через корешок</title>
+        <g fill="none" stroke="#1b1a17" stroke-width="1.5">
+          <path d="M120 40 h960 M120 40 v180 M1080 40 v180 M120 220 h960"/>
+          <path d="M280 40 v180 M440 40 v180 M600 40 v180 M760 40 v180 M920 40 v180" stroke="#cfccc3"/>
+        </g>
+        <g fill="#1e4d57">
+          <circle cx="200" cy="80" r="4"/><circle cx="200" cy="180" r="4"/>
+          <circle cx="360" cy="80" r="4"/><circle cx="360" cy="180" r="4"/>
+          <circle cx="520" cy="80" r="4"/><circle cx="520" cy="180" r="4"/>
+          <circle cx="680" cy="80" r="4"/><circle cx="680" cy="180" r="4"/>
+          <circle cx="840" cy="80" r="4"/><circle cx="840" cy="180" r="4"/>
+          <circle cx="1000" cy="80" r="4"/><circle cx="1000" cy="180" r="4"/>
+        </g>
+        <path class="stitch" fill="none" stroke="#1e4d57" stroke-width="2.5" stroke-linecap="round"
+          d="M200 80 V180 C240 200 320 200 360 180 V80 C400 60 480 60 520 80 V180 C560 200 640 200 680 180 V80 C720 60 800 60 840 80 V180 C880 200 960 200 1000 180 V80"/>
+        <g font-family="Georgia, serif" font-size="18" fill="#4a4740">
+          <text x="120" y="250">тетрадь</text>
+          <text x="1080" y="250" text-anchor="end">корешок блока</text>
+        </g>
+      </svg>
+      <figcaption>Нитка проходит сгиб каждой тетради и связывает соседние. Так блок гнётся по корешку, и разворот открывается целиком.</figcaption>
+    </figure>
+
+    <article class="article" id="article">
+      <p class="dropcap">В любой мастерской рано или поздно появляется человек с поваренной книгой под мышкой и одной просьбой: чтобы она перестала захлопываться. Чаще всего дело не в обложке. Книгу собрали так, что она сопротивляется собственному развороту.</p>
+      <p>У бумаги есть направление волокна, как у древесины. Вдоль волокна лист гнётся охотно, поперёк — пружинит. Если волокно в блоке идёт параллельно корешку, страницы ложатся мягко. Если поперёк, каждая страница тянется обратно, и разворот приходится придерживать ладонью.</p>
+      <blockquote class="pull">Хорошо собранная книга не спорит с рукой. Её открывают один раз, и дальше она держится сама.</blockquote>
+      <h2>Нитка или клей</h2>
+      <p>При клеевом скреплении листы обрезают по корешку и склеивают торцами. Это быстро, но клей держит лист за самый край, и широкий разворот ломает корешок. Шитый блок собирают из тетрадей: лист складывают пополам, ещё раз пополам, и сшивают тетради между собой через сгиб.</p>
+      <p>Сгиб работает как петля. Нагрузка ложится на нитку, а не на край бумаги, и книга раскрывается до самого корешка, не теряя страниц. Поэтому шитые книги переживают десятилетия частого чтения.</p>
+      <h2>Что спросить у мастера</h2>
+      <p>Попросите показать блок до обложки: в какую сторону идёт волокно и как сшиты тетради. Мастер, который любит своё дело, сам согнёт лист в обе стороны и даст почувствовать разницу пальцами.</p>
+    </article>
+
+    <aside class="sidenotes" aria-label="Заметки на полях">
+      <p><strong>Тетрадь</strong> — лист, сложенный несколько раз и сшитый по сгибу. Из тетрадей собирают книжный блок.</p>
+      <p><strong>Как узнать волокно.</strong> Согните лист без нажима вдоль и поперёк. Где он поддаётся легче, туда и идёт волокно.</p>
+      <p><strong>Каптал</strong> — тканевый валик на концах корешка. Сегодня он скорее украшает, но когда-то держал блок.</p>
+    </aside>
+  </div>
+
+  <section class="issue" id="issue" aria-labelledby="issue-title">
+    <h2 id="issue-title">В этом выпуске</h2>
+    <ul>
+      <li><a href="#top">Бумага, которая помнит руку</a><span>Как отличить бумагу ручного отлива от машинной на ощупь и на просвет.</span></li>
+      <li><a href="#top">Переплёт для тетради рецептов</a><span>Мастер-класс: блок на тесьме, который можно дополнять новыми листами.</span></li>
+      <li><a href="#top">Клей, который не желтеет</a><span>Почему реставраторы выбирают пшеничный крахмал, и как сварить его дома.</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer id="footer">Демо-страница AI Design. Журнал «Корешок» и его мастерская вымышлены, схемы нарисованы кодом.</footer>
+</body>
+</html>

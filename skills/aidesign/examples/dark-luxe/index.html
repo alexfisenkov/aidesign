@@ -1,0 +1,262 @@
+<!doctype html>
+<!-- Демо-страница AI Design: тёмный «дорогой» стиль с видео-героем. Мастерская вымышлена; «видео» — кадры, которые рисует canvas в коде, без чужих съёмок. -->
+<html lang="ru" style="color-scheme: dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17140f">
+<title>Полночь — часовая мастерская</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #17140f;
+  --surface: #211d17;
+  --surface-2: #2b261e;
+  --text: #ece6da;
+  --text-soft: #b9b0a0;
+  --line: #3a3429;
+  --brass: #c4a46e;
+  --brass-deep: #a5854f;
+  --display: "Cormorant", "Iowan Old Style", "Georgia", serif;
+  --body: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --pad: clamp(20px, 5vw, 80px);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--text); }
+body { margin: 0; font-family: var(--body); font-size: 1.0625rem; line-height: 1.7; font-weight: 400; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+.bar { position: absolute; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 22px var(--pad); }
+.bar-name { font-family: var(--display); font-size: 1.6rem; font-weight: 600; text-decoration: none; }
+.bar nav { display: flex; gap: 28px; font-size: 0.9375rem; }
+.bar nav a { text-decoration: none; color: var(--text-soft); transition: color 200ms var(--ease); }
+.bar nav a:hover { color: var(--text); }
+
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; overflow: hidden; background: var(--bg); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(23, 20, 15, 0.94) 0%, rgba(23, 20, 15, 0.55) 38%, rgba(23, 20, 15, 0) 70%); }
+.hero-text { position: relative; z-index: 10; padding: 0 var(--pad) clamp(48px, 9vh, 96px); max-width: 860px; animation: rise 900ms var(--ease) 150ms both; }
+.hero h1 { margin: 0; font-family: var(--display); font-weight: 500; font-size: clamp(3rem, 7vw, 6rem); line-height: 0.98; letter-spacing: -0.01em; }
+.hero p { margin: 22px 0 0; max-width: 46ch; color: var(--text-soft); font-size: 1.125rem; }
+.hero-actions { display: flex; gap: 14px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
+@keyframes rise { from { transform: translateY(18px); } to { transform: none; } }
+
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 6px; font: inherit; font-weight: 600; font-size: 0.9375rem; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background-color 180ms var(--ease), border-color 180ms var(--ease), transform 150ms var(--ease); }
+.btn-main { background: var(--brass); color: #1a160f; }
+.btn-main:hover { background: #d1b37f; transform: translateY(-1px); }
+.btn-quiet { background: transparent; color: var(--text); border-color: var(--line); }
+.btn-quiet:hover { border-color: var(--text-soft); }
+
+.video-toggle { position: absolute; z-index: 10; right: var(--pad); bottom: clamp(48px, 9vh, 96px); display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 6px; border: 1px solid var(--line); background: rgba(23, 20, 15, 0.6); color: var(--text); font: inherit; font-size: 0.875rem; cursor: pointer; transition: border-color 180ms var(--ease); }
+.video-toggle:hover { border-color: var(--text-soft); }
+.video-toggle svg { width: 12px; height: 12px; }
+
+.craft { padding: clamp(72px, 10vw, 140px) var(--pad); display: grid; grid-template-columns: 5fr 7fr; gap: 48px 80px; }
+.craft h2, .visit h2 { margin: 0; font-family: var(--display); font-weight: 500; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1.05; }
+.craft-intro { margin: 20px 0 0; color: var(--text-soft); max-width: 40ch; }
+.services { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.services li { display: grid; grid-template-columns: 1fr 1.3fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.services h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 1.6rem; line-height: 1.15; }
+.services p { margin: 0; color: var(--text-soft); }
+
+.visit { margin: 0 var(--pad) clamp(72px, 10vw, 120px); padding: clamp(36px, 5vw, 64px); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: end; }
+.visit p { margin: 16px 0 0; color: var(--text-soft); max-width: 44ch; }
+.visit .hero-actions { justify-content: flex-end; margin: 0; }
+
+footer { padding: 28px var(--pad) 40px; border-top: 1px solid var(--line); color: var(--text-soft); font-size: 0.9375rem; }
+
+@media (max-width: 820px) {
+  .bar nav { display: none; }
+  .craft, .visit { grid-template-columns: 1fr; }
+  .visit .hero-actions { justify-content: flex-start; }
+  .services li { grid-template-columns: 1fr; gap: 8px; }
+  .video-toggle { top: 22px; bottom: auto; right: var(--pad); }
+}
+@media (max-width: 480px) {
+  .hero-text { padding-bottom: calc(40px + env(safe-area-inset-bottom)); }
+  .hero p { font-size: 1.0625rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-text { animation: none; }
+  .btn, .video-toggle, .bar nav a { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="bar-name" href="#top">Полночь</a>
+  <nav aria-label="Разделы">
+    <a href="#craft">Работы</a>
+    <a href="#visit">Запись</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <canvas id="film" aria-hidden="true"></canvas>
+    <div class="hero-shade"></div>
+    <div class="hero-text">
+      <h1 id="hero-title">Механизм снова идёт</h1>
+      <p>Мастерская «Полночь» возвращает к жизни механические часы: разбираем до последнего винта, чистим, смазываем и собираем так, чтобы ход было слышно.</p>
+      <div class="hero-actions">
+        <a class="btn btn-main" href="#visit">Записаться на осмотр часов</a>
+        <a class="btn btn-quiet" href="#craft">Что мы чиним</a>
+      </div>
+    </div>
+    <button class="video-toggle" id="toggle" type="button" aria-pressed="false">
+      <svg viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="3.5" height="10" fill="currentColor"/><rect x="7.5" y="1" width="3.5" height="10" fill="currentColor"/></svg>
+      <span>Остановить видео</span>
+    </button>
+  </section>
+
+  <section class="craft" id="craft" aria-labelledby="craft-title">
+    <div>
+      <h2 id="craft-title">Что происходит на столе мастера</h2>
+      <p class="craft-intro">Каждые часы приходят со своей историей. Сначала слушаем ход и смотрим механизм под лупой, потом называем работу и срок.</p>
+    </div>
+    <ul class="services">
+      <li><h3>Чистка и смазка механизма</h3><p>Разбираем калибр, промываем детали, меняем масла в каждой точке трения и выставляем ход по позициям.</p></li>
+      <li><h3>Восстановление циферблата</h3><p>Снимаем потемневший лак, подкрашиваем метки и сохраняем следы времени там, где они украшают часы.</p></li>
+      <li><h3>Утраченные детали</h3><p>Вытачиваем винт, ось или колесо по образцу соседних, когда запчасти уже давно не выпускают.</p></li>
+    </ul>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="visit-title">
+    <div>
+      <h2 id="visit-title">Принесите часы на осмотр</h2>
+      <p>Мастер посмотрит механизм при вас и расскажет, что с ним происходит. Записываем на удобный вечер.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-main" href="#top">Выбрать вечер для визита</a>
+    </div>
+  </section>
+</main>
+
+<footer>Демо-страница AI Design. Мастерская «Полночь» вымышлена, видео в шапке рисует код в браузере.</footer>
+
+<script>
+(function () {
+  var canvas = document.getElementById('film');
+  var ctx = canvas.getContext('2d');
+  var toggle = document.getElementById('toggle');
+  var label = toggle.querySelector('span');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var w = 0, h = 0, t = 4.2, last = 0, playing = !reduce.matches, onScreen = true, raf = 0;
+
+  function size() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  // Шестерня: зубья трапецией, спицы вырезаны.
+  function gear(x, y, r, teeth, angle, tone, blur, spokes) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(angle);
+    ctx.filter = blur ? 'blur(' + blur + 'px)' : 'none';
+    var g = ctx.createLinearGradient(-r, -r, r, r);
+    g.addColorStop(0, tone[0]); g.addColorStop(0.5, tone[1]); g.addColorStop(1, tone[2]);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    var depth = r * 0.09, step = Math.PI * 2 / teeth;
+    for (var i = 0; i < teeth; i++) {
+      var a = i * step;
+      ctx.lineTo(Math.cos(a) * (r - depth), Math.sin(a) * (r - depth));
+      ctx.lineTo(Math.cos(a + step * 0.2) * r, Math.sin(a + step * 0.2) * r);
+      ctx.lineTo(Math.cos(a + step * 0.5) * r, Math.sin(a + step * 0.5) * r);
+      ctx.lineTo(Math.cos(a + step * 0.7) * (r - depth), Math.sin(a + step * 0.7) * (r - depth));
+    }
+    ctx.closePath();
+    for (var s = 0; s < spokes; s++) {
+      var a0 = s * Math.PI * 2 / spokes + 0.22, a1 = (s + 1) * Math.PI * 2 / spokes - 0.22;
+      ctx.moveTo(Math.cos(a0) * r * 0.74, Math.sin(a0) * r * 0.74);
+      ctx.arc(0, 0, r * 0.74, a0, a1);
+      ctx.arc(0, 0, r * 0.24, a1, a0, true);
+      ctx.closePath();
+    }
+    ctx.fill('evenodd');
+    if (!blur) {
+      ctx.strokeStyle = 'rgba(255, 238, 205, 0.18)'; ctx.lineWidth = Math.max(1, r * 0.012);
+      ctx.beginPath(); ctx.arc(0, 0, r * 0.74, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(0, 0, r * 0.24, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.08, 0, Math.PI * 2);
+    ctx.fillStyle = '#7d1f24'; ctx.fill();
+    ctx.restore();
+  }
+
+  function draw() {
+    if (!w) return;
+    ctx.filter = 'none';
+    ctx.fillStyle = '#17140f'; ctx.fillRect(0, 0, w, h);
+    var m = Math.max(w, h), cx = w * (w > 820 ? 0.75 : 0.55), cy = h * (w > 820 ? 0.42 : 0.3);
+    var brass = ['#6e5631', '#c8a76d', '#5a4527'];
+    var steel = ['#4b4a47', '#9d9a92', '#3a3936'];
+    var dim = ['#2c251b', '#5a4a33', '#241e16'];
+    gear(cx - m * 0.33, cy - m * 0.2, m * 0.2, 40, t * 0.05, dim, 10, 5);
+    gear(cx + m * 0.3, cy + m * 0.16, m * 0.17, 34, -t * 0.06, dim, 8, 4);
+    gear(cx - m * 0.06, cy + m * 0.03, m * 0.16, 36, t * 0.12, brass, 0, 5);
+    gear(cx + m * 0.135, cy - m * 0.11, m * 0.085, 18, -t * 0.24 + 0.1, steel, 0, 4);
+    // Баланс: колесо качается туда-обратно.
+    var bx = cx + m * 0.13, by = cy + m * 0.14, br = m * 0.075, swing = Math.sin(t * 2.6) * 1.9;
+    ctx.save(); ctx.translate(bx, by); ctx.rotate(swing);
+    ctx.strokeStyle = '#d0b27a'; ctx.lineWidth = m * 0.008;
+    ctx.beginPath(); ctx.arc(0, 0, br, 0, Math.PI * 2); ctx.stroke();
+    ctx.lineWidth = m * 0.004;
+    ctx.beginPath(); ctx.moveTo(-br, 0); ctx.lineTo(br, 0); ctx.moveTo(0, -br); ctx.lineTo(0, br); ctx.stroke();
+    ctx.restore();
+    // Ближний план вне фокуса.
+    gear(cx - m * 0.26, cy + m * 0.3, m * 0.22, 44, -t * 0.04, ['#120f0b', '#3b3022', '#100d0a'], 14, 6);
+    // Свет: тёплое пятно медленно идёт по механизму, как от лампы мастера.
+    var lx = cx + Math.cos(t * 0.21) * m * 0.16, ly = cy + Math.sin(t * 0.17) * m * 0.1;
+    var light = ctx.createRadialGradient(lx, ly, 0, lx, ly, m * 0.5);
+    light.addColorStop(0, 'rgba(255, 226, 170, 0.20)');
+    light.addColorStop(1, 'rgba(255, 226, 170, 0)');
+    ctx.globalCompositeOperation = 'soft-light';
+    ctx.fillStyle = light; ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'source-over';
+    var vignette = ctx.createRadialGradient(w / 2, h / 2, m * 0.2, w / 2, h / 2, m * 0.75);
+    vignette.addColorStop(0, 'rgba(23, 20, 15, 0)');
+    vignette.addColorStop(1, 'rgba(23, 20, 15, 0.85)');
+    ctx.fillStyle = vignette; ctx.fillRect(0, 0, w, h);
+  }
+
+  function frame(now) {
+    raf = 0;
+    if (!playing || !onScreen || document.hidden) { last = 0; return; }
+    if (last) t += Math.min(now - last, 50) / 1000;
+    last = now;
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+  function run() { if (!raf) raf = requestAnimationFrame(frame); }
+
+  function setPlaying(on) {
+    playing = on;
+    toggle.setAttribute('aria-pressed', String(!on));
+    label.textContent = on ? 'Остановить видео' : 'Запустить видео';
+    toggle.querySelector('svg').innerHTML = on
+      ? '<rect x="1" y="1" width="3.5" height="10" fill="currentColor"/><rect x="7.5" y="1" width="3.5" height="10" fill="currentColor"/>'
+      : '<path d="M2 1 L11 6 L2 11 Z" fill="currentColor"/>';
+    if (on) run();
+  }
+
+  toggle.addEventListener('click', function () { setPlaying(!playing); });
+  reduce.addEventListener('change', function () { setPlaying(!reduce.matches); });
+  document.addEventListener('visibilitychange', run);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) { onScreen = entries[0].isIntersecting; run(); }).observe(canvas);
+  }
+  window.addEventListener('resize', size);
+  size();
+  setPlaying(playing);
+})();
+</script>
+</body>
+</html>

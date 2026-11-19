@@ -1,0 +1,263 @@
+<!doctype html>
+<!-- Демо-страница AI Design: сюжетный стиль со сценой прокрутки. Мастерская вымышлена; изделие на гончарном круге рисует canvas в коде. Прокрутка родная, колесо не перехватывается. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e4e6e0">
+<title>Круг — гончарная мастерская</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Onest:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #e4e6e0;
+  --surface: #d6d9d0;
+  --ink: #1f2420;
+  --soft: #59605a;
+  --green: #2f4a3a;
+  --line: #bfc3b8;
+  --display: "Lora", "Georgia", serif;
+  --body: "Onest", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --pad: clamp(20px, 5vw, 72px);
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); }
+body { margin: 0; font-family: var(--body); font-size: 1.0625rem; line-height: 1.6; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+.top { display: flex; justify-content: space-between; align-items: baseline; padding: 22px var(--pad); }
+.top-name { font-family: var(--display); font-weight: 600; font-size: 1.5rem; text-decoration: none; }
+.top a.link { color: var(--soft); text-decoration: none; transition: color 150ms var(--ease); }
+.top a.link:hover { color: var(--ink); }
+
+.intro { padding: clamp(48px, 9vw, 128px) var(--pad) clamp(40px, 6vw, 80px); max-width: 1100px; }
+.intro h1 { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1.02; letter-spacing: -0.02em; }
+.intro p { margin: 24px 0 0; max-width: 46ch; font-size: 1.1875rem; color: var(--soft); }
+.hint { display: inline-flex; gap: 10px; align-items: center; margin-top: 32px; color: var(--green); font-weight: 500; }
+.hint svg { width: 16px; height: 16px; }
+
+/* Сцена: длинная секция, внутри липкий кадр. Без скрипта и при reduced-motion — обычный поток. */
+.scene { position: relative; border-top: 1px solid var(--line); }
+.stage { display: grid; grid-template-columns: minmax(0, 720px); gap: 40px; padding: 40px var(--pad); align-items: center; }
+.canvas-box { display: none; }
+.canvas-box canvas { display: block; width: 100%; height: 100%; }
+.beats { list-style: none; margin: 0; padding: 0; counter-reset: beat; }
+.beat { counter-increment: beat; display: grid; grid-template-columns: 2.2em 1fr; padding: 14px 0; border-bottom: 1px solid var(--line); transition: color 300ms var(--ease); }
+.beat::before { content: counter(beat); font-family: var(--display); font-weight: 600; color: var(--green); padding-top: 4px; }
+.beat h2 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 1.5rem; line-height: 1.2; }
+.beat p { grid-column: 2; margin: 6px 0 0; max-width: 40ch; color: var(--soft); }
+.beat canvas.still { grid-column: 2; display: block; width: 160px; height: 160px; margin-top: 12px; }
+
+.scene-on .scene { height: 520vh; height: 520svh; }
+.scene-on .stage { position: sticky; top: 0; height: 100vh; height: 100svh; padding-top: 24px; padding-bottom: 24px; }
+.scene-on .stage { grid-template-columns: 5fr 7fr; }
+.scene-on .canvas-box { display: block; }
+.scene-on .canvas-box { height: 100%; min-height: 0; }
+.scene-on .beat { color: #5f655f; }
+.scene-on .beat p { color: #5f655f; }
+.scene-on .beat.is-active { color: var(--ink); }
+.scene-on .beat.is-active p { color: var(--soft); }
+
+.classes { padding: clamp(64px, 9vw, 128px) var(--pad); border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; }
+.classes h2 { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.08; }
+.classes p { margin: 0 0 24px; max-width: 44ch; color: var(--soft); }
+.btn { display: inline-block; padding: 14px 24px; background: var(--green); color: #f3f4ef; text-decoration: none; font-weight: 500; border-radius: 4px; transition: background-color 150ms var(--ease), transform 150ms var(--ease); }
+.btn:hover { background: #243a2d; transform: translateY(-1px); }
+
+footer { padding: 24px var(--pad) 36px; border-top: 1px solid var(--line); color: var(--soft); font-size: 0.9375rem; }
+
+@media (max-width: 820px) {
+  .stage, .scene-on .stage { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .scene-on .scene { height: 420vh; height: 420svh; }
+  .scene-on .stage { grid-template-rows: 1fr auto; align-items: stretch; }
+  .scene-on .canvas-box { grid-row: 1; }
+  .scene-on .beat { padding: 8px 0; }
+  .scene-on .beat h2 { font-size: 1.125rem; }
+  .scene-on .beat:not(.is-active) p { display: none; }
+  .classes { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .beat, .btn, .top a.link { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="top-name" href="#top">Круг</a>
+  <a class="link" href="#classes">Занятия</a>
+</header>
+
+<main id="top">
+  <section class="intro">
+    <h1>Чаша начинается с кома глины</h1>
+    <p>В мастерской «Круг» учат работать за гончарным кругом. Вот что происходит с глиной между первым броском и обжигом.</p>
+    <span class="hint"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2 V13 M3 8 L8 13 L13 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>Прокрутите вниз, круг уже вращается</span>
+  </section>
+
+  <section class="scene" id="scene" aria-label="Как рождается сосуд">
+    <div class="stage">
+      <ol class="beats" id="beats">
+        <li class="beat is-active"><h2>Ком</h2><p>Глину разминают, чтобы выгнать воздух, и с силой бросают в центр круга.</p></li>
+        <li class="beat"><h2>Центровка</h2><p>Ладони держат ком, пока он не перестанет биться о руки. Без этого стенки уйдут в сторону.</p></li>
+        <li class="beat"><h2>Подъём стенок</h2><p>Пальцы сжимают глину изнутри и снаружи и ведут её вверх: стенка становится тоньше и выше.</p></li>
+        <li class="beat"><h2>Форма</h2><p>Изнутри выводят округлое тулово, сверху сужают горло и отгибают край.</p></li>
+        <li class="beat"><h2>Обжиг и глазурь</h2><p>Высушенный сосуд обжигают, покрывают глазурью и обжигают ещё раз.</p></li>
+      </ol>
+      <div class="canvas-box"><canvas id="wheel" aria-hidden="true"></canvas></div>
+    </div>
+  </section>
+
+  <section class="classes" id="classes" aria-labelledby="classes-title">
+    <h2 id="classes-title">Попробуйте сами за кругом</h2>
+    <div>
+      <p>На первом занятии мастер помогает отцентровать глину и поднять первую стенку. Фартук и глину выдаём на месте.</p>
+      <a class="btn" href="#top">Записаться на пробное занятие</a>
+    </div>
+  </section>
+</main>
+
+<footer>Демо-страница AI Design. Мастерская «Круг» вымышлена, сосуд на круге рисует код.</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var scene = document.getElementById('scene');
+  var canvas = document.getElementById('wheel');
+  var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+  var K = 28;
+
+  function smooth(a, b, x) { var t = Math.min(Math.max((x - a) / (b - a), 0), 1); return t * t * (3 - 2 * t); }
+
+  // Профиль изделия: высота и радиус на K уровнях, снизу вверх (доли от размера кадра).
+  function profile(fn, height, open) {
+    var r = [];
+    for (var i = 0; i < K; i++) r.push(fn(i / (K - 1)));
+    return { r: r, h: height, open: open };
+  }
+  var stages = [
+    profile(function (y) { return 0.3 * Math.sqrt(Math.max(0, 1 - y * y)) + 0.02; }, 0.32, 0),
+    profile(function (y) { return 0.24 - 0.05 * smooth(0.75, 1, y); }, 0.3, 0.2),
+    profile(function (y) { return 0.155 + 0.01 * (1 - y); }, 0.66, 1),
+    profile(function (y) { return 0.09 + 0.12 * Math.exp(-Math.pow((y - 0.38) / 0.26, 2)) - 0.03 * smooth(0.6, 0.85, y) + 0.05 * smooth(0.86, 1, y); }, 0.74, 1),
+    profile(function (y) { return 0.09 + 0.12 * Math.exp(-Math.pow((y - 0.38) / 0.26, 2)) - 0.03 * smooth(0.6, 0.85, y) + 0.05 * smooth(0.86, 1, y); }, 0.72, 1)
+  ];
+  var clay = [[158, 92, 62], [158, 92, 62], [150, 88, 60], [146, 86, 58], [96, 136, 118]];
+
+  function mix(a, b, t) { return a + (b - a) * t; }
+
+  function drawPot(ctx, w, h, s, spin) {
+    var i = Math.min(Math.floor(s), stages.length - 2), t = smooth(0.2, 0.8, s - i);
+    var A = stages[i], B = stages[i + 1];
+    var size = Math.min(w, h * 1.05), cx = w / 2, base = h * 0.8;
+    var height = mix(A.h, B.h, t) * size, open = mix(A.open, B.open, t);
+    var col = clay[i].map(function (c, k) { return Math.round(mix(c, clay[i + 1][k], t)); });
+    var rs = A.r.map(function (r, k) { return mix(r, B.r[k], t) * size; });
+
+    ctx.clearRect(0, 0, w, h);
+    // Круг: диск и риски, которые бегут при вращении.
+    ctx.fillStyle = '#4c534d';
+    ctx.beginPath(); ctx.ellipse(cx, base + 8, size * 0.4, size * 0.07, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6b726b';
+    ctx.beginPath(); ctx.ellipse(cx, base, size * 0.4, size * 0.07, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(31, 36, 32, 0.35)'; ctx.lineWidth = 2;
+    for (var m = 0; m < 10; m++) {
+      var a = spin * 0.5 + m * Math.PI / 5, cos = Math.cos(a), sin = Math.sin(a);
+      if (sin < 0) continue;
+      ctx.beginPath();
+      ctx.moveTo(cx + cos * size * 0.31, base + sin * size * 0.054);
+      ctx.lineTo(cx + cos * size * 0.38, base + sin * size * 0.066);
+      ctx.stroke();
+    }
+
+    // Силуэт: левая кромка снизу вверх, правая сверху вниз.
+    ctx.beginPath();
+    for (var k = 0; k < K; k++) ctx.lineTo(cx - rs[k], base - height * k / (K - 1));
+    for (var j = K - 1; j >= 0; j--) ctx.lineTo(cx + rs[j], base - height * j / (K - 1));
+    ctx.closePath();
+    var maxR = Math.max.apply(null, rs);
+    var g = ctx.createLinearGradient(cx - maxR, 0, cx + maxR, 0);
+    g.addColorStop(0, 'rgb(' + col.map(function (c) { return Math.round(c * 0.55); }).join(',') + ')');
+    g.addColorStop(0.38, 'rgb(' + col.map(function (c) { return Math.min(255, Math.round(c * 1.18)); }).join(',') + ')');
+    g.addColorStop(1, 'rgb(' + col.map(function (c) { return Math.round(c * 0.5); }).join(',') + ')');
+    ctx.fillStyle = g; ctx.fill();
+
+    // Следы пальцев: горизонтальные кольца, и блики, которые бегут по кругу при вращении.
+    ctx.save(); ctx.clip();
+    ctx.strokeStyle = 'rgba(255, 240, 225, 0.12)'; ctx.lineWidth = 1.5;
+    for (var ring = 1; ring < 9; ring++) {
+      var yk = Math.round(ring * (K - 1) / 9), y = base - height * yk / (K - 1);
+      ctx.beginPath(); ctx.ellipse(cx, y, rs[yk], rs[yk] * 0.12, 0, 0, Math.PI); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(255, 245, 230, 0.10)';
+    for (var st = 0; st < 3; st++) {
+      var ph = spin + st * 2.1, sx = Math.sin(ph);
+      if (Math.cos(ph) < 0) continue;
+      ctx.fillRect(cx + sx * maxR * 0.9 - 3, base - height, 6, height);
+    }
+    ctx.restore();
+
+    // Горло: тёмный эллипс внутри, если сосуд уже полый.
+    if (open > 0.02) {
+      var top = rs[K - 1], yTop = base - height;
+      ctx.fillStyle = 'rgba(30, 20, 16,' + (0.75 * open).toFixed(2) + ')';
+      ctx.beginPath(); ctx.ellipse(cx, yTop, top * 0.9, top * 0.16, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgb(' + col.map(function (c) { return Math.min(255, Math.round(c * 1.25)); }).join(',') + ')';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.ellipse(cx, yTop, top, top * 0.18, 0, 0, Math.PI * 2); ctx.stroke();
+    }
+  }
+
+  function fit(c, cssW, cssH) {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), ctx = c.getContext('2d');
+    c.width = Math.round(cssW * dpr); c.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return ctx;
+  }
+
+  if (reduce) {
+    // Законченные кадры в обычном потоке: по картинке на каждый шаг.
+    beats.forEach(function (li, n) {
+      var c = document.createElement('canvas');
+      c.className = 'still'; c.setAttribute('aria-hidden', 'true');
+      li.appendChild(c);
+      drawPot(fit(c, 160, 160), 160, 160, n, 0.6);
+    });
+    return;
+  }
+
+  document.documentElement.classList.add('scene-on');
+  var ctx, w = 0, h = 0, ticking = false, active = -1;
+
+  function resize() {
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    ctx = fit(canvas, w, h);
+    update();
+  }
+
+  // Один дирижёр: прогресс секции 0…1, одно чтение положения за кадр.
+  function update() {
+    ticking = false;
+    var rect = scene.getBoundingClientRect();
+    var span = rect.height - window.innerHeight;
+    var p = span > 0 ? Math.min(Math.max(-rect.top / span, 0), 1) : 0;
+    var s = p * (stages.length - 1);
+    drawPot(ctx, w, h, s, p * 46);
+    var now = Math.min(Math.round(s), beats.length - 1);
+    if (now !== active) {
+      beats.forEach(function (li, n) { li.classList.toggle('is-active', n === now); });
+      active = now;
+    }
+  }
+
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  window.addEventListener('resize', resize);
+  resize();
+})();
+</script>
+</body>
+</html>

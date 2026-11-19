@@ -1,0 +1,218 @@
+<!doctype html>
+<!-- Демо-страница AI Design: игривый яркий стиль с SVG-морфингом. Кафе и вкусы вымышлены; форма шарика строится кодом. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffe3e4">
+<title>Пломбир на углу — кафе-мороженое</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1d1b26;
+  --paper: #ffffff;
+  --tint: #ffe3e4;
+  --scoop: #ff5a5f;
+  --yellow: #ffd23f;
+  --mint: #2bb673;
+  --blue: #2f4dd8;
+  --display: "Unbounded", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  --body: "Golos Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --pad: clamp(20px, 4vw, 56px);
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); color: var(--ink); }
+body { margin: 0; font-family: var(--body); font-size: 1.0625rem; line-height: 1.6; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.hero { background: var(--tint); transition: background-color 500ms var(--ease); padding: 22px var(--pad) clamp(48px, 7vw, 96px); }
+.top { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: var(--display); font-weight: 800; font-size: 1.125rem; text-decoration: none; }
+.top a.hours { white-space: nowrap; }
+.top a.hours { font-weight: 600; text-decoration: none; padding: 8px 16px; border: 2px solid var(--ink); border-radius: 999px; transition: background-color 200ms var(--ease), color 200ms var(--ease); }
+.top a.hours:hover { background: var(--ink); color: var(--paper); }
+
+.stage { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: center; margin-top: clamp(32px, 6vw, 72px); }
+.hero h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(2.3rem, 5.4vw, 4.6rem); line-height: 1.04; letter-spacing: -0.02em; }
+.swap { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.08em; }
+.swap span { display: inline-block; }
+.hero p { margin: 22px 0 0; max-width: 40ch; font-size: 1.1875rem; }
+
+.flavors { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.flavors button { font: inherit; font-weight: 600; font-size: 1rem; padding: 12px 20px; border-radius: 999px; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; transition: background-color 200ms var(--ease), color 200ms var(--ease), transform 150ms var(--ease); }
+.flavors button:hover { transform: translateY(-2px); }
+.flavors button:active { transform: scale(0.97); }
+.flavors button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+.cone { width: min(100%, 460px); justify-self: center; }
+.cone svg { display: block; width: 100%; height: auto; overflow: visible; }
+#scoop { transition: fill 500ms var(--ease); }
+
+.facts { display: grid; grid-template-columns: 1.3fr 1fr 1fr; }
+.fact { padding: clamp(32px, 4vw, 56px) var(--pad); min-height: 280px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.fact h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1.1; }
+.fact p { margin: 0; max-width: 34ch; }
+.fact-yellow { background: var(--yellow); }
+.fact-mint { background: var(--mint); }
+.fact-blue { background: var(--blue); color: var(--paper); }
+.fact svg { width: 56px; height: 56px; }
+
+.menu { padding: clamp(56px, 7vw, 96px) var(--pad); display: grid; grid-template-columns: 1fr 2fr; gap: 40px; }
+.menu h2 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.1; }
+.menu ul { list-style: none; margin: 0; padding: 0; }
+.menu li { display: flex; justify-content: space-between; gap: 24px; padding: 18px 0; border-bottom: 2px solid var(--ink); font-size: 1.25rem; font-weight: 600; }
+.menu li span { font-weight: 400; font-size: 1rem; text-align: right; }
+
+footer { padding: 24px var(--pad) 36px; background: var(--ink); color: #f3f1f7; font-size: 0.9375rem; }
+
+@media (max-width: 860px) {
+  .stage { grid-template-columns: 1fr; }
+  .cone { width: min(78%, 340px); grid-row: 1; }
+  .facts { grid-template-columns: 1fr; }
+  .fact { min-height: 0; }
+  .menu { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero p { font-size: 1.0625rem; }
+  .logo { font-size: 0.9375rem; }
+  .menu li { flex-direction: column; gap: 2px; }
+  .menu li span { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero, #scoop, .flavors button, .top a.hours { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="hero" id="hero">
+  <div class="top">
+    <a class="logo" href="#hero">Пломбир на углу</a>
+    <a class="hours" href="#menu">Что в витрине</a>
+  </div>
+  <div class="stage">
+    <div>
+      <h1>Сегодня в витрине <span class="swap" aria-live="polite"><span id="word">клубника</span></span></h1>
+      <p>Маленькое кафе, где мороженое варят каждое утро. Нажмите на вкус, и шарик сменит форму и цвет.</p>
+      <div class="flavors" role="group" aria-label="Выбрать вкус">
+        <button type="button" data-flavor="0" aria-pressed="true">Клубника</button>
+        <button type="button" data-flavor="1" aria-pressed="false">Фисташка</button>
+        <button type="button" data-flavor="2" aria-pressed="false">Манго</button>
+        <button type="button" data-flavor="3" aria-pressed="false">Черника</button>
+      </div>
+    </div>
+    <div class="cone" aria-hidden="true">
+      <svg viewBox="0 0 400 460">
+        <path d="M130 250 L200 450 L270 250 Z" fill="#e9a94b"/>
+        <clipPath id="wafer"><path d="M130 250 L200 450 L270 250 Z"/></clipPath>
+        <path clip-path="url(#wafer)" d="M120 250 L240 430 M160 250 L262 400 M200 250 L280 370 M280 250 L160 430 M240 250 L138 400 M200 250 L120 370" stroke="#c9852b" stroke-width="5" stroke-linecap="round"/>
+        <path id="scoop" fill="#ff5a5f" d="M200 60 C290 60 330 120 330 180 C330 240 290 280 200 280 C110 280 70 240 70 180 C70 120 110 60 200 60 Z"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="facts" aria-label="Как мы работаем">
+    <div class="fact fact-yellow">
+      <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="20" fill="none" stroke="#1d1b26" stroke-width="5"/><path d="M28 16 V28 L36 34" fill="none" stroke="#1d1b26" stroke-width="5" stroke-linecap="round"/></svg>
+      <div><h2>Варим утром</h2><p>Смесь готовим до открытия, поэтому к вечеру самые ходовые вкусы иногда заканчиваются.</p></div>
+    </div>
+    <div class="fact fact-mint">
+      <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M10 40 Q28 4 46 40 Z" fill="#1d1b26"/></svg>
+      <div><h2>Пробуем вместе</h2><p>Перед выбором дадим попробовать ложечкой любой вкус из витрины.</p></div>
+    </div>
+    <div class="fact fact-blue">
+      <svg viewBox="0 0 56 56" aria-hidden="true"><rect x="10" y="18" width="36" height="28" rx="4" fill="none" stroke="#ffffff" stroke-width="5"/><path d="M18 18 V12 H38 V18" fill="none" stroke="#ffffff" stroke-width="5"/></svg>
+      <div><h2>Берём с собой</h2><p>Упакуем в термобокс, чтобы мороженое доехало до дома целым.</p></div>
+    </div>
+  </section>
+
+  <section class="menu" id="menu" aria-labelledby="menu-title">
+    <h2 id="menu-title">Что сегодня в витрине</h2>
+    <ul>
+      <li>Клубника со сливками <span>ягоды целиком, без ароматизаторов</span></li>
+      <li>Фисташка <span>паста из жареной фисташки</span></li>
+      <li>Манго и лайм <span>сорбет без молока</span></li>
+      <li>Черника <span>с кусочками ягод и ванилью</span></li>
+    </ul>
+  </section>
+</main>
+
+<footer>Демо-страница AI Design. Кафе «Пломбир на углу» и его вкусы вымышлены, рисунки сделаны кодом.</footer>
+
+<script>
+(function () {
+  var flavors = [
+    { word: 'клубника', color: '#ff5a5f', tint: '#ffe3e4', r: [1, 1.02, 1, 1.03, 1.0, 1.1, 0.95, 1.12, 0.95, 1.1, 1.0, 1.03] },
+    { word: 'фисташка', color: '#7fb244', tint: '#e8f4d8', r: [0.94, 1.0, 1.06, 1.02, 1.04, 0.98, 1.12, 0.98, 1.12, 0.98, 1.04, 1.02] },
+    { word: 'манго', color: '#ffad1f', tint: '#fff0c9', r: [1.06, 1.04, 0.98, 1.06, 1.08, 1.0, 1.08, 1.0, 1.08, 1.0, 1.08, 1.06] },
+    { word: 'черника', color: '#4b5bd6', tint: '#e2e6ff', r: [0.98, 1.06, 1.02, 0.96, 1.1, 0.96, 1.12, 0.96, 1.1, 0.96, 1.02, 1.06] }
+  ];
+  var scoop = document.getElementById('scoop');
+  var word = document.getElementById('word');
+  var hero = document.getElementById('hero');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var current = flavors[0].r.slice();
+  var anim = 0;
+
+  // Двенадцать точек по кругу и сглаживание Катмулла — Рома: у всех форм одна структура пути, поэтому её можно плавно перетекать.
+  function path(r) {
+    var n = r.length, cx = 200, cy = 175, base = 118, pts = [];
+    for (var i = 0; i < n; i++) {
+      var a = -Math.PI / 2 + i * Math.PI * 2 / n;
+      pts.push([cx + Math.cos(a) * base * r[i], cy + Math.sin(a) * base * r[i] * 0.92]);
+    }
+    var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+    for (var k = 0; k < n; k++) {
+      var p0 = pts[(k - 1 + n) % n], p1 = pts[k], p2 = pts[(k + 1) % n], p3 = pts[(k + 2) % n];
+      var c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      var c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d += ' C' + c1[0].toFixed(1) + ' ' + c1[1].toFixed(1) + ' ' + c2[0].toFixed(1) + ' ' + c2[1].toFixed(1) + ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
+    }
+    return d + ' Z';
+  }
+
+  function easeOut(x) { return 1 - Math.pow(1 - x, 4); }
+
+  function morphTo(target) {
+    cancelAnimationFrame(anim);
+    if (reduce.matches) { current = target.slice(); scoop.setAttribute('d', path(current)); return; }
+    var from = current.slice(), start = performance.now(), dur = 650;
+    function step(now) {
+      var p = Math.min((now - start) / dur, 1), e = easeOut(p);
+      current = from.map(function (v, i) { return v + (target[i] - v) * e; });
+      scoop.setAttribute('d', path(current));
+      if (p < 1) anim = requestAnimationFrame(step);
+    }
+    anim = requestAnimationFrame(step);
+  }
+
+  function swapWord(text) {
+    if (reduce.matches || !word.animate) { word.textContent = text; return; }
+    var out = word.animate([{ transform: 'none' }, { transform: 'translateY(-110%)' }], { duration: 220, easing: 'cubic-bezier(0.7, 0, 0.84, 0)' });
+    out.onfinish = function () {
+      word.textContent = text;
+      word.animate([{ transform: 'translateY(110%)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+    };
+  }
+
+  scoop.setAttribute('d', path(current));
+  document.querySelectorAll('[data-flavor]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.getAttribute('aria-pressed') === 'true') return;
+      var f = flavors[+btn.dataset.flavor];
+      document.querySelectorAll('[data-flavor]').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+      scoop.style.fill = f.color;
+      hero.style.backgroundColor = f.tint;
+      swapWord(f.word);
+      morphTo(f.r);
+    });
+  });
+})();
+</script>
+</body>
+</html>

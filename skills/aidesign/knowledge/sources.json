@@ -1,0 +1,337 @@
+{
+  "version": 1,
+  "about": "Реестр источников AI Design: откуда взяты знания, под какой лицензией, в каком виде и в какие файлы. Пополняется по docs/пополнение.md; каждая запись есть в THIRD_PARTY_NOTICES.md и в таблице «Из чего собран» обоих README, каждая шапка атрибуции в skills/aidesign ссылается на запись отсюда — это проверяет tests/test_knowledge.py. form: «текст» — пересказ или перевод близко к оригиналу (шапка «Источник … Изменено …»), «идея» — своими словами (шапка «По мотивам»), «ничего» — назван, но ничего не взято. files — файлы скилла, в шапке которых назван репозиторий.",
+  "sources": [
+    {
+      "id": "impeccable",
+      "title": "Impeccable",
+      "repo": "pbakaus/impeccable",
+      "url": "https://github.com/pbakaus/impeccable",
+      "license": "Apache-2.0",
+      "copyright": "Copyright 2025 Paul Bakaus",
+      "commit": "d41d986",
+      "form": "текст",
+      "taken": "каталог примет шаблонного дизайна, «пол качества», правила шрифта, цвета, раскладки и движения, режимы посетителя, формат DESIGN.md, извлечение токенов, фиксация идентичности готового сайта, план трёх превью; правила tools/check.py — по мотивам детектора",
+      "files": [
+        "knowledge/INDEX.md",
+        "knowledge/движение-и-медиа/webgl-и-3d.md",
+        "knowledge/движение-и-медиа/готовый-сайт.md",
+        "knowledge/движение-и-медиа/движение.md",
+        "knowledge/движение-и-медиа/курсор-и-микровзаимодействия.md",
+        "knowledge/движение-и-медиа/морфинг.md",
+        "knowledge/движение-и-медиа/поверхности.md",
+        "knowledge/движение-и-медиа/превью.md",
+        "knowledge/движение-и-медиа/прокрутка-и-сцены.md",
+        "knowledge/язык/design-md.md",
+        "knowledge/язык/антипаттерны.md",
+        "knowledge/язык/доступность-и-качество.md",
+        "knowledge/язык/извлечь-стиль-с-сайта.md",
+        "knowledge/язык/сетка-и-ритм.md",
+        "knowledge/язык/стили/инженерный.md",
+        "knowledge/язык/стили/необрутализм.md",
+        "knowledge/язык/стили/редакционный.md",
+        "knowledge/язык/стили/стекло.md",
+        "knowledge/язык/стили/швейцарский-минимализм.md",
+        "knowledge/язык/типографика.md",
+        "knowledge/язык/цвет.md"
+      ]
+    },
+    {
+      "id": "frontend-design",
+      "title": "frontend-design (Anthropic)",
+      "repo": "anthropics/skills",
+      "url": "https://github.com/anthropics/skills/tree/main/skills/frontend-design",
+      "license": "Apache-2.0",
+      "copyright": "Anthropic (строки копирайта в LICENSE.txt нет)",
+      "commit": "e4bb5d9",
+      "form": "текст",
+      "taken": "список клише ИИ-дизайна, «смелость в одном месте», план «4–6 цветов и 1–2 гарнитуры», правила текста интерфейса",
+      "files": [
+        "knowledge/язык/антипаттерны.md",
+        "knowledge/язык/сочетание.md",
+        "knowledge/язык/типографика.md",
+        "knowledge/язык/цвет.md"
+      ]
+    },
+    {
+      "id": "taste-skill",
+      "title": "Taste Skill",
+      "repo": "Leonxlnx/taste-skill",
+      "url": "https://github.com/Leonxlnx/taste-skill",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Leonxlnx",
+      "commit": "f6b7657",
+      "form": "текст",
+      "taken": "эффекты по типу дела, приметы ИИ-текста, список «никогда», чек-лист, одиннадцать раскладок героя, движение, производительность, фото; фото из examples и код кита не брались",
+      "files": [
+        "knowledge/движение-и-медиа/webgl-и-3d.md",
+        "knowledge/движение-и-медиа/видео-в-сайт.md",
+        "knowledge/движение-и-медиа/видео.md",
+        "knowledge/движение-и-медиа/движение.md",
+        "knowledge/движение-и-медиа/курсор-и-микровзаимодействия.md",
+        "knowledge/движение-и-медиа/прокрутка-и-сцены.md",
+        "knowledge/движение-и-медиа/фото.md",
+        "knowledge/язык/антипаттерны.md",
+        "knowledge/язык/сетка-и-ритм.md",
+        "knowledge/язык/стили/инженерный.md",
+        "knowledge/язык/типографика.md",
+        "knowledge/язык/цвет.md"
+      ]
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "title": "UI UX Pro Max",
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2024 Next Level Builder",
+      "commit": "f984fcd",
+      "form": "текст",
+      "taken": "признаки 17 семейств стилей, UX-правила и WCAG 2.2, характеры шрифтовых пар, десять схем лендингов, семь типов графиков; премиум-версия и таблицы целиком не брались",
+      "files": [
+        "knowledge/язык/антипаттерны.md",
+        "knowledge/язык/доступность-и-качество.md",
+        "knowledge/язык/сетка-и-ритм.md",
+        "knowledge/язык/стили/INDEX.md",
+        "knowledge/язык/стили/бенто.md",
+        "knowledge/язык/стили/брутализм.md",
+        "knowledge/язык/стили/бумажный-для-чтения.md",
+        "knowledge/язык/стили/игривый-яркий.md",
+        "knowledge/язык/стили/инженерный.md",
+        "knowledge/язык/стили/кинетическая-типографика.md",
+        "knowledge/язык/стили/мягкий-объём.md",
+        "knowledge/язык/стили/необрутализм.md",
+        "knowledge/язык/стили/природный.md",
+        "knowledge/язык/стили/редакционный.md",
+        "knowledge/язык/стили/ремесленный-аналоговый.md",
+        "knowledge/язык/стили/ретро-футуризм.md",
+        "knowledge/язык/стили/стекло.md",
+        "knowledge/язык/стили/сюжетный-прокручиваемый.md",
+        "knowledge/язык/стили/тёмный-дорогой.md",
+        "knowledge/язык/стили/швейцарский-минимализм.md",
+        "knowledge/язык/стили/экстремальный-минимализм.md",
+        "knowledge/язык/типографика.md",
+        "knowledge/язык/цвет.md"
+      ]
+    },
+    {
+      "id": "web-design-guidelines",
+      "title": "web-design-guidelines (Vercel)",
+      "repo": "vercel-labs/agent-skills",
+      "url": "https://github.com/vercel-labs/agent-skills",
+      "license": "MIT (заявлена в README, файла LICENSE нет)",
+      "copyright": "не указан",
+      "commit": "1a2c79d",
+      "form": "идея",
+      "taken": "только идея: аудит по свежему своду правил с выводом файл:строка",
+      "files": [
+        "knowledge/язык/доступность-и-качество.md"
+      ]
+    },
+    {
+      "id": "web-interface-guidelines",
+      "title": "Web Interface Guidelines",
+      "repo": "vercel-labs/web-interface-guidelines",
+      "url": "https://github.com/vercel-labs/web-interface-guidelines",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2025 Vercel Labs",
+      "commit": "434b7f9",
+      "form": "текст",
+      "taken": "свод правил интерфейса: доступность, фокус, формы, анимация, шрифт, изображения, производительность, касание, тёмная тема — перевод и адаптация",
+      "files": [
+        "knowledge/язык/антипаттерны.md",
+        "knowledge/язык/доступность-и-качество.md",
+        "knowledge/язык/сетка-и-ритм.md",
+        "knowledge/язык/типографика.md"
+      ]
+    },
+    {
+      "id": "gsap-skills",
+      "title": "GSAP skills",
+      "repo": "greensock/gsap-skills",
+      "url": "https://github.com/greensock/gsap-skills",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 GreenSock",
+      "commit": "aed9cfd",
+      "form": "текст",
+      "taken": "правила анимации, ScrollTrigger, плагинов SplitText, Flip, MorphSVG и производительности; код библиотеки не переносился",
+      "files": [
+        "knowledge/движение-и-медиа/движение.md",
+        "knowledge/движение-и-медиа/курсор-и-микровзаимодействия.md",
+        "knowledge/движение-и-медиа/морфинг.md",
+        "knowledge/движение-и-медиа/прокрутка-и-сцены.md",
+        "knowledge/язык/стили/кинетическая-типографика.md"
+      ]
+    },
+    {
+      "id": "gsap-library",
+      "title": "Библиотека GSAP",
+      "repo": null,
+      "url": "https://gsap.com/licensing/",
+      "license": "проприетарная Standard No Charge License, бесплатна в использовании",
+      "copyright": "Webflow",
+      "commit": null,
+      "form": "ничего",
+      "taken": "ничего; страницы, которым она нужна, подключают её с CDN или из npm в проекте человека",
+      "files": []
+    },
+    {
+      "id": "mengto-skills",
+      "title": "MengTo Skills",
+      "repo": "MengTo/Skills",
+      "url": "https://github.com/MengTo/Skills",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Meng To",
+      "commit": "3cc9345",
+      "form": "текст",
+      "taken": "три режима отрисовки историй при прокрутке, «колесо не перехватывать никогда», раскладка на сцены, правила эффекта курсора",
+      "files": [
+        "knowledge/движение-и-медиа/webgl-и-3d.md",
+        "knowledge/движение-и-медиа/видео-в-сайт.md",
+        "knowledge/движение-и-медиа/видео.md",
+        "knowledge/движение-и-медиа/готовый-сайт.md",
+        "knowledge/движение-и-медиа/курсор-и-микровзаимодействия.md",
+        "knowledge/движение-и-медиа/превью.md",
+        "knowledge/движение-и-медиа/прокрутка-и-сцены.md",
+        "knowledge/язык/антипаттерны.md",
+        "knowledge/язык/решения-споров.md",
+        "knowledge/язык/стили/сюжетный-прокручиваемый.md"
+      ]
+    },
+    {
+      "id": "shaders",
+      "title": "Пакет shaders и shaders.com",
+      "repo": null,
+      "url": "https://shaders.com/license",
+      "license": "пакет — MIT; пресеты, коллекции и секции — проприетарные",
+      "copyright": null,
+      "commit": null,
+      "form": "идея",
+      "taken": "ничего из пресетов и графов; идея следа курсора описана своими словами",
+      "files": []
+    },
+    {
+      "id": "premium-frontend-ui",
+      "title": "premium-frontend-ui",
+      "repo": "github/awesome-copilot",
+      "url": "https://github.com/github/awesome-copilot/tree/main/skills/premium-frontend-ui",
+      "license": "MIT",
+      "copyright": "Copyright GitHub, Inc.",
+      "commit": "a255a19",
+      "form": "текст",
+      "taken": "направления, прелоадер, прячущееся меню, магнитные кнопки, свой курсор, параллакс — как позиции в спорах; отключение эффектов курсора на касании",
+      "files": [
+        "knowledge/движение-и-медиа/webgl-и-3d.md",
+        "knowledge/движение-и-медиа/движение.md",
+        "knowledge/движение-и-медиа/курсор-и-микровзаимодействия.md",
+        "knowledge/движение-и-медиа/прокрутка-и-сцены.md",
+        "knowledge/язык/стили/брутализм.md",
+        "knowledge/язык/стили/тёмный-дорогой.md"
+      ]
+    },
+    {
+      "id": "hyperframes",
+      "title": "HyperFrames",
+      "repo": "heygen-com/hyperframes",
+      "url": "https://github.com/heygen-com/hyperframes",
+      "license": "Apache-2.0",
+      "copyright": "Copyright 2026 HeyGen, Inc.",
+      "commit": "a82ee10",
+      "form": "идея",
+      "taken": "идеи обработки медиа, HTML-презентации и видео из HTML; каталог блоков и Pro-скиллы не брались",
+      "files": [
+        "knowledge/движение-и-медиа/видео.md",
+        "knowledge/движение-и-медиа/поверхности.md",
+        "knowledge/движение-и-медиа/фото.md"
+      ]
+    },
+    {
+      "id": "hoodini-skills",
+      "title": "video-to-landing-page и parallax-landing-page",
+      "repo": "hoodini/ai-agents-skills",
+      "url": "https://github.com/hoodini/ai-agents-skills",
+      "license": "MIT заявлена в README, файла LICENSE нет",
+      "copyright": null,
+      "commit": "a52f5f4",
+      "form": "идея",
+      "taken": "только идеи своими словами: бюджет кадров для прокрутки видео, сцены текста; текст не переносился",
+      "files": [
+        "knowledge/движение-и-медиа/видео-в-сайт.md",
+        "knowledge/движение-и-медиа/прокрутка-и-сцены.md"
+      ]
+    },
+    {
+      "id": "awesome-design-md",
+      "title": "awesome-design-md",
+      "repo": "VoltAgent/awesome-design-md",
+      "url": "https://github.com/VoltAgent/awesome-design-md",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 VoltAgent",
+      "commit": "fcc7028",
+      "form": "текст",
+      "taken": "структура DESIGN.md из девяти разделов; файлы брендов не брались",
+      "files": [
+        "knowledge/язык/design-md.md",
+        "knowledge/язык/извлечь-стиль-с-сайта.md"
+      ]
+    },
+    {
+      "id": "getdesign",
+      "title": "getdesign.md",
+      "repo": null,
+      "url": "https://getdesign.md/terms",
+      "license": "условия сайта",
+      "copyright": null,
+      "commit": null,
+      "form": "ничего",
+      "taken": "ничего из файлов; команда npx getdesign названа как путь, которым человек идёт сам",
+      "files": []
+    },
+    {
+      "id": "dembrandt",
+      "title": "Dembrandt",
+      "repo": "dembrandt/dembrandt",
+      "url": "https://github.com/dembrandt/dembrandt",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2025 thevangelist",
+      "commit": "90e2691",
+      "form": "текст",
+      "taken": "описание команд извлечения токенов с сайта; код не копировался",
+      "files": [
+        "knowledge/язык/design-md.md",
+        "knowledge/язык/извлечь-стиль-с-сайта.md"
+      ]
+    },
+    {
+      "id": "dembrandt-skills",
+      "title": "Dembrandt skills",
+      "repo": "dembrandt/dembrandt-skills",
+      "url": "https://github.com/dembrandt/dembrandt-skills",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Dembrandt",
+      "commit": "66d0331",
+      "form": "текст",
+      "taken": "модульная шкала шрифта, алгоритмическая палитра, извлечение и воспроизведение сайта",
+      "files": [
+        "knowledge/язык/извлечь-стиль-с-сайта.md",
+        "knowledge/язык/типографика.md",
+        "knowledge/язык/цвет.md"
+      ]
+    },
+    {
+      "id": "scroll-world",
+      "title": "scroll-world",
+      "repo": "oso95/scroll-world",
+      "url": "https://github.com/oso95/scroll-world",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 cyw",
+      "commit": "71cc36d",
+      "form": "текст",
+      "taken": "интервью об арт-направлении, смета до генерации, перемотка через Blob, телефонная версия 9:16, бесшовные стыки сцен; код движка и шаблоны промптов не брались",
+      "files": [
+        "knowledge/движение-и-медиа/видео-в-сайт.md",
+        "knowledge/движение-и-медиа/морфинг.md"
+      ]
+    }
+  ]
+}

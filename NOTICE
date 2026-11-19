@@ -1,0 +1,20 @@
+# Third-Party Notices
+
+This project includes content derived from third-party work, used under the terms of its original license.
+
+## Platform Design Skills
+
+The `skill/reference/ios.md` and `skill/reference/android.md` platform reference files are distilled from ehmo's `platform-design-skills` (Apple Human Interface Guidelines and Material Design 3 rules), rewritten in Impeccable's voice.
+
+**Original work:** https://github.com/ehmo/platform-design-skills
+**Original license:** MIT
+**Author:** ehmo
+
+---
+
+AI Design (aidesign) включает материалы, производные от Impeccable
+(https://github.com/pbakaus/impeccable), Copyright 2025 Paul Bakaus,
+распространяемого по лицензии Apache License 2.0. Текст выше — уведомление
+Impeccable (файл NOTICE.md) без изменений. Изменённые файлы AI Design помечены
+шапкой «Источник … Изменено …»; полный список источников и тексты лицензий —
+в THIRD_PARTY_NOTICES.md.

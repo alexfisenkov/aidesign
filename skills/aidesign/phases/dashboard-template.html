@@ -1,0 +1,1156 @@
+<!doctype html>
+<!-- Происхождение: основано на AISpa 1.0.2 (MIT), phases/dashboard-template.html. Изменено: этапы AI Design, референсы, темы интервью, круги превью с лайтбоксом, примеры работ, бэкапы, Figma, оснащение. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500..800&family=Onest:wght@400..800&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  /* Вид — «Графит» семейства: центрованный лист, белые карточки на светло-сером, тёмная главная карточка.
+     Цвет — сигнал: графит — идёт работа, хром — ждём человека, зелёный — сдано, красный — упало.
+     Без сети шрифты системные: у каждого семейства есть запас. */
+  :root{
+    --bg:#F4F5F6; --card:#FFFFFF; --inset:#F4F5F6; --soft:#ECEDEF; --line:#E3E4E7; --line2:#D5D7DB;
+    --tx:#181A1C; --tx2:#3A3C40; --mut:#55585E; --quiet:#62666D;
+    --silver:#C7C9CC; --press:#171717; --press-tx:#FFFFFF; --press-line:transparent;
+    --chrome:linear-gradient(180deg,#FFFFFF 0%,#E0E2E5 40%,#A9ACB1 62%,#EEF0F2 100%);
+    --page:radial-gradient(1200px 600px at 80% -10%,#FFFFFF,transparent 70%);
+    --hero:linear-gradient(165deg,#202123 0%,#0E0E10 100%);
+    --hero-sh:0 40px 90px rgba(20,20,22,.16),inset 0 1px 0 rgba(255,255,255,.12);
+    --done:#18784E; --done-soft:#DCFCE7; --done-tx:#166534;
+    --now:#1D4ED8; --now-soft:#DBEAFE; --now-tx:#1D4ED8;
+    --fix:#854D0E; --fix-soft:#FEF3C7; --fix-tx:#854D0E;
+    --bad:#991B1B; --bad-soft:#FEE2E2; --bad-tx:#991B1B;
+    --idle:#C7C9CC; --eyeline:rgba(23,23,23,.45); --cur:#171717; --pastline:#171717;
+    --sh:0 20px 60px rgba(20,20,22,.10); --sh-btn:0 10px 26px rgba(23,23,23,.22); --sh-tab:0 4px 12px rgba(20,20,22,.10);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme]){
+      --bg:#121316; --card:#202226; --inset:#121316; --soft:#303238; --line:#414349; --line2:#52545A;
+      --tx:#F1F2F4; --tx2:#D5D7DB; --mut:#C1C3C8; --quiet:#9FA2A9;
+      --press:#383A40; --press-tx:#FFFFFF; --press-line:#52545A;
+      --page:radial-gradient(1200px 600px at 80% -10%,#25272B,transparent 70%);
+      --hero-sh:0 20px 60px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.05);
+      --done-soft:#123523; --done-tx:#86EFAC; --now-soft:#192E50; --now-tx:#93C5FD;
+      --fix-soft:#3D3217; --fix-tx:#FDE68A; --bad-soft:#431C22; --bad-tx:#FCA5A5;
+      --idle:#5A5D63; --eyeline:rgba(255,255,255,.5); --cur:#383A40; --pastline:#B9BBC1;
+      --sh:0 20px 60px rgba(0,0,0,.24); --sh-btn:0 10px 26px rgba(0,0,0,.35); --sh-tab:0 4px 12px rgba(0,0,0,.3);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121316; --card:#202226; --inset:#121316; --soft:#303238; --line:#414349; --line2:#52545A;
+    --tx:#F1F2F4; --tx2:#D5D7DB; --mut:#C1C3C8; --quiet:#9FA2A9;
+    --press:#383A40; --press-tx:#FFFFFF; --press-line:#52545A;
+    --page:radial-gradient(1200px 600px at 80% -10%,#25272B,transparent 70%);
+    --hero-sh:0 20px 60px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.05);
+    --done-soft:#123523; --done-tx:#86EFAC; --now-soft:#192E50; --now-tx:#93C5FD;
+    --fix-soft:#3D3217; --fix-tx:#FDE68A; --bad-soft:#431C22; --bad-tx:#FCA5A5;
+    --idle:#5A5D63; --eyeline:rgba(255,255,255,.5); --cur:#383A40; --pastline:#B9BBC1;
+    --sh:0 20px 60px rgba(0,0,0,.24); --sh-btn:0 10px 26px rgba(0,0,0,.35); --sh-tab:0 4px 12px rgba(0,0,0,.3);
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html{-webkit-text-size-adjust:100%;background:var(--bg)}
+  body{margin:0;min-height:100vh;background:var(--page),var(--bg);color:var(--tx);
+    font:15px/1.5 'Onest',-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  :focus-visible{outline:2px solid var(--tx);outline-offset:3px}
+  .hero:not(.ask) :focus-visible{outline-color:#fff}
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+  .tbig,.s-time,.ev em{font-variant-numeric:tabular-nums}
+  .wrap{max-width:calc(1280px + 2 * clamp(16px,3vw,44px));margin:0 auto;padding:28px clamp(16px,3vw,44px) 64px;display:flex;flex-direction:column;gap:22px;min-width:0}
+  .wrap>*{min-width:0}
+  .card{background:var(--card);border-radius:28px;box-shadow:var(--sh);padding:clamp(20px,2.4vw,30px);min-width:0}
+  .ic{width:16px;height:16px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .ic.xs{width:14px;height:14px;stroke-width:2.6}
+  .ic.m{width:20px;height:20px}
+  .wt{font-family:'Unbounded','Onest',-apple-system,sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--quiet);margin:0;line-height:1.6;display:flex;align-items:center;gap:10px;overflow-wrap:anywhere;min-width:0}
+  .wt::before{content:"";flex:0 0 26px;height:1px;background:linear-gradient(90deg,transparent,var(--eyeline))}
+  .whead{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;margin-bottom:16px;flex-wrap:wrap}
+  .whead>span{font-size:13px;color:var(--quiet)}
+  .bh{font-family:'Unbounded','Onest',-apple-system,sans-serif;margin:0;font-size:24px;line-height:1.15;font-weight:700;letter-spacing:-.02em;overflow-wrap:anywhere}
+  .bsub{margin:8px 0 0;font-size:15px;line-height:1.5;color:var(--mut);max-width:80ch}
+
+  /* ── верх ── */
+  .top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-right:auto;min-width:0}
+  .brand{display:flex;align-items:center;gap:14px;min-width:0}
+  .brand-link{display:flex;align-items:center;gap:14px;color:var(--tx);text-decoration:none;border-radius:12px}
+  .brand h1{display:block;margin:0;font-family:'Unbounded','Onest',-apple-system,sans-serif;font-weight:700;font-size:25px;line-height:1.1;letter-spacing:-.01em}
+  .brand small{display:block;margin-bottom:3px;font-size:12px;color:var(--quiet)}
+  .logo{width:50px;height:50px;flex:none;filter:drop-shadow(0 6px 12px rgba(20,20,22,.18))}
+  .logo svg{display:block;width:100%;height:100%}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .vpill{padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:13px;color:var(--mut)}
+  .tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .source{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mut);min-width:0}
+  .source .sdot{width:8px;height:8px;border-radius:999px;flex:none;background:var(--silver)}
+  .source.s-live .sdot{background:#1F8A5B}
+  .source.s-lost .sdot,.source.s-snap .sdot{background:var(--quiet)}
+  .pref{height:44px;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--tx);font:600 13px 'Onest',-apple-system,sans-serif;cursor:pointer}
+  .btn{height:44px;padding:0 20px;border:1px solid var(--press-line);border-radius:15px;background:var(--press);color:var(--press-tx);font:600 14px 'Onest',-apple-system,sans-serif;cursor:pointer;
+    box-shadow:var(--sh-btn);display:inline-flex;align-items:center;gap:10px;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:active{transform:scale(.96)}
+  .btn.busy .arr{animation:pulse .8s linear infinite}
+  /* Вкладки «Прогон / Примеры работ» — сегменты, нажатое белое с тенью. */
+  .chips{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:15px;background:var(--soft);width:fit-content;max-width:100%}
+  .chip{appearance:none;height:44px;padding:0 16px;border-radius:11px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+  .chip span{color:var(--quiet);font-weight:500}
+  .chip[aria-pressed="true"]{background:var(--card);color:var(--tx);box-shadow:var(--sh-tab)}
+  .notice{background:var(--now-soft);color:var(--now-tx);border:1px solid currentColor;border-radius:14px;padding:12px 16px;font-weight:600;font-size:14px;line-height:1.5}
+  .lost{max-width:calc(1280px + 2 * clamp(16px,3vw,44px));margin:0 auto;padding:16px clamp(16px,3vw,44px) 0}
+
+  /* ── шапка состояния ── */
+  .hero{--h-tx:#fff;--h-mut:rgba(255,255,255,.82);--h-line:rgba(255,255,255,.14);--h-fill:rgba(255,255,255,.06);
+    --glow:radial-gradient(520px 520px at calc(100% + 140px) -100px,rgba(199,201,204,.20),transparent 70%);
+    border-radius:28px;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;gap:24px;
+    background:var(--glow),var(--hero);color:var(--h-tx);box-shadow:var(--hero-sh);min-width:0}
+  .hero.ask{background:var(--glow),linear-gradient(165deg,#FFFFFF 0%,#E0E2E5 45%,#C7C9CC 100%);--h-tx:#171717;--h-mut:rgba(23,23,23,.78);--h-line:rgba(23,23,23,.14);--h-fill:rgba(23,23,23,.05);
+    box-shadow:0 40px 90px rgba(20,20,22,.16),inset 0 1px 0 #fff}
+  .hero.won{background:var(--glow),linear-gradient(165deg,#18784E 0%,#10593A 100%);--h-mut:rgba(255,255,255,.9);--h-line:rgba(255,255,255,.2)}
+  .hero.bad{background:var(--glow),linear-gradient(165deg,#A82121 0%,#851717 100%);--h-line:rgba(255,255,255,.2)}
+  .hero-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 20px}
+  .hwt{margin:0;font-family:'Unbounded','Onest',-apple-system,sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--h-mut);
+    display:flex;align-items:center;gap:10px;line-height:1.6;min-width:0;overflow-wrap:anywhere;flex:1 1 260px}
+  .hwt::before{content:"";flex:0 0 26px;height:1px;background:linear-gradient(90deg,transparent,var(--h-mut))}
+  .state{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 10px;border-radius:999px;background:var(--h-fill);border:1px solid var(--h-line);font-size:13px;font-weight:600}
+  .hero h2{font-family:'Unbounded','Onest',-apple-system,sans-serif;margin:0;font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-.02em;text-wrap:balance;max-width:32ch;overflow-wrap:anywhere}
+  .lead{margin:12px 0 0;font-size:16px;line-height:1.55;color:var(--h-mut);max-width:64ch}
+  .hint{display:inline-flex;align-items:center;gap:10px;margin-top:18px;min-height:44px;padding:8px 20px;border-radius:15px;background:#171717;color:#fff;font-size:14px;font-weight:600}
+  .facts{display:flex;flex-wrap:wrap;gap:10px 32px;font-size:12px;color:var(--h-mut);margin:0}
+  .facts div{display:grid;gap:3px;min-width:0}
+  .facts dd{margin:0;font-size:13px;font-weight:600;color:var(--h-tx);overflow-wrap:anywhere}
+  .runctx{border-top:1px solid var(--h-line);padding-top:6px;margin-top:-10px}
+  .runctx>summary{display:flex;align-items:center;gap:6px;width:fit-content;min-height:32px;cursor:pointer;list-style:none;font-size:12.5px;color:var(--h-mut)}
+  .runctx>summary::-webkit-details-marker{display:none}
+  .runctx>summary::before{content:'▸'}
+  .runctx[open]>summary::before{content:'▾'}
+  .rkv{display:grid;grid-template-columns:minmax(120px,max-content) minmax(0,1fr);gap:6px 18px;margin:8px 0 2px;font-size:13px}
+  .rkv dt{color:var(--h-mut)}
+  .rkv dd{margin:0;overflow-wrap:anywhere}
+  .live{width:9px;height:9px;border-radius:50%;background:#fff;display:inline-block;animation:pulse 1.8s cubic-bezier(.16,1,.3,1) infinite}
+  .hero.ask .live{background:#171717}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .badge-ic{width:22px;height:22px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center}
+  .hero.won .badge-ic{color:#18784E}.hero.bad .badge-ic{color:#991B1B}
+
+  /* ── этапы и время ── */
+  .rowh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 12px;margin-bottom:12px}
+  .sh{margin:0;font-family:'Unbounded','Onest',-apple-system,sans-serif;font-weight:600;font-size:17px}
+  .rowh>span{font-size:13px;color:var(--quiet)}
+  .stgc{padding:16px 20px;border-radius:24px}
+  .stgs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+  .stg{display:flex;flex-direction:column;gap:6px;padding:8px 10px 9px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--quiet);min-width:0}
+  .stg>i{display:block;height:2px;border-radius:999px;background:var(--line)}
+  .stg small{font-family:'Unbounded','Onest',sans-serif;font-size:11px;opacity:.75}
+  .stg b{display:block;font-size:12.5px;font-weight:600;line-height:1.25;overflow-wrap:anywhere}
+  .stg.past{background:var(--inset);color:var(--tx)}
+  .stg.past>i{background:var(--pastline)}
+  .stg.cur{background:var(--cur);color:#fff;border-color:var(--cur)}
+  .stg.cur>i{background:linear-gradient(90deg,#9A9DA2,#FFFFFF,#9A9DA2) 0 0/200% 100%;animation:chromeShine 2.4s linear infinite}
+  .stg.fail{background:var(--bad-soft);color:var(--bad-tx);border-color:currentColor}
+  .stg.skip{border-style:dashed}
+  @keyframes chromeShine{from{background-position:200% 0}to{background-position:-200% 0}}
+  .s-time{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;opacity:.8}
+  .timec{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 28px;padding:20px clamp(20px,2.4vw,30px)}
+  .tcol{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .tcol+.tcol{border-left:1px solid var(--line);padding-left:28px}
+  .tlb{font-size:12.5px;color:var(--mut)}
+  .tbig{font-family:'Unbounded','Onest',-apple-system,sans-serif;font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
+  .tbig.dim{font-family:'Onest',-apple-system,sans-serif;font-size:18px;font-weight:600;color:var(--mut);letter-spacing:0}
+  .tnote{font-size:12.5px;line-height:1.5;color:var(--quiet);max-width:62ch}
+  .tnote.paused{font-weight:600;color:var(--fix-tx)}
+
+  /* ── превью: уменьшенные живые страницы ── */
+  .pvgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px;margin-top:20px}
+  .pv{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .pvbtn{appearance:none;display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:18px;background:var(--inset);cursor:zoom-in;overflow:hidden;position:relative;font:inherit;color:inherit;text-align:left;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+  .pvbtn:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+  .pv.chosen .pvbtn{border:2px solid var(--done)}
+  .frame{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#fff}
+  .frame iframe{position:absolute;left:0;top:0;width:1280px;height:800px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+  .frame .ph{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;font-size:13px;color:var(--mut);background:var(--inset)}
+  .pvid{position:absolute;left:10px;top:10px;z-index:2;width:30px;height:30px;border-radius:999px;background:var(--chrome);color:#171717;display:grid;place-items:center;
+    font-family:'Unbounded','Onest',sans-serif;font-weight:700;font-size:13px;box-shadow:0 4px 10px rgba(20,20,22,.18)}
+  .zoom{position:absolute;right:10px;top:10px;z-index:2;padding:4px 10px;border-radius:999px;background:rgba(23,23,23,.78);color:#fff;font-size:12px;font-weight:600}
+  .pv h4{margin:0;font-size:16px;font-weight:600;line-height:1.35;overflow-wrap:anywhere}
+  .pv p{margin:0;font-size:13.5px;line-height:1.5;color:var(--mut);overflow-wrap:anywhere}
+  .pill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:500;line-height:1.3;white-space:nowrap;border:1px solid currentColor;align-self:flex-start}
+  .p-done{background:var(--done-soft);color:var(--done-tx)}
+  .p-now{background:var(--now-soft);color:var(--now-tx)}
+  .p-mut{background:var(--card);color:var(--mut);border-color:var(--line2)}
+  .p-fix{background:var(--fix-soft);color:var(--fix-tx)}
+  .quote{margin:18px 0 0;padding:14px 16px;border-radius:14px;background:var(--inset);border-left:3px solid var(--tx);font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+  .quote small{display:block;font-size:12.5px;color:var(--quiet);margin-bottom:4px}
+  /* История кругов: маленькие превью в ряд. */
+  .rnd{padding:16px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+  .rnd:first-of-type{border-top:0;padding-top:0}
+  .rnd-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px}
+  .rnd-h b{font-size:15px}
+  .mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:640px}
+  .mini .pvbtn{border-radius:12px}
+  .mini .pvid{width:24px;height:24px;font-size:11px;left:6px;top:6px}
+  .mini .zoom{display:none}
+  .rnd .quote{margin-top:0}
+
+  /* ── референсы, темы, направление, проверка, лента ── */
+  .refs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:14px}
+  .ref{display:flex;flex-direction:column;gap:8px;min-width:0}
+  .ref .thumb{appearance:none;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:var(--inset);cursor:zoom-in;display:block;width:100%}
+  .ref img{display:block;width:100%;height:100%;object-fit:cover}
+  .ref .box{border:1px solid var(--line);border-radius:14px;aspect-ratio:4/3;background:var(--inset);padding:12px;display:flex;flex-direction:column;gap:6px;justify-content:center;font-size:13px;overflow:hidden;overflow-wrap:anywhere}
+  .ref .box a{color:var(--now-tx);font-weight:600}
+  .ref p{margin:0;font-size:13px;line-height:1.45;color:var(--mut);overflow-wrap:anywhere}
+  .ref span.mono{font-size:11.5px;color:var(--quiet)}
+  .tlist{display:flex;flex-direction:column}
+  .trow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:15px}
+  .trow:first-child{border-top:0;padding-top:0}
+  .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:22px;align-items:start}
+  .pair>*{min-width:0}
+  .dir{font-family:'Unbounded','Onest',-apple-system,sans-serif;font-size:22px;font-weight:700;margin:0 0 8px;overflow-wrap:anywhere}
+  .big{font-family:'Unbounded','Onest',-apple-system,sans-serif;font-size:36px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .big small{font-size:16px;color:var(--mut);font-weight:600;margin-left:4px}
+  .nl{margin:8px 0 0;padding:0 0 0 18px;font-size:14.5px;color:var(--tx2);line-height:1.5}
+  .nl li{overflow-wrap:anywhere}
+  .nl li+li{margin-top:7px}
+  .hist{padding:14px clamp(20px,2.4vw,30px)}
+  .hist>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;cursor:pointer;list-style:none}
+  .hist>summary::-webkit-details-marker{display:none}
+  .hist>summary h3{margin:0;font-family:'Unbounded','Onest',-apple-system,sans-serif;font-size:15px;font-weight:600}
+  .hist>summary>span{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;color:var(--mut)}
+  .ev{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:12px;align-items:start;padding:11px 0;font-size:14px;line-height:1.45;border-top:1px solid var(--line)}
+  .ei{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--inset);color:var(--mut);border:1px solid var(--line)}
+  .ei.f-done{background:var(--done-soft);color:var(--done-tx);border-color:currentColor}
+  .ei.f-now{background:var(--now-soft);color:var(--now-tx);border-color:currentColor}
+  .ei.f-bad{background:var(--bad-soft);color:var(--bad-tx);border-color:currentColor}
+  .ev>span{padding-top:2px;overflow-wrap:anywhere}
+  .ev em{font-style:normal;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;color:var(--quiet);white-space:nowrap;padding-top:4px}
+  .empty{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-radius:16px;background:var(--inset);border:1.5px dashed var(--idle);font-size:14.5px;line-height:1.5;color:var(--tx2)}
+  .empty .ic{color:var(--mut);margin-top:3px}
+  .muted{color:var(--mut);font-size:14px;line-height:1.5;margin:0}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-size:12px;padding:3px 8px;border-radius:8px;background:var(--inset);border:1px solid var(--line);color:var(--tx2)}
+  footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;font-size:13px;color:var(--quiet);padding:6px 4px 0}
+  .stale{color:var(--now-tx);font-weight:600}
+
+  /* ── лайтбокс: полноэкранный просмотр превью ── */
+  .lb{position:fixed;inset:0;z-index:50;background:rgba(10,10,12,.92);display:flex;flex-direction:column;color:#fff}
+  .lb-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.14)}
+  .lb-title{margin:0 auto 0 0;font-size:15px;font-weight:600;min-width:0;overflow-wrap:anywhere}
+  .lb-title small{display:block;font-size:12.5px;font-weight:500;color:rgba(255,255,255,.72)}
+  .lb .seg{display:inline-flex;border:1px solid rgba(255,255,255,.3);border-radius:12px;overflow:hidden}
+  .lb button{appearance:none;font:inherit;cursor:pointer;color:#fff;background:transparent;border:0;min-height:44px;min-width:44px;padding:0 14px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  .lb .seg button[aria-pressed="true"]{background:#fff;color:#171717}
+  .lb .nav,.lb .close{border:1px solid rgba(255,255,255,.3);border-radius:12px}
+  .lb button:disabled{opacity:.35;cursor:default}
+  .lb button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .lb-stage{flex:1;position:relative;overflow:hidden;display:flex;justify-content:center;align-items:flex-start;padding:16px}
+  .lb-box{position:relative;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .lb-box iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;background:#fff;opacity:0}
+  .lb-box.loaded iframe{opacity:1}
+  .lb-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:#4a4a4a;font-size:14px;line-height:1.5}
+  .lb-box.loaded .lb-wait{display:none}
+  .lb-wait.fail{color:#8a1c1c;font-weight:600}
+  .lb-box img{display:block;max-width:100%;max-height:100%}
+  .lb-note{padding:0 16px 14px;font-size:13.5px;color:rgba(255,255,255,.8);text-align:center}
+
+  .boot .w{animation:rise .8s cubic-bezier(.16,1,.3,1) both}
+  @keyframes rise{from{transform:translateY(10px);opacity:.01}to{transform:none;opacity:1}}
+  @media (prefers-reduced-motion:reduce){.boot .w,.live,.stg.cur>i,.btn.busy .arr{animation:none}.btn,.pvbtn{transition:none}}
+
+  @media (max-width:1040px){.stgs{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  @media (max-width:900px){
+    body{font-size:14px}
+    .wrap{padding:16px 16px 40px;gap:14px}
+    .card{padding:18px;border-radius:24px}
+    .hero{padding:18px;border-radius:24px;gap:18px}
+    .hero h2{font-size:20px;max-width:none}
+    .lead{font-size:14px}
+    .stgs{display:flex;flex-wrap:wrap;gap:5px}
+    .stg{flex:1 1 auto;padding:6px 8px 7px}
+    .stg b{font-size:11.5px;white-space:nowrap}
+    .timec{grid-template-columns:minmax(0,1fr);padding:18px}
+    .tcol+.tcol{border-left:0;border-top:1px solid var(--line);padding:14px 0 0}
+    .tbig{font-size:24px}
+    .bh{font-size:19px}
+    .mini{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .lb-bar{padding:10px}
+  }
+  @media (max-width:440px){.tools{width:100%}.tools .source{flex:1 1 100%}.chip{padding:0 11px;font-size:13px}}
+</style>
+</head>
+<body>
+<!-- Плашки о связи и о file:// живут вне #app: render() переписывает #app целиком. -->
+<div class="lost" hidden><div id="link" class="notice" role="status" hidden></div></div>
+<div class="wrap" id="app"></div>
+<!-- Лайтбокс — тоже вне #app, чтобы перерисовка по событию прогона его не закрывала. -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-title" hidden></div>
+
+<!-- Состояние приходит двумя путями: снимок внутри страницы (пишет только ad.py,
+     руками — никогда) и файл state.js рядом, который подгружается каждые десять секунд. -->
+<script>/*STATE-BEGIN*/window.STATE=null;/*STATE-END*/</script>
+<script src="state.js"></script>
+
+<script>
+const STAGE_IDS = ['preflight','refs','interview','previews','build','check','handoff'];
+const POLL_MS = 10000;
+const BASE_W = 1280, BASE_H = 800, PHONE_W = 390;
+
+const BRAND = (srText) => `<div class="brand"><a class="brand-link" href="https://t.me/masterskaya_video" target="_blank" rel="noopener noreferrer"><div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><rect width="256" height="256" rx="52" fill="#171717"/><rect x="22" y="102" width="112" height="109" rx="14" fill="#F4F5F6"/><rect x="45" y="124" width="62" height="66" rx="8" fill="#171717"/><path d="M122 211V84L173 159L224 84V211" fill="none" stroke="#F4F5F6" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/><rect x="110" y="33" width="24" height="24" rx="6" fill="#F4F5F6"/></svg></div><div><small>AI мастерская</small><h1>AIDesign</h1></div><span class="sr-only">${srText}</span></a></div>`;
+
+const IC = {
+  check: 'M20 6 9 17l-5-5',
+  clock: 'M12 6v6h4M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
+  play: 'M6 4l13 8-13 8V4z',
+  list: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',
+  msg: 'M7.9 20A9 9 0 1 0 4 16.1L2 22Z',
+  alert: 'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M12 8v4M12 16h.01',
+  x: 'M18 6 6 18M6 6l12 12',
+  flag: 'M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7',
+  chev: 'm9 18 6-6-6-6',
+  left: 'm15 18-6-6 6-6',
+  plus: 'M12 5v14M5 12h14',
+  image: 'M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M21 15l-5-5L5 21',
+  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6'
+};
+const ic = (n, cls) => `<svg class="ic${cls ? ' ' + cls : ''}" viewBox="0 0 24 24" aria-hidden="true"><path d="${IC[n]}"/></svg>`;
+
+const storedTheme = () => { try { return localStorage.getItem('aidesign-theme'); } catch(e) { return null; } };
+function applyTheme(t){
+  if (t) document.documentElement.setAttribute('data-theme', t);
+  else document.documentElement.removeAttribute('data-theme');
+}
+const plural = (n, one, few, many) => {
+  const a = Math.abs(n) % 10, b = Math.abs(n) % 100;
+  if (a === 1 && b !== 11) return one;
+  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return few;
+  return many;
+};
+const en = (n, one, many) => n === 1 ? one : many;
+// В href ссылки — только http: и https:; всё остальное (javascript:, data:, file:, относительное) — текстом.
+// Тема интервью закрыта, когда ответ есть или решение принято: обе идут в «решено N из M».
+const themeDone = t => !!t && (t.status === 'answered' || t.status === 'decided');
+// Команда отката копии — текстом на панели: человек или агент копирует её как есть.
+const restoreCmd = id => `python3 .aidesign-work/backup.py restore --id ${id} --yes`;
+// Строка «Оснащение»: что не хватает, что поставлено, от чего отказались (null — проверки не было).
+const toolkitParts = T => T && typeof T === 'object' ? {missing: T.missing || [], installed: T.installed || [], skipped: T.skipped || []} : null;
+const fmtBytes = n => { n = +n || 0; return n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : n >= 1024 ? Math.round(n / 1024) + ' KB' : n + ' B'; };
+const httpHref = s => { try { const u = new URL(String(s == null ? '' : s).trim()); return /^https?:$/.test(u.protocol) && /^https?:\/\//i.test(String(s).trim()) ? u.href : ''; } catch (e) { return ''; } };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+const I18N = {
+  ru:{lang:"ru",of:"из",
+    stages:{preflight:"Подготовка",refs:"Референсы",interview:"Интервью",previews:"Превью",build:"Сборка",check:"Проверка",handoff:"Передача"},
+    modes:{auto:"Сам по брифу",important:"Только важное",interview:"Интервью"},
+    entries:{new:"Новый сайт",existing:"Готовый сайт"},
+    questions:{one:"По одному",rounds:"Раундами"},
+    src:{live:"Живые данные · локальный сервер",file:"Данные из файла · без сервера",lost:"Нет связи",snap:"Последний снимок"},
+    tabRun:"Прогон",tabExamples:"Примеры работ",
+    themeSystem:"Система",themeLight:"Светлая",themeDark:"Тёмная",langLabel:"Язык",themeLabel:"Тема",refresh:"Обновить",workshopLink:" — Telegram-канал, новая вкладка",
+    fUpdated:"Последняя запись агента",fStage:"Этап",fMode:"Режим",fEntry:"Вход",fQuestions:"Вопросы",
+    runData:"Данные прогона",rStarted:"Начат",rFinished:"Сдан",rDir:"Папка прогона",rSkill:"Версия AI Design",
+    fileMode:"Панель открыта файлом. Откройте адрес http://localhost:…/dashboard.html, который назвал агент: превью видны только через сервер. Нет адреса — скажите агенту «подними панель».",
+    lost:"Связь с панелью пропала — на экране последнее, что она успела получить. Скажи агенту «подними панель»: страница подхватит сервер сама.",
+    stageHead:"Этап",stepOf:(n,m)=>`Шаг ${n} из ${m}`,
+    runTime:"Время работы · без пауз на ожидании",stageTime:n=>`На этапе «${n}»`,finishedAt:"Сдано",paused:"пауза — часы стоят",
+    waitBig:"ждём ответа · часы стоят",waitNote:"Пока ты думаешь, время работы не идёт.",
+    stateRun:{preflight:"Идёт подготовка",refs:"Смотрю референсы",interview:"Идёт интервью",previews:"Собираю превью",build:"Идёт сборка",check:"Идёт проверка",handoff:"Передача"},
+    h2Run:{preflight:"Готовлю панель и папку прогона",refs:"Разбираю, что тебе нравится в референсах",interview:"Выясняю твой вкус, стиль и тон",
+      previews:"Собираю три разных варианта первого экрана",build:"Собираю страницу в выбранном направлении",check:"Проверяю результат на шаблонность и качество",handoff:"Записываю правила дизайна для следующих агентов"},
+    leadRun:{preflight:"Дальше — референсы: картинки, скриншоты или ссылки на сайты.",refs:"Каждый референс описываю словами: цвет, шрифт, раскладка, настроение.",
+      interview:"Вопросы приходят в чат. Ответ — словом, буквой или «ок».",previews:"Три мини-страницы появятся здесь. Кликни по любой, чтобы рассмотреть.",
+      build:"Типографика, цвет, сетка, движение — по выбранному направлению.",check:"Скрипт проверки и просмотр на компьютере и телефоне.",handoff:"DESIGN.md прочитает любой агент, и AISpa тоже."},
+    waitState:"Ждём тебя",
+    waitH2:{refs:"Пришли референсы — картинки, скриншоты или ссылки",interview:"Ответь в чате на вопросы о вкусе",previews:"Посмотри превью и скажи, какое ближе",
+      action:"Нужно твоё решение перед следующим шагом",stop:"Прогон остановлен — нужен ты"},
+    waitHint:"Ответ — в чате",
+    failState:"Прогон остановился",failH2:n=>`Этап «${n}» не прошёл`,
+    doneState:"Сдано",doneDefault:"Дизайн собран",doneLead:"Правила дизайна записаны — следующий агент продолжит в том же стиле.",
+    ahead:"впереди",skipped:"пропущен",failedSt:"не прошёл",waitingSt:"ждём ответа",
+    round:n=>`Круг ${n}`,roundHead:"Текущий круг",roundSub:"Живые мини-страницы первого экрана. Кликни, чтобы увеличить: компьютер или телефон, стрелки листают.",
+    refineOf:(n,id)=>`Доработка варианта ${id.toUpperCase()} из круга ${n}`,
+    noRound:"Превью появятся здесь, когда начнётся этап «Превью».",
+    noFile:"Превью видно только через сервер панели",
+    optWait:"вариант готовится",zoom:"Увеличить",chosen:"Выбран",none:"Ничего не подошло",noChoice:"Без выбора",
+    feedback:"Твой отзыв",historyHead:"История кругов",historySub:n=>`${n} ${plural(n,'прошлый круг','прошлых круга','прошлых кругов')}`,
+    refsHead:"Референсы",refsEmpty:"Референсов пока нет. Картинки, скриншоты и ссылки появятся здесь.",
+    kinds:{image:"картинка",screenshot:"скриншот",url:"ссылка",text:"текст"},
+    themesHead:"Темы интервью",themesOf:(d,n)=>`решено ${d} из ${n}`,themesEmpty:"Карта тем появится, когда начнётся интервью.",
+    ts:{wait:"впереди",asked:"спросил",answered:"ответ есть",decided:"решено"},
+    dirHead:"Выбранное направление",dirEmpty:"Направление появится после выбора превью.",dirFile:"Правила — в",
+    checkHead:"Итог проверки",checkEmpty:"Проверка будет после сборки.",checkVal:(f,x)=>f ? `Находок ${f}, исправлено ${x}` : "Находок нет",
+    checkLeft:n=>`осталось ${n}`,
+    reportHead:"Отчёт",assumptionsHead:"Решено за тебя",noNotes:"Пока пусто.",
+    bkHead:"Бэкапы",bkEmpty:"Копий проекта пока нет. Перед первой правкой файлов будет копия «до».",bkRestore:"Вернуть как было",
+    bkNote:"Копии лежат в .aidesign-work/backups/ и не удаляются без твоего слова.",
+    figmaHead:"Figma",figmaModes:{free:"кадры страниц",paid:"файл раскладывает AI Design"},
+    tkHead:"Оснащение",tkOk:"всё нужное на месте",tkMissing:"не хватает",tkInstalled:"поставлено",tkSkipped:"без этого",
+    feed:"Лента",footer:"Панель только показывает ход работы. Решения — в чате.",updated:"Обновлено",frozen:"Прогон сдан — панель больше не обновляется",
+    ago:{s:s=>`${s} сек назад`,m:m=>`${m} мин назад`,h:(h,m)=>`${h} ч ${m} мин назад`},
+    agoShort:{s:"сейчас",m:m=>`${m} мин`,h:h=>`${h} ч`},
+    lbDesktop:"Компьютер · 1280",lbPhone:"Телефон · 390",lbPrev:"Предыдущий вариант",lbNext:"Следующий вариант",lbClose:"Закрыть",lbOf:(i,n)=>`${i} из ${n}`,
+    lbLoading:"Превью загружается…",lbMissing:"Файла этого превью нет на сервере — его ещё не положили или переложили",
+    lbDown:"Превью не открылось: сервер панели не отвечает. Подними его командой python3 .aidesign-work/ad.py и открой окно снова",
+    exHead:"Примеры работ",exSub:"Демо-страницы, собранные AI Design: разные стили и приёмы. Кликни, чтобы рассмотреть.",
+    exEmpty:"Примеров пока нет: папки examples/ рядом с панелью нет или в ней пустой INDEX.json. Они копируются при запуске AI Design.",
+    exFile:"Примеры видны только через сервер панели — откройте адрес http://localhost:…/dashboard.html.",
+    exLoading:"Загружаю примеры…",
+    ev:{init:"Прогон начат",
+      stage:{start:n=>`Начат этап «${n}»`,done:n=>`Пройден этап «${n}»`,skip:(n,x)=>`Этап «${n}» пропущен${x ? ': ' + x : ''}`,fail:(n,x)=>`Этап «${n}» не прошёл${x ? ': ' + x : ''}`},
+      ask:e=>`Ждём тебя${e.note ? ': ' + e.note : ''}`,answered:"Ответ получен — работа идёт дальше",
+      ref:e=>e.act === 'note' ? `Референс ${e.n}: описание обновлено` : `Референс ${e.n} добавлен`,
+      theme:e=>e.act === 'set' ? `Тема «${e.title}»: ${(I18N.ru.ts[e.status] || e.status)}` : `Тема интервью: «${e.title}»`,
+      round:e=>({new:`Круг ${e.n} начат`,option:`Круг ${e.n}: вариант ${String(e.id||'').toUpperCase()} готов`,feedback:`Круг ${e.n}: отзыв записан`,
+        choose:e.id === 'none' ? `Круг ${e.n}: ничего не подошло` : `Круг ${e.n}: выбран вариант ${String(e.id||'').toUpperCase()}`,
+        refine:`Круг ${e.n}: доработка варианта ${String(e.id||'').toUpperCase()}`})[e.act] || `Круг ${e.n}`,
+      direction:e=>`Направление: «${e.name}»`,check:e=>`Проверка: находок ${e.findings}, исправлено ${e.fixed}`,
+      add:e=>e.key === 'assumptions' ? `Решено за тебя: +${e.n}` : `В отчёт: +${e.n}`,set:e=>`Изменено: ${e.key}`,
+      backup:e=>`Бэкап «${e.reason || ''}»: ${e.id || ''}`,figma:"Figma подключена к проекту",toolkit:e=>e.n ? `Оснащение: не хватает ${e.n}` : "Оснащение проверено",
+      finish:"Прогон сдан"},
+    boot:"Панель ещё не прочитала состояние",
+    bootWhy:"Состояния нет ни внутри страницы, ни в файле <code>.aidesign-work/state.js</code>: прогон только начался, либо файл помялся.",
+    bootHelp:"Страница проверяет файл каждые десять секунд и покажет данные, как только он появится.",
+    tabWait:"● Ждём ответа"},
+  en:{lang:"en",of:"of",
+    stages:{preflight:"Preflight",refs:"References",interview:"Interview",previews:"Previews",build:"Build",check:"Check",handoff:"Handoff"},
+    modes:{auto:"On its own from the brief",important:"Only what matters",interview:"Interview"},
+    entries:{new:"New site",existing:"Existing site"},
+    questions:{one:"One at a time",rounds:"In rounds"},
+    src:{live:"Live data · local server",file:"Data from file · no server",lost:"Disconnected",snap:"Last snapshot"},
+    tabRun:"Run",tabExamples:"Examples",
+    themeSystem:"System",themeLight:"Light",themeDark:"Dark",langLabel:"Language",themeLabel:"Theme",refresh:"Refresh",workshopLink:" — Telegram channel, new tab",
+    fUpdated:"Last agent record",fStage:"Stage",fMode:"Mode",fEntry:"Entry",fQuestions:"Questions",
+    runData:"Run data",rStarted:"Started",rFinished:"Done",rDir:"Run folder",rSkill:"AI Design version",
+    fileMode:"The panel is opened as a file. Open the http://localhost:…/dashboard.html address the agent gave you: previews are only visible through the server. No address — ask the agent to bring the panel up.",
+    lost:"The panel lost its connection — the screen shows the last state it received. Ask the agent to bring the panel up: the page will pick it up by itself.",
+    stageHead:"Stage",stepOf:(n,m)=>`Step ${n} of ${m}`,
+    runTime:"Working time · without waiting pauses",stageTime:n=>`In “${n}”`,finishedAt:"Done",paused:"paused — the clock is stopped",
+    waitBig:"waiting for you · the clock is stopped",waitNote:"While you think, working time does not run.",
+    stateRun:{preflight:"Preflight",refs:"Reading references",interview:"Interview",previews:"Building previews",build:"Building",check:"Checking",handoff:"Handoff"},
+    h2Run:{preflight:"Setting up the panel and the run folder",refs:"Working out what you like in the references",interview:"Finding out your taste, style and tone",
+      previews:"Building three different first screens",build:"Building the page in the chosen direction",check:"Checking for template look and quality",handoff:"Writing design rules for the next agents"},
+    leadRun:{preflight:"Next — references: images, screenshots or links to sites.",refs:"Each reference gets described: colour, type, layout, mood.",
+      interview:"Questions come to the chat. Answer with a word, a letter or “ok”.",previews:"Three mini pages will appear here. Click any of them to look closer.",
+      build:"Type, colour, grid, motion — following the chosen direction.",check:"The check script plus a look on desktop and phone.",handoff:"Any agent reads DESIGN.md, AISpa included."},
+    waitState:"Waiting for you",
+    waitH2:{refs:"Send references — images, screenshots or links",interview:"Answer the taste questions in the chat",previews:"Look at the previews and say which is closer",
+      action:"Your call is needed before the next step",stop:"The run has stopped — you are needed"},
+    waitHint:"Answer in the chat",
+    failState:"The run has stopped",failH2:n=>`Stage “${n}” failed`,
+    doneState:"Done",doneDefault:"The design is built",doneLead:"Design rules are written down — the next agent continues in the same style.",
+    ahead:"ahead",skipped:"skipped",failedSt:"failed",waitingSt:"waiting for you",
+    round:n=>`Round ${n}`,roundHead:"Current round",roundSub:"Live mini pages of the first screen. Click to enlarge: desktop or phone, arrows switch.",
+    refineOf:(n,id)=>`Refining option ${id.toUpperCase()} from round ${n}`,
+    noRound:"Previews will appear here once the Previews stage starts.",
+    noFile:"Previews are visible only through the panel server",
+    optWait:"option in progress",zoom:"Enlarge",chosen:"Chosen",none:"Nothing fit",noChoice:"No choice",
+    feedback:"Your feedback",historyHead:"Round history",historySub:n=>`${n} past ${en(n,'round','rounds')}`,
+    refsHead:"References",refsEmpty:"No references yet. Images, screenshots and links will show up here.",
+    kinds:{image:"image",screenshot:"screenshot",url:"link",text:"text"},
+    themesHead:"Interview topics",themesOf:(d,n)=>`${d} of ${n} decided`,themesEmpty:"The topic map appears when the interview starts.",
+    ts:{wait:"ahead",asked:"asked",answered:"answered",decided:"decided"},
+    dirHead:"Chosen direction",dirEmpty:"The direction appears after a preview is chosen.",dirFile:"Rules in",
+    checkHead:"Check result",checkEmpty:"The check comes after the build.",checkVal:(f,x)=>f ? `${f} findings, ${x} fixed` : "No findings",
+    checkLeft:n=>`${n} left`,
+    reportHead:"Report",assumptionsHead:"Decided for you",noNotes:"Nothing yet.",
+    bkHead:"Backups",bkEmpty:"No project copies yet. A “before” copy comes before the first file edit.",bkRestore:"Bring it back",
+    bkNote:"Copies live in .aidesign-work/backups/ and are never deleted without your word.",
+    figmaHead:"Figma",figmaModes:{free:"page frames",paid:"file laid out by AI Design"},
+    tkHead:"Toolkit",tkOk:"everything needed is in place",tkMissing:"missing",tkInstalled:"installed",tkSkipped:"going without",
+    feed:"Feed",footer:"The panel only shows progress. Decisions happen in the chat.",updated:"Updated",frozen:"The run is done — the panel no longer updates",
+    ago:{s:s=>`${s}s ago`,m:m=>`${m} min ago`,h:(h,m)=>`${h}h ${m}m ago`},
+    agoShort:{s:"now",m:m=>`${m} min`,h:h=>`${h} h`},
+    lbDesktop:"Desktop · 1280",lbPhone:"Phone · 390",lbPrev:"Previous option",lbNext:"Next option",lbClose:"Close",lbOf:(i,n)=>`${i} of ${n}`,
+    lbLoading:"Loading the preview…",lbMissing:"This preview file is not on the server — it has not been added yet or was moved",
+    lbDown:"The preview did not open: the panel server is not answering. Start it with python3 .aidesign-work/ad.py and open the window again",
+    exHead:"Examples",exSub:"Demo pages built with AI Design: different styles and techniques. Click to look closer.",
+    exEmpty:"No examples yet: there is no examples/ folder next to the panel, or its INDEX.json is empty. They are copied when AI Design starts.",
+    exFile:"Examples are visible only through the panel server — open http://localhost:…/dashboard.html.",
+    exLoading:"Loading examples…",
+    ev:{init:"Run started",
+      stage:{start:n=>`Stage “${n}” started`,done:n=>`Stage “${n}” passed`,skip:(n,x)=>`Stage “${n}” skipped${x ? ': ' + x : ''}`,fail:(n,x)=>`Stage “${n}” failed${x ? ': ' + x : ''}`},
+      ask:e=>`Waiting for you${e.note ? ': ' + e.note : ''}`,answered:"Answer received — work goes on",
+      ref:e=>e.act === 'note' ? `Reference ${e.n}: description updated` : `Reference ${e.n} added`,
+      theme:e=>e.act === 'set' ? `Topic “${e.title}”: ${(I18N.en.ts[e.status] || e.status)}` : `Interview topic: “${e.title}”`,
+      round:e=>({new:`Round ${e.n} started`,option:`Round ${e.n}: option ${String(e.id||'').toUpperCase()} ready`,feedback:`Round ${e.n}: feedback recorded`,
+        choose:e.id === 'none' ? `Round ${e.n}: nothing fit` : `Round ${e.n}: option ${String(e.id||'').toUpperCase()} chosen`,
+        refine:`Round ${e.n}: refining option ${String(e.id||'').toUpperCase()}`})[e.act] || `Round ${e.n}`,
+      direction:e=>`Direction: “${e.name}”`,check:e=>`Check: ${e.findings} findings, ${e.fixed} fixed`,
+      add:e=>e.key === 'assumptions' ? `Decided for you: +${e.n}` : `For the report: +${e.n}`,set:e=>`Changed: ${e.key}`,
+      backup:e=>`Backup “${e.reason || ''}”: ${e.id || ''}`,figma:"Figma linked to the project",toolkit:e=>e.n ? `Toolkit: ${e.n} missing` : "Toolkit checked",
+      finish:"Run done"},
+    boot:"The panel has no state yet",
+    bootWhy:"No state either inside the page or in <code>.aidesign-work/state.js</code>: the run has just started, or the file got mangled.",
+    bootHelp:"The page rechecks the file every ten seconds and will render as soon as it appears.",
+    tabWait:"● Waiting for you"}
+};
+
+let CUR = I18N.ru;
+let pollT = null, pulling = false, misses = 0, lastStamp = null, booted = false;
+const UI = {tab: 'run', open: {}};
+const SERVED = /^https?:$/.test(location.protocol);
+
+/*TIME-BEGIN*/
+// Время работы, а не календарь: промежуток между соседними метками длиннее порога —
+// простой; ожидание ответа человека (waits, waiting) вычитается целиком.
+const IDLE_CAP_MS = 2700000;
+let MARKS = [];
+let WAITS = [];
+const toMs = v => { const t = v ? new Date(v).getTime() : NaN; return isNaN(t) ? null : t; };
+const spanMs = (from, to) => {
+  const a = toMs(from);
+  if (a == null) return null;
+  const b = to ? toMs(to) : Date.now();
+  return Math.max(0, (b == null ? Date.now() : b) - a);
+};
+function rememberBeats(S){
+  const key = 'aidesign-beats:' + (S.slug || '') + ':' + (S.startedAt || '');
+  try {
+    const seen = JSON.parse(localStorage.getItem(key) || '[]');
+    if (S.updatedAt && seen.indexOf(S.updatedAt) === -1) {
+      seen.push(S.updatedAt);
+      localStorage.setItem(key, JSON.stringify(seen.slice(-600)));
+    }
+    return seen;
+  } catch (e) { return []; }
+}
+function collectMarks(S){
+  const out = [];
+  const push = v => { const t = toMs(v); if (t != null) out.push(t); };
+  push(S.startedAt); push(S.updatedAt); push(S.finishedAt);
+  (S.beats || []).forEach(push);
+  rememberBeats(S).forEach(push);
+  (S.stages || []).forEach(x => { push(x.startedAt); push(x.finishedAt); });
+  (S.waits || []).forEach(x => { push(x.from); push(x.to); });
+  return Array.from(new Set(out)).sort((a, b) => a - b);
+}
+function collectWaits(S){
+  const out = [];
+  (S.waits || []).forEach(w => {
+    const a = toMs(w.from), b = toMs(w.to);
+    if (a != null && b != null && b > a) out.push([a, b]);
+  });
+  if (S.waiting && !S.finishedAt) {
+    const a = toMs(S.waiting.since);
+    if (a != null) out.push([a, null]);
+  }
+  return out;
+}
+function waitedIn(a, b){
+  let s = 0;
+  WAITS.forEach(([x, y]) => {
+    const hi = Math.min(b, y == null ? Date.now() : y), lo = Math.max(a, x);
+    if (hi > lo) s += hi - lo;
+  });
+  return s;
+}
+function activeMs(from, to){
+  const a = toMs(from);
+  if (a == null) return null;
+  const b = (to && toMs(to)) || Date.now();
+  if (b <= a) return 0;
+  const pts = [a].concat(MARKS.filter(t => t > a && t < b), [b]);
+  let s = 0;
+  for (let i = 1; i < pts.length; i++) {
+    const gap = pts[i] - pts[i-1] - waitedIn(pts[i-1], pts[i]);
+    s += Math.min(Math.max(0, gap), IDLE_CAP_MS);
+  }
+  return s;
+}
+/*TIME-END*/
+
+function idleNow(){
+  const S = window.STATE || {};
+  if (!S || S.finishedAt || S.waiting) return false;
+  const last = MARKS.length ? MARKS[MARKS.length - 1] : null;
+  return last != null && Date.now() - last > IDLE_CAP_MS;
+}
+const fmtClock = ms => {
+  if (ms == null) return '—';
+  const s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60;
+  const p = n => String(n).padStart(2,'0');
+  return h ? `${h}:${p(m)}:${p(ss)}` : `${m}:${p(ss)}`;
+};
+const hhmm = iso => { const t = toMs(iso); if (t == null) return ''; const d = new Date(t);
+  return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); };
+function timerHTML(from, to){
+  const ms = activeMs(from, to);
+  if (ms == null) return '—';
+  return to ? fmtClock(ms) : `<span data-live data-from="${esc(from)}">${fmtClock(ms)}</span>`;
+}
+function agoText(iso){
+  const ms = spanMs(iso, null);
+  if (ms == null) return '—';
+  const s = Math.floor(ms/1000);
+  if (s < 60) return CUR.ago.s(s);
+  const m = Math.floor(s/60);
+  return m < 60 ? CUR.ago.m(m) : CUR.ago.h(Math.floor(m/60), m%60);
+}
+function agoShort(iso){
+  const ms = spanMs(iso, null);
+  if (ms == null) return '';
+  const m = Math.floor(ms/60000);
+  return m < 1 ? CUR.agoShort.s : m < 60 ? CUR.agoShort.m(m) : CUR.agoShort.h(Math.floor(m/60));
+}
+function tick(){
+  const stopped = idleNow();
+  document.querySelectorAll('[data-live][data-from]').forEach(el => { el.textContent = fmtClock(activeMs(el.dataset.from, null)); });
+  document.querySelectorAll('[data-since]').forEach(el => { el.textContent = fmtClock(spanMs(el.dataset.since, null)); });
+  document.querySelectorAll('[data-idle-note]').forEach(el => { el.hidden = !stopped; });
+  document.querySelectorAll('[data-ago]').forEach(el => {
+    el.textContent = agoText(el.dataset.ago);
+    const S = window.STATE || {};
+    el.classList.toggle('stale', !S.finishedAt && !S.waiting && (spanMs(el.dataset.ago, null) || 0) > 300000);
+  });
+  document.querySelectorAll('[data-ago-short]').forEach(el => { el.textContent = agoShort(el.dataset.agoShort); });
+}
+
+// ——— автообновление: state.js подгружается отдельным тегом, без перезагрузки ———
+const stampOf = S => (S.rev || '') + '|' + (S.updatedAt || '') + '|' + (S.finishedAt || '');
+function applyState(){
+  const S = window.STATE;
+  if (!S || typeof S !== 'object') return;
+  const stamp = stampOf(S);
+  if (stamp === lastStamp) return;
+  lastStamp = stamp;
+  const y = window.scrollY;
+  try { render(CUR.lang); } catch (e) { lastStamp = ''; bootFail(esc(String(e && e.message || e))); }
+  window.scrollTo(0, y);
+}
+function showLink(){
+  const el = document.getElementById('link');
+  if (!el) return;
+  const lost = SERVED && misses >= 2 && !(window.STATE && window.STATE.finishedAt);
+  el.hidden = !lost;
+  el.parentNode.hidden = !lost;
+  if (lost) el.textContent = CUR.lost;
+  const k = sourceKind();
+  document.querySelectorAll('[data-source]').forEach(s => {
+    s.className = 'source s-' + k;
+    const t = s.querySelector('[data-source-label]');
+    if (t) t.textContent = CUR.src[k];
+  });
+}
+function sourceKind(){
+  const fin = window.STATE && window.STATE.finishedAt;
+  if (SERVED) return misses >= 2 && !fin ? 'lost' : 'live';
+  if (location.protocol === 'file:') return misses >= 2 ? 'snap' : 'file';
+  return 'snap';
+}
+function pullState(done){
+  if (pulling) return;
+  pulling = true;
+  const s = document.createElement('script');
+  s.src = 'state.js?t=' + Date.now();
+  const end = ok => {
+    s.remove();
+    pulling = false;
+    misses = ok ? 0 : misses + 1;
+    if (ok) applyState();
+    showLink();
+    if (done) done(ok);
+  };
+  s.onload = () => end(true);
+  s.onerror = () => end(false);
+  document.head.appendChild(s);
+}
+function pollState(){
+  clearTimeout(pollT);
+  if (window.STATE && window.STATE.finishedAt) return;
+  pollT = setTimeout(() => pullState(pollState), POLL_MS);
+}
+function refreshNow(btn){
+  clearTimeout(pollT);
+  if (btn) btn.classList.add('busy');
+  const started = Date.now();
+  pullState(ok => {
+    if (!ok && btn) misses = Math.max(misses, 2);
+    showLink();
+    setTimeout(() => document.querySelectorAll('[data-refresh]').forEach(b => b.classList.remove('busy')),
+      Math.max(0, 500 - (Date.now() - started)));
+    pollState();
+  });
+}
+
+// ——— превью: адреса и уменьшенные живые страницы ———
+// Превью лежат в папке прогона: панель грузит их через тот же сервер как <dir>/<src>.
+const runUrl = (S, p) => {
+  const s = String(p || '');
+  if (/^(https?:)?\/\//i.test(s) || s.startsWith('/')) return s;
+  return (S.dir ? S.dir.split('/').map(encodeURIComponent).join('/') + '/' : '') + s.split('/').map(encodeURIComponent).join('/');
+};
+// Карточка-превью: кнопка увеличения, внутри iframe 1280×800, уменьшенный под ширину карточки.
+function pvButton(item, key, idx, label){
+  const inner = !item.src ? `<div class="ph">${esc(CUR.optWait)}</div>`
+    : !SERVED ? `<div class="ph">${esc(CUR.noFile)}</div>`
+    : `<iframe src="${esc(item.src)}" title="${esc(item.title || '')}" loading="lazy" tabindex="-1" aria-hidden="true" sandbox="allow-scripts"></iframe>`;
+  return `<button type="button" class="pvbtn" data-lb="${esc(key)}" data-i="${idx}" aria-label="${esc(CUR.zoom + ': ' + (label ? label + ' — ' : '') + (item.title || ''))}">
+    <div class="frame" data-fit>${inner}</div>${label ? `<span class="pvid" aria-hidden="true">${esc(label)}</span>` : ''}<span class="zoom" aria-hidden="true">${esc(CUR.zoom)}</span></button>`;
+}
+function fitFrames(){
+  document.querySelectorAll('#app [data-fit]').forEach(box => {
+    const f = box.querySelector('iframe');
+    if (f && box.clientWidth) f.style.transform = `scale(${box.clientWidth / BASE_W})`;
+  });
+}
+// Наборы для лайтбокса: ключ → список {src, title, note, label, img}. Собираются в render().
+let SETS = {};
+
+function render(lang){
+  const L = I18N[lang] || I18N.ru;
+  CUR = L;
+  const S = STATE;
+  MARKS = collectMarks(S);
+  WAITS = collectWaits(S);
+  SETS = {};
+  const fin = !!S.finishedAt;
+  const waiting = !fin && S.waiting ? S.waiting : null;
+  const given = Array.isArray(S.stages) ? S.stages.filter(Boolean) : [];
+  const stages = STAGE_IDS.map(id => given.find(s => s.id === id) || {id, status:'pending'});
+  const stName = s => L.stages[s.id] || s.id;
+  const activeStage = stages.find(s => s.status === 'active');
+  const failedStage = stages.find(s => s.status === 'failed');
+  const locale = L.lang === 'en' ? 'en-GB' : 'ru-RU';
+  const stamp = iso => { const t = toMs(iso); return t == null ? '—'
+    : new Date(t).toLocaleString(locale, {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'}); };
+
+  // ——— шапка ———
+  let heroCls = '', stateLine, h2, lead = '', hint = '';
+  if (fin) {
+    heroCls = 'won';
+    stateLine = `<span class="badge-ic">${ic('check','xs')}</span>${L.doneState}`;
+    h2 = esc(S.result || L.doneDefault);
+    lead = L.doneLead;
+  } else if (waiting) {
+    heroCls = 'ask';
+    stateLine = `<span class="live" aria-hidden="true"></span>${L.waitState}`;
+    h2 = L.waitH2[waiting.kind] || L.waitState;
+    lead = waiting.note ? esc(waiting.note) : '';
+    hint = `<span class="hint">${ic('msg','m')}${L.waitHint}</span>`;
+  } else if (failedStage) {
+    heroCls = 'bad';
+    stateLine = `<span class="badge-ic">${ic('x','xs')}</span>${L.failState}`;
+    h2 = L.failH2(stName(failedStage));
+    lead = esc(failedStage.note || '');
+  } else {
+    const cur = activeStage || stages.find(s => s.status === 'pending') || stages[stages.length - 1];
+    stateLine = `<span class="live" aria-hidden="true"></span>${L.stateRun[cur.id] || stName(cur)}`;
+    h2 = L.h2Run[cur.id] || stName(cur);
+    lead = cur.note ? esc(cur.note) : (L.leadRun[cur.id] || '');
+  }
+  const curStage = activeStage || failedStage || (fin ? null : stages.find(s => s.status === 'pending'));
+  const facts = [
+    [L.fUpdated, S.updatedAt ? stamp(S.updatedAt) : '—'],
+    [L.fStage, fin ? L.doneState : curStage ? esc(stName(curStage)) : '—'],
+    S.mode ? [L.fMode, esc(L.modes[S.mode] || S.mode)] : null,
+    S.entry ? [L.fEntry, esc(L.entries[S.entry] || S.entry)] : null,
+    S.questions ? [L.fQuestions, esc(L.questions[S.questions] || S.questions)] : null,
+  ].filter(Boolean).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+  const runRows = [
+    S.startedAt ? [L.rStarted, esc(stamp(S.startedAt))] : null,
+    S.finishedAt ? [L.rFinished, esc(stamp(S.finishedAt))] : null,
+    (S.dir || S.slug) ? [L.rDir, `<code>.aidesign-work/${esc(S.dir || S.slug)}/</code>`] : null,
+    S.skillVersion ? [L.rSkill, esc(S.skillVersion)] : null,
+  ].filter(Boolean);
+  const hero = `<section class="hero ${heroCls} w" aria-live="polite">
+    <div class="hero-top"><p class="hwt">AI Design · ${esc(S.title || '')}</p><div class="state">${stateLine}</div></div>
+    <div><h2>${h2}</h2>${lead ? `<p class="lead">${lead}</p>` : ''}${hint}</div>
+    <dl class="facts">${facts}</dl>
+    ${runRows.length ? `<details class="runctx" data-key="run"${UI.open.run ? ' open' : ''}><summary>${L.runData}</summary>
+      <dl class="rkv">${runRows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl></details>` : ''}
+  </section>`;
+
+  // ——— этапы; строка «Оснащение» — итог setup.py doctor на Подготовке ———
+  const TK = toolkitParts(S.toolkit);
+  const tkLine = TK ? `<p class="muted" style="margin-top:12px"><b>${L.tkHead}:</b> ${[
+      TK.missing.length ? `${L.tkMissing} — ${esc(TK.missing.join(', '))}` : '',
+      TK.installed.length ? `${L.tkInstalled} — ${esc(TK.installed.join(', '))}` : '',
+      TK.skipped.length ? `${L.tkSkipped} — ${esc(TK.skipped.join(', '))}` : ''].filter(Boolean).join(' · ') || L.tkOk}</p>` : '';
+  const idx = fin ? stages.length - 1 : Math.max(0, stages.indexOf(curStage));
+  const stageCard = `<section class="card stgc w"><div class="rowh"><h3 class="sh">${L.stageHead}</h3>
+      <span>${L.stepOf(idx + 1, stages.length)} · ${esc(stName(stages[idx]))}</span></div>
+    <div class="stgs" role="list">${stages.map((s, i) => {
+      let cls = '', time = '';
+      if (s.status === 'done') { cls = 'past'; time = s.startedAt ? timerHTML(s.startedAt, s.finishedAt) : ''; }
+      else if (s.status === 'active') { cls = 'cur'; time = waiting ? L.waitingSt : (s.startedAt ? timerHTML(s.startedAt, null) : ''); }
+      else if (s.status === 'failed') { cls = 'fail'; time = L.failedSt; }
+      else if (s.status === 'skipped') { cls = 'skip'; time = L.skipped; }
+      return `<div class="stg ${cls}" role="listitem"><i></i><div><small>${String(i + 1).padStart(2, '0')}</small><b>${esc(stName(s))}</b></div>${
+        time ? `<span class="s-time">${time}</span>` : ''}</div>`;
+    }).join('')}</div>${tkLine}</section>`;
+
+  // ——— время ———
+  let rLbl = '', rVal = '', rNote = '';
+  if (fin) { rLbl = L.finishedAt; rVal = `<b class="tbig">${esc(stamp(S.finishedAt))}</b>`; }
+  else if (waiting) { rLbl = L.waitBig; rVal = `<b class="tbig"><span data-since="${esc(waiting.since)}">${fmtClock(spanMs(waiting.since, null))}</span></b>`; rNote = L.waitNote; }
+  else if (activeStage && activeStage.startedAt) { rLbl = L.stageTime(stName(activeStage)); rVal = `<b class="tbig">${timerHTML(activeStage.startedAt, null)}</b>`; }
+  const timeCard = `<section class="card timec w">
+    <div class="tcol"><span class="tlb">${L.runTime}</span><b class="tbig">${S.startedAt ? timerHTML(S.startedAt, S.finishedAt) : '—'}</b>
+      <span class="tnote paused" data-idle-note hidden>${L.paused}</span></div>
+    ${rLbl ? `<div class="tcol"><span class="tlb">${rLbl}</span>${rVal}${rNote ? `<span class="tnote">${rNote}</span>` : ''}</div>` : ''}
+  </section>`;
+
+  // ——— круги превью ———
+  const rounds = Array.isArray(S.rounds) ? S.rounds : [];
+  const optItems = r => (r.options || []).map(o => ({src: o.src ? runUrl(S, o.src) : '', title: o.title, note: o.note,
+    label: String(o.id || '').toUpperCase(), sub: L.round(r.n)}));
+  const choicePill = r => r.chosen === 'none' ? `<span class="pill p-fix">${L.none}</span>`
+    : r.chosen ? `<span class="pill p-done">${ic('check','xs')}${L.chosen}: ${esc(String(r.chosen).toUpperCase())}</span>` : '';
+  const cr = rounds[rounds.length - 1];
+  let roundCard;
+  if (cr) {
+    const items = optItems(cr), key = 'r' + cr.n;
+    SETS[key] = items;
+    const slots = ['a','b','c'].map(id => (cr.options || []).find(o => o.id === id) ? null : id)
+      .filter(Boolean).filter(() => !cr.refinedFrom);
+    roundCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.roundHead}</h3>${choicePill(cr)}</div>
+      <h3 class="bh">${L.round(cr.n)}</h3><p class="bsub">${cr.refinedFrom ? esc(L.refineOf(cr.refinedFrom.round, String(cr.refinedFrom.id || ''))) + '. ' : ''}${L.roundSub}</p>
+      <div class="pvgrid">${(cr.options || []).map((o, i) => `<div class="pv${cr.chosen === o.id ? ' chosen' : ''}">${pvButton(items[i], key, i, items[i].label)}
+        <h4>${esc(o.title || '')}</h4>${o.note ? `<p>${esc(o.note)}</p>` : ''}</div>`).join('')}${
+        slots.map(id => `<div class="pv"><div class="pvbtn" style="cursor:default"><div class="frame"><div class="ph">${esc(id.toUpperCase())} · ${L.optWait}</div></div></div></div>`).join('')}</div>
+      ${cr.feedback ? `<p class="quote"><small>${L.feedback}</small>${esc(cr.feedback)}</p>` : ''}</section>`;
+  } else {
+    roundCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.roundHead}</h3></div>
+      <div class="empty">${ic('eye','m')}<span>${L.noRound}</span></div></section>`;
+  }
+  const past = rounds.slice(0, -1).reverse();
+  const historyCard = past.length ? `<section class="card w"><div class="whead"><h3 class="wt">${L.historyHead}</h3><span>${L.historySub(past.length)}</span></div>
+    ${past.map(r => { const items = optItems(r), key = 'r' + r.n; SETS[key] = items;
+      return `<div class="rnd"><div class="rnd-h"><b>${L.round(r.n)}${r.refinedFrom ? ` · <span class="muted">${esc(L.refineOf(r.refinedFrom.round, String(r.refinedFrom.id || '')))}</span>` : ''}</b>${
+        choicePill(r) || `<span class="pill p-mut">${L.noChoice}</span>`}</div>
+        <div class="mini">${(r.options || []).map((o, i) => `<div class="pv${r.chosen === o.id ? ' chosen' : ''}">${pvButton(items[i], key, i, items[i].label)}</div>`).join('')}</div>
+        ${r.feedback ? `<p class="quote"><small>${L.feedback}</small>${esc(r.feedback)}</p>` : ''}</div>`; }).join('')}</section>` : '';
+
+  // ——— референсы ———
+  const refs = Array.isArray(S.refs) ? S.refs : [];
+  const refImgs = [];
+  const refCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.refsHead}</h3>${refs.length ? `<span>${refs.length}</span>` : ''}</div>
+    ${refs.length ? `<div class="refs">${refs.map((r, i) => {
+      const n = `<span class="mono">${i + 1} · ${esc(L.kinds[r.kind] || r.kind)}</span>`;
+      const note = r.note ? `<p>${esc(r.note)}</p>` : '';
+      if ((r.kind === 'image' || r.kind === 'screenshot') && SERVED && r.path && !/^\//.test(r.path)) {
+        const src = runUrl(S, r.path), j = refImgs.length;
+        refImgs.push({src, img: true, title: r.note || r.path, label: String(i + 1), sub: L.refsHead});
+        return `<div class="ref"><button type="button" class="thumb" data-lb="refs" data-i="${j}" aria-label="${esc(CUR.zoom + ': ' + (r.note || r.path))}"><img src="${esc(src)}" alt="${esc(r.note || '')}" loading="lazy"></button>${n}${note}</div>`;
+      }
+      if (r.kind === 'url' && httpHref(r.path)) {
+        let host = r.path; try { host = new URL(r.path).host; } catch(e) {}
+        return `<div class="ref"><div class="box">${ic('eye')}<a href="${esc(httpHref(r.path))}" target="_blank" rel="noopener noreferrer">${esc(host)}</a></div>${n}${note}</div>`;
+      }
+      return `<div class="ref"><div class="box">${r.kind === 'text' ? '' : ic('image')}<span>${esc(r.path || '')}</span></div>${n}${note}</div>`;
+    }).join('')}</div>` : `<div class="empty">${ic('image','m')}<span>${L.refsEmpty}</span></div>`}</section>`;
+  SETS.refs = refImgs;
+
+  // ——— темы интервью ———
+  const themes = Array.isArray(S.themes) ? S.themes : [];
+  const TP = {wait:'p-mut', asked:'p-now', answered:'p-done', decided:'p-done'};
+  const decided = themes.filter(themeDone).length;
+  const themesCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.themesHead}</h3>${themes.length ? `<span>${L.themesOf(decided, themes.length)}</span>` : ''}</div>
+    ${themes.length ? `<div class="tlist">${themes.map(t => `<div class="trow"><span>${esc(t.title || t.id)}</span><span class="pill ${TP[t.status] || 'p-mut'}">${
+      themeDone(t) ? ic('check','xs') : ''}${esc(L.ts[t.status] || t.status)}</span></div>`).join('')}</div>` : `<p class="muted">${L.themesEmpty}</p>`}</section>`;
+
+  // ——— направление и проверка ———
+  const D = S.direction;
+  const F = S.figma && httpHref(S.figma.url) ? S.figma : null;
+  const figmaLine = F ? `<p class="muted" style="margin-top:10px">${L.figmaHead}: <a href="${esc(httpHref(S.figma.url))}" target="_blank" rel="noopener noreferrer">${
+    esc(L.figmaModes[F.mode] || F.mode || '')}</a></p>` : '';
+  const dirCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.dirHead}</h3></div>${D
+    ? `<p class="dir">${esc(D.name)}</p><p class="muted">${esc(D.summary || '')}</p>${D.file ? `<p class="muted" style="margin-top:10px">${L.dirFile} <code>${esc(D.file)}</code></p>` : ''}`
+    : `<p class="muted">${L.dirEmpty}</p>`}${figmaLine}</section>`;
+  const C = S.check;
+  const left = C ? Math.max(0, (+C.findings || 0) - (+C.fixed || 0)) : 0;
+  const checkCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.checkHead}</h3>${C ? `<span class="pill ${left ? 'p-fix' : 'p-done'}">${left ? L.checkLeft(left) : ic('check','xs') + ' ' + esc(L.checkVal(0, 0))}</span>` : ''}</div>${C
+    ? `<p class="big">${esc(C.fixed)}<small>${L.of} ${esc(C.findings)}</small></p><p class="muted" style="margin-top:10px">${esc(L.checkVal(+C.findings || 0, +C.fixed || 0))}</p>`
+    : `<p class="muted">${L.checkEmpty}</p>`}</section>`;
+  const backups = Array.isArray(S.backups) ? S.backups.filter(Boolean) : [];
+  const backupsCard = `<section class="card w"><div class="whead"><h3 class="wt">${L.bkHead}</h3>${backups.length ? `<span>${backups.length}</span>` : ''}</div>${
+    backups.length ? `<ol class="nl">${backups.slice().reverse().map(b => `<li><b>${esc(b.reason || '')}</b> · ${esc(fmtBytes(b.bytes))}${
+      b.at ? ' · ' + esc(stamp(b.at)) : ''}<br><span class="muted">${L.bkRestore}:</span> <code>${esc(restoreCmd(b.id))}</code></li>`).join('')}</ol>
+    <p class="muted" style="margin-top:10px">${L.bkNote}</p>` : `<p class="muted">${L.bkEmpty}</p>`}</section>`;
+  const report = S.report || [], asm = S.assumptions || [];
+  const notesCard = (report.length || asm.length) ? `<section class="card w">
+    ${asm.length ? `<div class="whead"><h3 class="wt">${L.assumptionsHead}</h3><span>${asm.length}</span></div><ol class="nl">${asm.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : ''}
+    ${report.length ? `<div class="whead" style="margin-top:${asm.length ? 18 : 0}px"><h3 class="wt">${L.reportHead}</h3><span>${report.length}</span></div><ol class="nl">${report.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : ''}
+  </section>` : '';
+
+  // ——— лента ———
+  const evText = e => {
+    const V = L.ev;
+    if (e.k === 'stage') return (V.stage[e.act] || V.stage.start)(L.stages[e.id] || e.id, e.note);
+    if (typeof V[e.k] === 'function') return V[e.k](e);
+    return typeof V[e.k] === 'string' ? V[e.k] : null;
+  };
+  const evTone = e => e.k === 'finish' ? ['f-done','flag'] : e.k === 'ask' ? ['f-now','msg'] : e.k === 'answered' ? ['','msg']
+    : e.k === 'stage' ? ({done:['f-done','check'], fail:['f-bad','x'], skip:['','chev']}[e.act] || ['','play'])
+    : e.k === 'round' ? (e.act === 'choose' ? ['f-done','check'] : ['','eye']) : e.k === 'ref' ? ['','image']
+    : e.k === 'check' ? [e.findings > e.fixed ? 'f-now' : 'f-done', 'check'] : ['','plus'];
+  const feedRows = (S.log || []).slice().reverse().map(e => {
+    let text = null;
+    try { text = evText(e); } catch (err) { text = null; }
+    if (!text) return '';
+    const [cls, icon] = evTone(e);
+    return `<div class="ev"><span class="ei ${cls}">${ic(icon,'xs')}</span><span>${esc(text)}</span>${
+      fin ? `<em>${hhmm(e.t)}</em>` : `<em data-ago-short="${esc(e.t)}">${agoShort(e.t)}</em>`}</div>`;
+  }).filter(Boolean);
+  const histCard = feedRows.length ? `<details class="card hist w" data-key="hist"${UI.open.hist ? ' open' : ''}>
+    <summary><h3>${L.feed}</h3><span>${feedRows.length}</span></summary><div>${feedRows.join('')}</div></details>` : '';
+
+  // ——— раскладка ———
+  const theme = storedTheme() || 'system';
+  const opt = (v, t, cur) => `<option value="${v}"${v === cur ? ' selected' : ''}>${t}</option>`;
+  const tabs = `<div class="chips" role="group" aria-label="${L.tabRun} / ${L.tabExamples}">
+    <button type="button" class="chip" data-tab="run" aria-pressed="${UI.tab === 'run'}">${L.tabRun}</button>
+    <button type="button" class="chip" data-tab="examples" aria-pressed="${UI.tab === 'examples'}">${L.tabExamples}</button></div>`;
+  const fileNote = SERVED ? '' : `<div class="notice" role="status">${L.fileMode}</div>`;
+  const runBody = [hero, stageCard, timeCard, roundCard, historyCard,
+    `<div class="pair">${refCard}${themesCard}</div>`, `<div class="pair">${dirCard}${checkCard}</div>`, backupsCard, notesCard, histCard];
+  const app = document.getElementById('app');
+  document.documentElement.lang = L.lang;
+  app.innerHTML = `
+  <header class="top">
+    <div class="brand-row">${BRAND(L.workshopLink)}${S.skillVersion ? `<span class="vpill">${esc(S.skillVersion)}</span>` : ''}</div>
+    <div class="tools">
+      <div class="source" data-source><span class="sdot" aria-hidden="true"></span><span data-source-label></span></div>
+      <label><span class="sr-only">${L.langLabel}</span><select class="pref" data-pref="lang" aria-label="${L.langLabel}">${opt('ru', 'RU', L.lang)}${opt('en', 'EN', L.lang)}</select></label>
+      <label><span class="sr-only">${L.themeLabel}</span><select class="pref" data-pref="theme" aria-label="${L.themeLabel}">${
+        opt('system', L.themeSystem, theme)}${opt('light', L.themeLight, theme)}${opt('dark', L.themeDark, theme)}</select></label>
+      <button type="button" class="btn" data-refresh><span>${L.refresh}</span> <span class="arr" aria-hidden="true">→</span></button>
+    </div>
+  </header>
+  ${fileNote}
+  ${tabs}
+  ${UI.tab === 'examples' ? examplesCard(L) : runBody.filter(Boolean).join('\n')}
+  <footer>
+    <span>${L.footer}</span>
+    <span>${fin ? L.frozen : `${L.updated}: <span data-ago="${esc(S.updatedAt || '')}">${S.updatedAt ? agoText(S.updatedAt) : '—'}</span>`}</span>
+  </footer>`;
+  document.title = (waiting ? L.tabWait + ' — ' : '') + (S.title ? `${S.title} — AI Design` : 'AI Design');
+  if (!booted) {
+    booted = true;
+    app.classList.add('boot');
+    setTimeout(() => app.classList.remove('boot'), 1400);
+  }
+  fitFrames();
+  tick();
+  showLink();
+  // Открытый лайтбокс не перезагружаем на каждом событии: превью внутри живое.
+  if (LB.open && !lbItems().length) lbClose();
+  if (!pulling) pollState();
+}
+
+// ——— вкладка «Примеры работ»: examples/INDEX.json через сервер ———
+let EXAMPLES = null;          // null — не грузили, 'loading', [] — пусто, [..] — есть
+function loadExamples(){
+  if (!SERVED || EXAMPLES === 'loading') return;
+  EXAMPLES = 'loading';
+  fetch('examples/INDEX.json?t=' + Date.now(), {cache: 'no-store'})
+    .then(r => r.ok ? r.json() : [])
+    .then(d => { EXAMPLES = Array.isArray(d) ? d.filter(x => x && typeof x === 'object') : []; })
+    .catch(() => { EXAMPLES = []; })
+    .then(() => { if (UI.tab === 'examples') render(CUR.lang); });
+}
+const exSrc = x => {
+  const f = String(x.file || (x.id ? x.id + '/index.html' : ''));
+  if (!f) return '';
+  const p = f.startsWith('examples/') ? f : 'examples/' + f;
+  return p.split('/').map(encodeURIComponent).join('/');
+};
+function examplesCard(L){
+  const head = `<div class="whead"><h3 class="wt">${L.exHead}</h3>${Array.isArray(EXAMPLES) && EXAMPLES.length ? `<span>${EXAMPLES.length}</span>` : ''}</div><p class="bsub">${L.exSub}</p>`;
+  if (!SERVED) return `<section class="card w">${head}<div class="empty" style="margin-top:18px">${ic('alert','m')}<span>${L.exFile}</span></div></section>`;
+  if (EXAMPLES === null) loadExamples();
+  if (!Array.isArray(EXAMPLES)) return `<section class="card w">${head}<p class="muted" style="margin-top:18px">${L.exLoading}</p></section>`;
+  if (!EXAMPLES.length) return `<section class="card w">${head}<div class="empty" style="margin-top:18px">${ic('image','m')}<span>${L.exEmpty}</span></div></section>`;
+  const items = EXAMPLES.map(x => ({src: exSrc(x), title: x.title || x.id || '', note: [x.style].concat(x.techniques || []).filter(Boolean).join(' · '),
+    label: '', sub: L.exHead}));
+  SETS.ex = items;
+  return `<section class="card w">${head}<div class="pvgrid">${EXAMPLES.map((x, i) => `<div class="pv">${pvButton(items[i], 'ex', i, '')}
+    <h4>${esc(x.title || x.id || '')}</h4>${x.style ? `<p>${esc(x.style)}</p>` : ''}${(x.techniques || []).length
+      ? `<div class="tags">${x.techniques.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}</div>`).join('')}</div></section>`;
+}
+
+// ——— лайтбокс: клик по превью → весь экран, 1280/390, Esc, ← → ———
+const LB = {open: false, key: null, i: 0, w: BASE_W, back: null};
+function lbItems(){ return SETS[LB.key] || []; }
+function lbOpen(key, i, from){
+  if (!(SETS[key] || []).length) return;
+  LB.open = true; LB.key = key; LB.i = i; LB.back = from || document.activeElement;
+  lbShow();
+  const c = document.querySelector('#lb .close');
+  if (c) c.focus();
+}
+function lbClose(){
+  const el = document.getElementById('lb');
+  LB.open = false;
+  el.hidden = true;
+  el.innerHTML = '';
+  document.body.style.overflow = '';
+  const back = LB.back && document.contains(LB.back) ? LB.back
+    : document.querySelector(`#app [data-lb="${LB.key}"][data-i="${LB.i}"]`);
+  if (back) back.focus();
+}
+function lbGo(d){
+  const n = lbItems().length;
+  if (n < 2) return;
+  LB.i = (LB.i + d + n) % n;
+  lbShow();
+}
+function lbShow(){
+  const L = CUR, items = lbItems(), el = document.getElementById('lb');
+  if (!items.length) { lbClose(); return; }
+  LB.i = Math.min(LB.i, items.length - 1);
+  const it = items[LB.i], many = items.length > 1;
+  const keepFocus = el.contains(document.activeElement) ? document.activeElement.dataset.lbAct : null;
+  const body = !it.src ? `<div class="lb-note">${esc(L.optWait)}</div>`
+    : it.img ? `<img src="${esc(it.src)}" alt="${esc(it.title || '')}">`
+    : !SERVED ? `<div class="lb-note">${esc(L.noFile)}</div>`
+    : `<div class="lb-wait" role="status">${esc(L.lbLoading)}</div><iframe src="${esc(it.src)}" title="${esc(it.title || '')}" sandbox="allow-scripts"></iframe>`;
+  el.innerHTML = `<div class="lb-bar">
+      <p class="lb-title" id="lb-title"><small>${esc(it.sub || '')}${many ? ' · ' + L.lbOf(LB.i + 1, items.length) : ''}</small>${it.label ? esc(it.label) + ' — ' : ''}${esc(it.title || '')}</p>
+      ${it.img ? '' : `<div class="seg" role="group" aria-label="${L.lbDesktop} / ${L.lbPhone}">
+        <button type="button" data-lb-act="w1280" aria-pressed="${LB.w === BASE_W}">${L.lbDesktop}</button>
+        <button type="button" data-lb-act="w390" aria-pressed="${LB.w === PHONE_W}">${L.lbPhone}</button></div>`}
+      <button type="button" class="nav" data-lb-act="prev" aria-label="${L.lbPrev}"${many ? '' : ' disabled'}>${ic('left')}</button>
+      <button type="button" class="nav" data-lb-act="next" aria-label="${L.lbNext}"${many ? '' : ' disabled'}>${ic('chev')}</button>
+      <button type="button" class="close" data-lb-act="close" aria-label="${L.lbClose}">${ic('x')}<span>${L.lbClose}</span></button>
+    </div>
+    <div class="lb-stage"><div class="lb-box">${body}</div></div>
+    ${it.note ? `<div class="lb-note">${esc(it.note)}</div>` : ''}`;
+  el.hidden = false;
+  document.body.style.overflow = 'hidden';
+  lbFit();
+  lbWatch(el, it.src);
+  // Превью в песочнице без allow-same-origin: его скрипты не дотянутся до панели,
+  // а панель — до его окна. Esc и стрелки работают, пока фокус не внутри превью.
+  if (keepFocus) { const b = el.querySelector(`[data-lb-act="${keepFocus}"]`); if (b) b.focus(); }
+}
+// Пока превью грузится, белая рамка выглядела пустой, а погасший сервер или пропавший файл
+// оставляли её пустой навсегда. Теперь до загрузки видна строка «загружается», а адрес
+// проверяется тем же сервером: не ответил или 404 — в рамке сказано, что делать.
+// Содержимое превью панель не читает: песочница без allow-same-origin остаётся.
+let lbSeq = 0;
+function lbWatch(el, src){
+  const box = el.querySelector('.lb-box'), f = box && box.querySelector('iframe'), w = box && box.querySelector('.lb-wait');
+  if (!f || !w) return;
+  const seq = ++lbSeq, L = CUR;
+  const fail = text => { if (seq !== lbSeq) return; box.classList.remove('loaded'); f.hidden = true; w.textContent = text; w.classList.add('fail'); };
+  f.addEventListener('load', () => { if (seq === lbSeq && !w.classList.contains('fail')) box.classList.add('loaded'); });
+  if (typeof fetch !== 'function') return;
+  fetch(src, {method: 'HEAD', cache: 'no-store'})
+    .then(r => { if (!r.ok) fail(r.status === 404 ? L.lbMissing : L.lbDown); })
+    .catch(() => fail(L.lbDown));
+}
+// 1280 — ширина компьютера: если экран уже, страница уменьшается целиком; 390 — телефон как есть.
+function lbFit(){
+  const el = document.getElementById('lb');
+  const stage = el.querySelector('.lb-stage'), box = el.querySelector('.lb-box'), f = box && box.querySelector('iframe');
+  if (!stage || !box) return;
+  if (!f) { box.style.width = ''; box.style.height = ''; return; }
+  const aw = stage.clientWidth - 32, ah = stage.clientHeight - 32;
+  const k = Math.min(1, aw / LB.w);
+  const h = Math.max(200, ah);
+  box.style.width = Math.round(LB.w * k) + 'px';
+  box.style.height = Math.round(h) + 'px';
+  f.style.width = LB.w + 'px';
+  f.style.height = Math.round(h / k) + 'px';
+  f.style.transform = k < 1 ? `scale(${k})` : '';
+}
+function lbKey(e){
+  if (!LB.open) return;
+  if (e.key === 'Escape') { e.preventDefault(); lbClose(); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); lbGo(-1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); lbGo(1); }
+  else if (e.key === 'Tab') {
+    const f = Array.from(document.querySelectorAll('#lb button:not([disabled])'));
+    if (!f.length) return;
+    const i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+  }
+}
+document.addEventListener('keydown', lbKey);
+document.getElementById('lb').addEventListener('click', e => {
+  const b = e.target.closest('[data-lb-act]');
+  if (!b) { if (e.target.classList.contains('lb-stage')) lbClose(); return; }
+  const a = b.dataset.lbAct;
+  if (a === 'close') lbClose();
+  else if (a === 'prev') lbGo(-1);
+  else if (a === 'next') lbGo(1);
+  else if (a === 'w1280' || a === 'w390') { LB.w = a === 'w390' ? PHONE_W : BASE_W; lbShow(); }
+});
+
+// Один обработчик на всё: #app переписывается целиком на каждом событии прогона.
+document.getElementById('app').addEventListener('click', e => {
+  const z = e.target.closest('[data-lb]');
+  if (z) { lbOpen(z.dataset.lb, +z.dataset.i || 0, z); return; }
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.hasAttribute('data-refresh')) refreshNow(b);
+  else if (b.dataset.tab) {
+    UI.tab = b.dataset.tab;
+    try { localStorage.setItem('aidesign-tab', UI.tab); } catch(err) {}
+    render(CUR.lang);
+    const t = document.querySelector(`#app [data-tab="${UI.tab}"]`);
+    if (t) t.focus();
+  }
+});
+document.getElementById('app').addEventListener('change', e => {
+  const sel = e.target.closest('select[data-pref]');
+  if (!sel) return;
+  if (sel.dataset.pref === 'lang') {
+    try { localStorage.setItem('aidesign-lang', sel.value); } catch(err) {}
+    render(sel.value);
+  } else if (sel.dataset.pref === 'theme') {
+    const t = sel.value === 'system' ? null : sel.value;
+    try { t ? localStorage.setItem('aidesign-theme', t) : localStorage.removeItem('aidesign-theme'); } catch(err) {}
+    applyTheme(t);
+  }
+});
+document.getElementById('app').addEventListener('toggle', e => {
+  const d = e.target;
+  if (d && d.matches && d.matches('details[data-key]')) UI.open[d.dataset.key] = d.open;
+}, true);
+let fitT = null;
+window.addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(() => { fitFrames(); if (LB.open) lbFit(); }, 60); });
+
+let savedLang = 'ru';
+try {
+  savedLang = localStorage.getItem('aidesign-lang') || ((navigator.language || '').startsWith('ru') ? 'ru' : 'en');
+  UI.tab = localStorage.getItem('aidesign-tab') === 'examples' ? 'examples' : 'run';
+} catch(e) {}
+applyTheme(storedTheme());
+
+function bootFail(why){
+  const app = document.getElementById('app');
+  if (!app) return;
+  const L = I18N[(navigator.language || '').startsWith('ru') ? 'ru' : 'en'];
+  app.innerHTML = `<header class="top">${BRAND(L.workshopLink)}</header>
+    ${SERVED ? '' : `<div class="notice" role="status">${L.fileMode}</div>`}
+    <section class="card"><h3 class="wt">${L.boot}</h3><p class="muted" style="margin-top:10px">${why}</p>
+    <p class="muted" style="margin-top:10px">${L.bootHelp}</p></section>`;
+}
+
+if (typeof STATE === 'undefined' || !STATE || typeof STATE !== 'object') {
+  bootFail(I18N[(navigator.language || '').startsWith('ru') ? 'ru' : 'en'].bootWhy);
+  pollState();
+} else {
+  try {
+    render(I18N[savedLang] ? savedLang : 'ru');
+    lastStamp = stampOf(STATE);
+  } catch (e) {
+    bootFail(esc(String(e && e.message || e)));
+    pollState();
+  }
+}
+setInterval(tick, 1000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { tick(); refreshNow(); } });
+window.addEventListener('pageshow', e => { if (e.persisted) { tick(); refreshNow(); } });
+</script>
+</body>
+</html>

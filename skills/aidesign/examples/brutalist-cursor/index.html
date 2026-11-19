@@ -1,0 +1,215 @@
+<!doctype html>
+<!-- Демо-страница AI Design: брутализм с эффектом курсора. Печатня вымышлена; оттиски нарисованы SVG в коде. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Сырой оттиск — печатня на ризографе</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Golos+Text:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --blue: #0038ff;
+  --pink: #ff3fa4;
+  --yellow: #ffe600;
+  --display: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "Golos Text", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", "Courier New", monospace;
+  --b: 3px solid var(--black);
+}
+* { box-sizing: border-box; }
+html { background: var(--white); color: var(--black); }
+body { margin: 0; font-family: var(--body); font-size: 1.0625rem; line-height: 1.55; }
+a { color: inherit; }
+:focus-visible { outline: 4px solid var(--blue); outline-offset: 0; }
+
+.frame { border: var(--b); margin: 12px; }
+.row { display: grid; border-bottom: var(--b); }
+.row > * { min-width: 0; }
+.row:last-child { border-bottom: 0; }
+.cell { padding: clamp(16px, 2.4vw, 32px); }
+.cell + .cell { border-left: var(--b); }
+
+.top { grid-template-columns: 2fr 1fr 1fr 1fr; }
+.top .cell { padding-top: 14px; padding-bottom: 14px; font-weight: 600; }
+.top a { display: block; text-decoration: none; }
+.top a:hover { background: var(--black); color: var(--white); }
+.top .cell.link { padding: 0; }
+.top .cell.link a { padding: 14px clamp(16px, 2.4vw, 32px); height: 100%; }
+
+.hero { grid-template-columns: 3fr 1fr; }
+.hero h1 { margin: 0; font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: clamp(3.4rem, 10.5vw, 9.6rem); line-height: 0.9; letter-spacing: -0.01em; }
+.hero-side { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; background: var(--yellow); }
+.hero-side p { margin: 0; font-size: 1.125rem; }
+.btn { display: block; padding: 18px 20px; border: var(--b); background: var(--black); color: var(--white); text-decoration: none; font-weight: 600; font-size: 1.0625rem; }
+.btn:hover { background: var(--blue); }
+
+.prints { grid-template-columns: repeat(3, 1fr); }
+.print { padding: 0; text-decoration: none; display: block; }
+.print svg { display: block; width: 100%; height: auto; border-bottom: var(--b); }
+.print:hover svg { filter: invert(1); }
+.print h2 { margin: 0; padding: 14px clamp(16px, 2.4vw, 32px) 2px; font-family: var(--display); font-weight: 600; font-size: 1.75rem; line-height: 1.1; text-transform: uppercase; }
+.print p { margin: 0; padding: 0 clamp(16px, 2.4vw, 32px) 18px; }
+
+.inks { grid-template-columns: 1fr 2fr; }
+.inks h2, .order h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 0.95; text-transform: uppercase; }
+.swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0; }
+.swatch { min-height: 200px; display: flex; align-items: flex-end; padding: 12px; font-family: var(--mono); font-size: 0.9375rem; }
+.swatch + .swatch { border-left: var(--b); }
+.s-blue { background: var(--blue); color: var(--white); }
+.s-pink { background: var(--pink); }
+.s-yellow { background: var(--yellow); }
+.s-black { background: var(--black); color: var(--white); }
+
+.specs { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.9375rem; margin-top: 20px; }
+.specs th, .specs td { text-align: left; padding: 10px 0; border-top: 2px solid var(--black); vertical-align: top; }
+.specs th { width: 40%; font-weight: 500; }
+
+.order { grid-template-columns: 1fr 2fr; }
+form { display: grid; gap: 16px; max-width: 560px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; }
+input, textarea { width: 100%; font: inherit; padding: 12px 14px; border: var(--b); border-radius: 0; background: var(--white); color: var(--black); }
+input:focus-visible, textarea:focus-visible { outline: 4px solid var(--blue); outline-offset: 0; }
+button.btn { width: 100%; text-align: left; cursor: pointer; font-family: inherit; }
+.note { margin: 0; font-family: var(--mono); font-size: 0.9375rem; min-height: 1.5em; }
+
+footer { padding: 16px 24px 28px; font-size: 0.9375rem; }
+
+/* Свой курсор: квадрат-прицел догоняет мышь и подписывает цель. Только точный указатель и без reduced-motion. */
+.cursor { position: fixed; left: 0; top: 0; z-index: 50; width: 40px; height: 40px; margin: -20px 0 0 -20px; border: 3px solid var(--white); mix-blend-mode: difference; pointer-events: none; display: none; }
+.cursor span { position: absolute; left: 100%; top: 100%; margin: 6px 0 0 6px; padding: 2px 6px; background: var(--white); color: var(--black); font-family: var(--mono); font-size: 0.8125rem; white-space: nowrap; display: none; }
+.cursor.is-on { display: block; }
+.cursor.has-label { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
+.cursor.has-label span { display: block; }
+
+@media (max-width: 900px) {
+  .top { grid-template-columns: 1fr 1fr 1fr; }
+  .top .cell:first-child { grid-column: 1 / -1; border-bottom: var(--b); }
+  .top .cell:nth-child(2) { border-left: 0; }
+  .hero, .inks, .order { grid-template-columns: 1fr; }
+  .hero .cell + .cell, .inks .cell + .cell, .order .cell + .cell { border-left: 0; border-top: var(--b); }
+  .prints { grid-template-columns: 1fr; }
+  .prints .cell + .cell { border-left: 0; border-top: var(--b); }
+}
+@media (max-width: 480px) {
+  :root { --b: 2px solid var(--black); }
+  .frame { margin: 6px; }
+  .swatches { grid-template-columns: 1fr 1fr; }
+  .swatch:nth-child(3) { border-left: 0; }
+  .swatch:nth-child(n+3) { border-top: var(--b); }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="frame">
+  <header class="row top">
+    <div class="cell">Сырой оттиск</div>
+    <div class="cell link"><a href="#prints" data-cursor="смотреть">Работы</a></div>
+    <div class="cell link"><a href="#inks" data-cursor="краски">Краски</a></div>
+    <div class="cell link"><a href="#order" data-cursor="заказать">Заказ</a></div>
+  </header>
+
+  <main>
+    <section class="row hero">
+      <div class="cell"><h1>Печатаем зины и афиши на ризографе</h1></div>
+      <div class="cell hero-side">
+        <p>Маленькая печатня для тех, кому нужен тираж с характером: краска ложится слоями, совмещение гуляет, и каждый лист чуть отличается от соседа.</p>
+        <a class="btn" href="#order" data-cursor="печатать">Отправить макет в печать</a>
+      </div>
+    </section>
+
+    <section class="row prints" id="prints" aria-label="Работы печатни">
+      <a class="cell print" href="#prints" data-cursor="смотреть">
+        <svg viewBox="0 0 300 220" aria-hidden="true"><rect width="300" height="220" fill="#ffe600"/><circle cx="130" cy="110" r="70" fill="#0038ff"/><circle cx="170" cy="110" r="70" fill="#ff3fa4" style="mix-blend-mode: multiply"/></svg>
+        <h2>Афиша концерта</h2><p>Два цвета, синий и розовый, наложены с нарочным сдвигом.</p>
+      </a>
+      <a class="cell print" href="#prints" data-cursor="смотреть">
+        <svg viewBox="0 0 300 220" aria-hidden="true"><rect width="300" height="220" fill="#fff"/><path d="M30 190 L150 30 L270 190 Z" fill="#000"/><path d="M90 190 L150 110 L210 190 Z" fill="#ffe600"/></svg>
+        <h2>Зин о горах</h2><p>Тетрадка на скобе, чёрный и жёлтый на серой бумаге.</p>
+      </a>
+      <a class="cell print" href="#prints" data-cursor="смотреть">
+        <svg viewBox="0 0 300 220" aria-hidden="true"><rect width="300" height="220" fill="#0038ff"/><rect x="40" y="40" width="100" height="140" fill="#fff"/><rect x="160" y="40" width="100" height="140" fill="#ff3fa4"/></svg>
+        <h2>Открытки</h2><p>Набор из шести карточек, каждая в свой цвет.</p>
+      </a>
+    </section>
+
+    <section class="row inks" id="inks" aria-labelledby="inks-title">
+      <div class="cell">
+        <h2 id="inks-title">Краски в барабанах</h2>
+        <table class="specs">
+          <tr><th scope="row">Формат</th><td>до А3</td></tr>
+          <tr><th scope="row">Бумага</th><td>офсетная, крафт, цветная</td></tr>
+          <tr><th scope="row">Слои</th><td>один цвет за прогон</td></tr>
+        </table>
+      </div>
+      <div class="cell swatches">
+        <div class="swatch s-blue">синий</div>
+        <div class="swatch s-pink">розовый</div>
+        <div class="swatch s-yellow">жёлтый</div>
+        <div class="swatch s-black">чёрный</div>
+      </div>
+    </section>
+
+    <section class="row order" id="order" aria-labelledby="order-title">
+      <div class="cell"><h2 id="order-title">Заказать тираж</h2></div>
+      <div class="cell">
+        <form id="form" novalidate>
+          <div><label for="contact">Как с вами связаться</label><input id="contact" name="contact" type="text" autocomplete="email" placeholder="почта или телефон"></div>
+          <div><label for="what">Что печатаем</label><textarea id="what" name="what" rows="3" placeholder="афиша А3, два цвета, тираж"></textarea></div>
+          <button class="btn" type="submit" data-cursor="печатать">Отправить заявку</button>
+          <p class="note" id="note" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+<footer>Демо-страница AI Design. Печатня «Сырой оттиск» вымышлена, оттиски нарисованы кодом, заявка никуда не отправляется.</footer>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+
+<script>
+(function () {
+  document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('note').textContent = 'Это демо: заявка никуда не ушла.';
+  });
+
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!fine.matches || reduce.matches) return;
+
+  var cursor = document.getElementById('cursor');
+  var tag = cursor.querySelector('span');
+  var x = -100, y = -100, tx = -100, ty = -100, raf = 0;
+
+  // Одна цель и одна интерполяция за кадр; раскладку в обработчике движения не читаем.
+  function tick() {
+    x += (tx - x) * 0.2; y += (ty - y) * 0.2;
+    cursor.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0)';
+    raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(tick) : 0;
+  }
+  window.addEventListener('pointermove', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    tx = e.clientX; ty = e.clientY;
+    if (!cursor.classList.contains('is-on')) { x = tx; y = ty; cursor.classList.add('is-on'); }
+    if (!raf) raf = requestAnimationFrame(tick);
+  }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', function () { cursor.classList.remove('is-on'); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) cursor.classList.remove('is-on'); });
+
+  document.querySelectorAll('[data-cursor]').forEach(function (el) {
+    el.addEventListener('pointerenter', function () { tag.textContent = el.dataset.cursor; cursor.classList.add('has-label'); });
+    el.addEventListener('pointerleave', function () { cursor.classList.remove('has-label'); });
+  });
+  reduce.addEventListener('change', function () { if (reduce.matches) cursor.classList.remove('is-on'); });
+})();
+</script>
+</body>
+</html>
